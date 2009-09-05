@@ -19,7 +19,7 @@ doc = """paste entry point. Generate a StaticURLParser to serve js stuff.
 **Available files**
 
 """
-for name in ('js', 'css'):
+for name in os.listdir(dirname):
     doc += '\n\n%s files:\n\n' % name
     for filename in glob.glob(os.path.join(dirname, name, '*.%s' % name)):
         if os.path.isfile(filename):
