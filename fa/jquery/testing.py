@@ -8,6 +8,7 @@ FieldSet.default_renderers.update(default_renderers)
 class ISample(interface.Interface):
     title = schema.TextLine(title=u'title')
     ajax = schema.TextLine(title=u'ajax')
+    color = schema.TextLine(title=u'color')
     selectable = schema.TextLine(title=u'selectable')
     slider = schema.Int(title=u'integer as slider')
     date = schema.Date(title=u'date')
@@ -16,6 +17,7 @@ class ISample(interface.Interface):
 Form = FieldSet(ISample)
 Form.title.set(renderer=AutoCompleteFieldRenderer(['aa', 'bb']))
 Form.ajax.set(renderer=AutoCompleteFieldRenderer('/values'))
+Form.color.set(renderer=ColorPickerFieldRenderer())
 Form.slider.set(renderer=SliderFieldRenderer)
 Form.selectable.set(renderer=SelectableFieldRenderer, options=[l for l in 'abcdef'])
 

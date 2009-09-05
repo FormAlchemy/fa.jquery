@@ -8,6 +8,11 @@ AutoCompleteFieldRenderer
 
 .. autofunction:: fa.jquery.renderers.AutoCompleteFieldRenderer
 
+ColorPickerFieldRenderer
+--------------------------
+
+.. autofunction:: fa.jquery.renderers.ColorPickerFieldRenderer
+
 DateFieldRenderer
 ----------------------
 

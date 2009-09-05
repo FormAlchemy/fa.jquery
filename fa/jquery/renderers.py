@@ -63,6 +63,37 @@ def AutoCompleteFieldRenderer(url_or_data, renderer=fields.TextFieldRenderer, **
 
 autocomplete = AutoCompleteFieldRenderer
 
+
+def ColorPickerFieldRenderer(**jq_options):
+    """Color Picker using http://www.syronex.com/software/jquery-color-picker:
+    """
+    if 'color' not in jq_options:
+        jq_options['color'] = [
+            "#FFFFFF", "#EEEEEE", "#FFFF88", "#FF7400", "#CDEB8B", "#6BBA70",
+            "#006E2E", "#C3D9FF", "#4096EE", "#356AA0", "#FF0096", "#B02B2C",
+            "#000000"
+            ]
+    color = jq_options['color']
+    class Renderer(fields.TextFieldRenderer):
+        template=templates.get_template('colorpicker.mako')
+        def render_readonly(self):
+            return '<span style="background-color:%s">&nbsp;</span>' % self._value
+        def render(self, **kwargs):
+            value=self._value
+            try:
+                jq_options['defaultColor'] = color.index(value)
+            except:
+                pass
+            kwargs.update(
+                name=self.name,
+                value=value,
+                jq_options=dumps(jq_options),
+            )
+            return self.template.render(**kwargs)
+    return Renderer
+
+colorpicker = ColorPickerFieldRenderer
+
 class DateFieldRenderer(fields.DateFieldRenderer):
     """Use http://jqueryui.com/demos/datepicker/:
 
@@ -98,7 +129,7 @@ class DateTimeFieldRenderer(DateFieldRenderer, fields.TimeFieldRenderer):
     """Use http://jqueryui.com/demos/datepicker/"""
     format = '%Y-%m-%d %H:%M:%S'
     template = templates.get_template('date.mako')
-    jq_options = "{dateFormat:'yy-mm-dd'}"
+    jq_options = dict(dateFormat='yy-mm-dd')
     def render(self, **kwargs):
         return h.content_tag('span', DateFieldRenderer.render(self, **kwargs) + ' ' + fields.TimeFieldRenderer._render(self, **kwargs))
 
