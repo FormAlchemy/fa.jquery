@@ -16,17 +16,17 @@ def StaticApp(*args, **local_conf):
 
 doc = """paste entry point. Generate a StaticURLParser to serve js stuff.
 
-**Available files**
+Available files:
 
 """
 for name in os.listdir(dirname):
-    doc += '\n\n%s files:\n\n' % name
-    for filename in glob.glob(os.path.join(dirname, name, '*.%s' % name)):
-        if os.path.isfile(filename):
-            doc += '- `%s`\n' % filename.replace(dirname, '')
-    for filename in glob.glob(os.path.join(dirname, name, '*', '*.%s' % name)):
-        if os.path.isfile(filename):
-            doc += '- `%s`\n' % filename.replace(dirname, '')
+    for ext in ('css', 'js'):
+        for filename in glob.glob(os.path.join(dirname, name, '*.%s' % ext)):
+            if os.path.isfile(filename):
+                doc += '- `%s`\n' % filename.replace(dirname, '')
+        for filename in glob.glob(os.path.join(dirname, name, '*', '*.%s' % ext)):
+            if os.path.isfile(filename):
+                doc += '- `%s`\n' % filename.replace(dirname, '')
 
 StaticApp.__doc__ = doc
 del doc
