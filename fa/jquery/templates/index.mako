@@ -70,14 +70,24 @@
 			ul#icons li {margin: 2px; position: relative; padding: 4px 0; cursor: pointer; float: left;  list-style: none;}
 			ul#icons span.ui-icon {float: left; margin: 0 4px;}
 		</style>	
+    <style type="text/css">
+      form div {margin:1em;}
+      .selectable .ui-selecting { background: #FECA40; }
+      .selectable .ui-selected { background: #F39814; color: white; }
+      .selectable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+      .selectable li { margin: 3px; padding: 0.4em; font-size: 1.4em; height: 18px; }
+    </style>
 	</head>
 	<body>
 	<h1>Welcome to jQuery UI!</h1>
 	<p style="font-size: 1.3em; line-height: 1.5; margin: 1em 0; width: 50%;">This page demonstrates the widgets you downloaded using the theme you selected in the download builder. We've included and linked to minified versions of <a href="js/jquery-1.3.2.min.js">jQuery</a>, your personalized copy of <a href="js/jquery-ui-1.7.2.custom.min.js">jQuery UI (js/jquery-ui-1.7.2.custom.min.js)</a>, and <a href="css/ui-lightness/jquery-ui-1.7.2.custom.css">css/ui-lightness/jquery-ui-1.7.2.custom.css</a> which imports the entire jQuery UI CSS Framework. You can choose to link a subset of the CSS Framework depending on your needs. </p>
 	<p style="font-size: 1.2em; line-height: 1.5; margin: 1em 0; width: 50%;">You've downloaded components and a theme that are compatible with jQuery 1.3+. Please make sure you are using jQuery 1.3+ in your production environment. <em>If you need jQuery UI components that work with an earlier version of jQuery, you can choose an older version in the <a href="http://jqueryui.com/download">jQuery UI download builder</a>.</em></p>	
 
-	<p style="font-weight: bold; margin: 2em 0 1em; font-size: 1.3em;">YOUR COMPONENTS:</p>
-    ${fs.render()}
+	<p style="font-weight: bold; margin: 2em 0 1em; font-size: 1.3em;">FA.JQUERY COMPONENTS:</p>
+    <form action="" method="POST">
+      ${fs.render()}
+      <div><input type="submit" /></div>
+    </form>
   </p>
 	<p style="font-weight: bold; margin: 2em 0 1em; font-size: 1.3em;">YOUR COMPONENTS:</p>
 		
