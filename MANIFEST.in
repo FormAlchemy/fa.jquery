@@ -1,0 +1,5 @@
+recursive-include fa *.css
+recursive-include fa *.js
+recursive-include fa *.gif
+recursive-include fa *.png
+recursive-include fa *.jpg
