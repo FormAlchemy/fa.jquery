@@ -5,4 +5,7 @@
 
 .. autoclass:: fa.jquery.renderers.DateFieldRenderer
 
+.. autoclass:: fa.jquery.renderers.DateTimeFieldRenderer
+
+.. autoclass:: fa.jquery.renderers.DateTimeFieldRenderer
 
