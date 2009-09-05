@@ -20,13 +20,16 @@ Available files:
 
 """
 for name in os.listdir(dirname):
+    filenames = []
     for ext in ('css', 'js'):
         for filename in glob.glob(os.path.join(dirname, name, '*.%s' % ext)):
             if os.path.isfile(filename):
-                doc += '- `%s`\n' % filename.replace(dirname, '')
+                filenames.append(filename)
         for filename in glob.glob(os.path.join(dirname, name, '*', '*.%s' % ext)):
             if os.path.isfile(filename):
-                doc += '- `%s`\n' % filename.replace(dirname, '')
+                filenames.append(filename)
+    for filename in sorted(filenames):
+        doc += '- `%s`\n' % filename.replace(dirname, '')
 
 StaticApp.__doc__ = doc
 del doc
