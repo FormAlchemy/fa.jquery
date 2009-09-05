@@ -3,11 +3,23 @@
 
 .. automodule:: fa.jquery.renderers
 
+DateFieldRenderer
+----------------------
+
 .. autoclass:: fa.jquery.renderers.DateFieldRenderer
+
+DateTimeFieldRenderer
+----------------------
 
 .. autoclass:: fa.jquery.renderers.DateTimeFieldRenderer
 
+SliderFieldRenderer
+------------------------
+
 .. autoclass:: fa.jquery.renderers.SliderFieldRenderer
+
+SelectableFieldRenderer
+-------------------------
 
 .. autoclass:: fa.jquery.renderers.SelectableFieldRenderer
 
