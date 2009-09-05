@@ -1,0 +1,9 @@
+:mod:`fa.jquery.renderers` -- Renderers
+=================================================
+
+.. automodule:: fa.jquery.renderers
+
+.. autoclass:: fa.jquery.renderers.DateTimeRenderer
+    :members:
+
+
