@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+from simplejson import dumps
 from formalchemy import helpers as h
 from formalchemy import types
 from formalchemy import fields
@@ -9,8 +10,58 @@ from mako.lookup import TemplateLookup
 dirname = os.path.join(os.path.dirname(__file__), 'templates')
 templates = TemplateLookup([dirname], input_encoding='utf-8', output_encoding='utf-8')
 
-class TextFieldRenderer(fields.TextFieldRenderer):
-    pass
+def AutoCompleteFieldRenderer(url_or_data, renderer=fields.TextFieldRenderer, **jq_options):
+    """Use http://bassistance.de/jquery-plugins/jquery-plugin-autocomplete/:
+
+    .. sourcecode:: python
+
+        >>> from testing import fs
+        >>> field = fs.title.set(renderer=AutoCompleteFieldRenderer(['aa', 'bb']))
+        >>> print field.render() #doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+        <input id="Sample--title" name="Sample--title" type="text" />
+        <script type="text/javascript">
+          (function($) {
+          var autocomplete = $(document.getElementById('Sample--title'));
+          autocomplete.autocomplete(["aa", "bb"]);
+          })(jQuery);
+        </script>
+
+    With more advanced options:
+
+    .. sourcecode:: python
+
+        >>> field = fs.title.set(
+        ...     renderer=AutoCompleteFieldRenderer(
+        ...         ['aa', 'bb'],
+        ...         width=320,
+        ...         scroll=True,
+        ...         scrollHeight=300, 
+        ...         ))
+        >>> print field.render() #doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+        <input id="Sample--title" name="Sample--title" type="text" />
+        <script type="text/javascript">
+          (function($) {
+          var autocomplete = $(document.getElementById('Sample--title'));
+          autocomplete.autocomplete(["aa", "bb"], {"width": 320, "scroll": true, "scrollHeight": 300});
+          })(jQuery);
+        </script>
+            
+    """
+    class Renderer(renderer):
+        template=templates.get_template('autocomplete.mako')
+        def render(self, options=None, **kwargs):
+            html = renderer.render(self, **kwargs)
+            data = url_or_data or options or []
+            kwargs.update(
+                html=html,
+                name=self.name,
+                data=dumps(data),
+                jq_options=jq_options and dumps(jq_options) or '',
+            )
+            return self.template.render(**kwargs)
+    return Renderer
+
+autocomplete = AutoCompleteFieldRenderer
 
 class DateFieldRenderer(fields.DateFieldRenderer):
     """Use http://jqueryui.com/demos/datepicker/:
@@ -21,25 +72,27 @@ class DateFieldRenderer(fields.DateFieldRenderer):
         >>> print fs.date.render() #doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
         <input type="text" size="10" value="" id="Sample--date" name="Sample--date" />
         <script type="text/javascript">
-          jQuery(document.getElementById('Sample--date')).datepicker({dateFormat:'yy-mm-dd'});
+          jQuery(document.getElementById('Sample--date')).datepicker({"dateFormat": "yy-mm-dd"});
         </script>...
         
     """
     template = templates.get_template('date.mako')
-    jq_options = "{dateFormat:'yy-mm-dd'}"
+    jq_options = dict(dateFormat='yy-mm-dd')
     def render(self, **kwargs):
         value = self._value or ''
         value = value and value.split()[0] or ''
         kwargs.update(
             name=self.name,
             value=value,
-            jq_options=self.jq_options,
+            jq_options=dumps(self.jq_options),
         )
         return self.template.render(**kwargs)
 
     def _serialized_value(self):
         value = self._params.getone(self.name) or ''
         return value
+
+date = DateFieldRenderer
 
 class DateTimeFieldRenderer(DateFieldRenderer, fields.TimeFieldRenderer):
     """Use http://jqueryui.com/demos/datepicker/"""
@@ -51,6 +104,8 @@ class DateTimeFieldRenderer(DateFieldRenderer, fields.TimeFieldRenderer):
 
     def _serialized_value(self):
         return DateFieldRenderer._serialized_value(self) + ' ' + fields.TimeFieldRenderer._serialized_value(self)
+
+datetime = DateTimeFieldRenderer
 
 class SliderFieldRenderer(fields.IntegerFieldRenderer):
     """Fill an integer field using http://jqueryui.com/demos/slider/:
@@ -78,6 +133,8 @@ class SliderFieldRenderer(fields.IntegerFieldRenderer):
     def render(self, **kwargs):
         value = self._value or 0
         return self.template.render(name=self.name, value=value)
+
+slider = SliderFieldRenderer
 
 class SelectableFieldRenderer(fields.SelectFieldRenderer):
     """Fill a text field using http://jqueryui.com/demos/selectable/:
@@ -140,8 +197,11 @@ class SelectableFieldRenderer(fields.SelectFieldRenderer):
                 L = [(k, k) for k in L]
         return self.template.render(name=self.name, value=value, options=L)
 
+selectable = SelectableFieldRenderer
 
 default_renderers = {
-    types.Date:DateFieldRenderer,
-    types.DateTime:DateTimeFieldRenderer,
+    types.Date:date,
+    types.DateTime:datetime,
+    'slider':slider,
+    'selectable':selectable,
 }

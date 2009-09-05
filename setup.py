@@ -24,6 +24,7 @@ setup(name='fa.jquery',
       install_requires=[
           'setuptools',
           'FormAlchemy>=1.2.3',
+          'simplejson',
           'mako',
       ],
       entry_points="""
