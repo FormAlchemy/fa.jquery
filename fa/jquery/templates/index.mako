@@ -3,7 +3,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 		<title>jQuery UI Example Page</title>
-		<link type="text/css" href="/jquery_ui/css/ui-lightness/jquery-ui-1.7.2.custom.css" rel="stylesheet" />	
+		<link type="text/css" href="/jquery_ui/css/redmond/jquery-ui-1.7.2.custom.css" rel="stylesheet" />	
 		<script type="text/javascript" src="/jquery_ui/js/jquery-1.3.2.min.js"></script>
 		<script type="text/javascript" src="/jquery_ui/js/jquery-ui-1.7.2.custom.min.js"></script>
 		<script type="text/javascript">
