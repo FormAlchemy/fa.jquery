@@ -7,5 +7,7 @@
 
 .. autoclass:: fa.jquery.renderers.DateTimeFieldRenderer
 
-.. autoclass:: fa.jquery.renderers.DateTimeFieldRenderer
+.. autoclass:: fa.jquery.renderers.SliderFieldRenderer
+
+.. autoclass:: fa.jquery.renderers.SelectableFieldRenderer
 
