@@ -66,6 +66,23 @@ autocomplete = AutoCompleteFieldRenderer
 
 def ColorPickerFieldRenderer(**jq_options):
     """Color Picker using http://www.syronex.com/software/jquery-color-picker:
+
+    .. sourcecode:: python
+
+        >>> from testing import fs
+        >>> print fs.color.render() #doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+        <input type="hidden" value="None" id="Sample--color" name="Sample--color" />
+        <div id="Sample--color_colors"></div>
+        <script type="text/javascript">
+          (function($) {
+            var field = $(document.getElementById('Sample--color'));
+            var picker = $(document.getElementById('Sample--color_colors'));
+            var opts = {"color": ["#FFFFFF", ..., "#B02B2C", "#000000"]};
+            $.extend(opts, { click: function(color) { field.val(color); } });
+            picker.colorPicker(opts);
+          })(jQuery);
+        </script>...
+            
     """
     if 'color' not in jq_options:
         jq_options['color'] = [

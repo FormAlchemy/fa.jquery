@@ -5,11 +5,7 @@
     var field = $(document.getElementById('${name}'));
     var picker = $(document.getElementById('${name}_colors'));
     var opts = ${jq_options};
-    $.extend(opts, {
-      click: function(color) {
-        field.val(color);
-      }
-    });
+    $.extend(opts, { click: function(color) { field.val(color); } });
     picker.colorPicker(opts);
   })(jQuery);
 </script>
