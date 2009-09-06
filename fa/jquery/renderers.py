@@ -64,7 +64,7 @@ def AutoCompleteFieldRenderer(url_or_data, renderer=fields.TextFieldRenderer, **
 autocomplete = AutoCompleteFieldRenderer
 
 
-def ColorPickerFieldRenderer(**jq_options):
+def ColorPickerFieldRenderer(show_input=False, **jq_options):
     """Color Picker using http://www.syronex.com/software/jquery-color-picker:
 
     .. sourcecode:: python
@@ -104,6 +104,7 @@ def ColorPickerFieldRenderer(**jq_options):
             kwargs.update(
                 name=self.name,
                 value=value,
+                show_input=show_input,
                 jq_options=dumps(jq_options),
             )
             return self.template.render(**kwargs)
