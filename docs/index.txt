@@ -8,6 +8,13 @@ Welcome to fa.jquery's documentation!
 
 .. include:: ../README.txt
 
+Installation
+============
+
+Using setuptools::
+
+  $ easy_install "FormAlchemy>=1.2.3" fa.jquery
+
 Configuration
 =============
 

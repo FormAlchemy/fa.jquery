@@ -119,7 +119,7 @@ class DateFieldRenderer(fields.DateFieldRenderer):
 
         >>> from testing import fs
         >>> print fs.date.render() #doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-        <input type="text" size="10" value="" id="Sample--date" name="Sample--date" />
+        <input type="text" autocomplete="off" size="10" value="" id="Sample--date" name="Sample--date" />
         <script type="text/javascript">
           jQuery(document.getElementById('Sample--date')).datepicker({"dateFormat": "yy-mm-dd"});
         </script>...
