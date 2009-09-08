@@ -5,6 +5,18 @@ from renderers import *
 
 FieldSet.default_renderers.update(default_renderers)
 
+class ITab1(interface.Interface):
+    title = schema.TextLine(title=u'title')
+
+class ITab2(interface.Interface):
+    title = schema.TextLine(title=u'title')
+    description = schema.TextLine(title=u'description')
+
+fs1 = FieldSet(ITab1)
+obj1 = fs1.gen_model()
+fs2 = FieldSet(ITab2)
+obj2 = fs2.gen_model()
+
 class ISample(interface.Interface):
     title = schema.TextLine(title=u'title')
     ajax = schema.TextLine(title=u'ajax')

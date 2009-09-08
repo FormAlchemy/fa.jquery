@@ -5,10 +5,8 @@ from formalchemy import helpers as h
 from formalchemy import types
 from formalchemy import fields
 from formalchemy import config
-from mako.lookup import TemplateLookup
 
-dirname = os.path.join(os.path.dirname(__file__), 'templates')
-templates = TemplateLookup([dirname], input_encoding='utf-8', output_encoding='utf-8')
+from utils import templates
 
 def jQueryFieldRenderer(plugin, show_input=False, tag='div', renderer=fields.TextFieldRenderer, **jq_options):
     """Extending jQuery.fa:
@@ -53,6 +51,8 @@ def jQueryFieldRenderer(plugin, show_input=False, tag='div', renderer=fields.Tex
             )
             return self.template.render(**options)
     return Renderer
+
+plugin = jQueryFieldRenderer
 
 def AutoCompleteFieldRenderer(url_or_data, renderer=fields.TextFieldRenderer, **jq_options):
     """Use http://bassistance.de/jquery-plugins/jquery-plugin-autocomplete/:
