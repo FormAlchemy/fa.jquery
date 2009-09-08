@@ -65,7 +65,7 @@ class Tabs(object):
         self._fs_dict[id] = fs
 
     def bind(self, model, *ids, **kwargs):
-        """bin forms to model. If no ids is provided, all forms are bound to
+        """Bind forms to model.  If no ids is provided, all forms are bound to
         model. Session and data can be passed as kwargs."""
         ids = ids or self._fs_dict.keys()
         for id in ids:
@@ -73,6 +73,7 @@ class Tabs(object):
             self._fs_dict[id] = fs.bind(model, **kwargs)
 
     def validate(self, *ids):
+        """Validate forms. If no ids is provided, all forms are validate."""
         forms = []
         ids = ids or self._fs_dict.keys()
         for id in ids:
@@ -83,7 +84,7 @@ class Tabs(object):
         return True
 
     def sync(self, *ids):
-        """sync forms"""
+        """Sync forms. If no ids is provided, all forms are validate."""
         ids = ids or self._fs_dict.keys()
         for id in ids:
             self._fs_dict[id].sync()
