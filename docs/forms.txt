@@ -1,0 +1,11 @@
+:mod:`fa.jquery.forms` -- Forms
+=================================================
+
+.. automodule:: fa.jquery.forms
+
+Tabs
+--------------------------
+
+.. autofunction:: fa.jquery.forms.Tabs
+
+
