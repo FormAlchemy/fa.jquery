@@ -7,6 +7,6 @@ Tabs
 --------------------------
 
 .. autofunction:: fa.jquery.forms.Tabs
-   :members:
+    :members:
 
 
