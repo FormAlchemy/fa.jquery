@@ -16,6 +16,8 @@ Manix
 '''
     else:
         obj = Form.gen_model()
+        obj.context['sortable'] = '1;2;3'
+        obj.context['selectable'] = 'f'
         fs = Form.bind(obj, data=req.POST or None)
         template = templates.get_template('index.mako')
         resp.body = template.render(fs=fs)

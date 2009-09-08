@@ -1,0 +1,7 @@
+.fa_selectable .ui-selecting { background: #DFEFFC; }
+.fa_selectable .ui-selected { background: #C3D9FF; color: #2E6E9E; }
+.fa_selectable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+.fa_selectable li { margin: 3px; padding: 0.4em; font-size: 1.4em; height: 18px; cursor:pointer;}
+.fa_sortable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+.fa_sortable li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px; cursor:move;}
+.fa_sortable li span { position: absolute; margin-left: -1.3em; }

@@ -3,9 +3,9 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 		<title>jQuery UI Example Page</title>
-		<link type="text/css" href="/jquery_ui/css/redmond/jquery-ui-1.7.2.custom.css" rel="stylesheet" />	
-		<link type="text/css" href="/jquery_ui/fa.jquery.min.css" rel="stylesheet" />	
-		<script type="text/javascript" src="/jquery_ui/fa.jquery.min.js"></script>
+		<link type="text/css" href="/jquery/css/redmond/jquery-ui-1.7.2.custom.css" rel="stylesheet" />	
+		<link type="text/css" href="/jquery/fa.jquery.min.css" rel="stylesheet" />	
+		<script type="text/javascript" src="/jquery/fa.jquery.min.js"></script>
 		<script type="text/javascript">
 			$(function(){
 
@@ -70,13 +70,6 @@
 			ul#icons li {margin: 2px; position: relative; padding: 4px 0; cursor: pointer; float: left;  list-style: none;}
 			ul#icons span.ui-icon {float: left; margin: 0 4px;}
 		</style>	
-    <style type="text/css">
-      form div {margin:1em;}
-      .selectable .ui-selecting { background: #FECA40; }
-      .selectable .ui-selected { background: #F39814; color: white; }
-      .selectable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
-      .selectable li { margin: 3px; padding: 0.4em; font-size: 1.4em; height: 18px; }
-    </style>
 	</head>
 	<body>
 	<h1>Welcome to jQuery UI!</h1>

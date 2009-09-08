@@ -33,3 +33,7 @@ SelectableFieldRenderer
 
 .. autoclass:: fa.jquery.renderers.SelectableFieldRenderer
 
+jQueryFieldRenderer
+--------------------------
+
+.. autofunction:: fa.jquery.renderers.jQueryFieldRenderer
