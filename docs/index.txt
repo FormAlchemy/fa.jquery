@@ -23,6 +23,7 @@ Contents
 
    configuration
    renderers
+   forms
    wsgi
 
 Indices and tables
