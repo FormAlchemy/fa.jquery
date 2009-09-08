@@ -31,5 +31,7 @@ setup(name='fa.jquery',
       [paste.app_factory]
       main = fa.jquery.wsgi:StaticApp
       test = fa.jquery.app:make_app
+      [paste.filter_factory]
+      demo = fa.jquery.app:make_demo
       """,
       )

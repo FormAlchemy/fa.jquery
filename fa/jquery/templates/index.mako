@@ -1,3 +1,4 @@
+%if headers:
 <!DOCTYPE html>
 <html>
 	<head>
@@ -8,7 +9,7 @@
 		<script type="text/javascript" src="/jquery/fa.jquery.min.js"></script>
 	</head>
 	<body>
-
+%endif
     <form action="" method="POST">
       <h2>Renderers</h2>
       <p>
@@ -22,7 +23,8 @@
       </p>
     </form>
 
+%if headers:
 	</body>
 </html>
-
+%endif
 

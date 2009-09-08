@@ -29,7 +29,7 @@ class ISample(interface.Interface):
 
 Form = FieldSet(ISample)
 Form.title.set(renderer=AutoCompleteFieldRenderer(['aa', 'bb']))
-Form.ajax.set(renderer=AutoCompleteFieldRenderer('/values'))
+Form.ajax.set(renderer=AutoCompleteFieldRenderer('/fa.jquery/ajax_values'))
 Form.color.set(renderer=ColorPickerFieldRenderer())
 Form.slider.set(renderer=SliderFieldRenderer)
 Form.selectable.set(renderer=SelectableFieldRenderer, options=[l for l in 'abcdef'])
