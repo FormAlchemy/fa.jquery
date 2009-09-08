@@ -3,6 +3,6 @@ Online Demo
 
 .. raw:: html
 
-  <div id="demo" />
+  <div id="demo"/>
 
 
