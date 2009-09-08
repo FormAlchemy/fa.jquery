@@ -25,6 +25,7 @@ Contents
    renderers
    forms
    wsgi
+   demo
 
 Indices and tables
 ==================
