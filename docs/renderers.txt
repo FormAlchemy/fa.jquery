@@ -1,6 +1,11 @@
 :mod:`fa.jquery.renderers` -- Renderers
 =================================================
 
+This is the predefined renderers. You can have a look at the :doc:`demo`.
+
+If you need your own, use the :class:`~fa.jquery.renderers.jQueryFieldRenderer`
+as base class.
+
 .. automodule:: fa.jquery.renderers
 
 AutoCompleteFieldRenderer
@@ -28,10 +33,20 @@ SliderFieldRenderer
 
 .. autoclass:: fa.jquery.renderers.SliderFieldRenderer
 
+SortableTokenTextFieldRenderer
+-------------------------------
+
+.. autoclass:: fa.jquery.renderers.SortableTokenTextFieldRenderer
+
 SelectableFieldRenderer
 -------------------------
 
 .. autoclass:: fa.jquery.renderers.SelectableFieldRenderer
+
+SelectableTokenFieldRenderer
+-----------------------------
+
+.. autoclass:: fa.jquery.renderers.SelectableTokenFieldRenderer
 
 jQueryFieldRenderer
 --------------------------

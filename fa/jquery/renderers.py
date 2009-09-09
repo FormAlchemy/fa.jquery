@@ -107,7 +107,23 @@ def AutoCompleteFieldRenderer(url_or_data, renderer=fields.TextFieldRenderer, **
 
 autocomplete = AutoCompleteFieldRenderer
 
-def SortableTextFieldRenderer(sep=';', show_input=False, **jq_options):
+def SortableTokenTextFieldRenderer(sep=';', show_input=False, **jq_options):
+    """Sortable token using http://jqueryui.com/demos/sortable/:
+
+    .. sourcecode:: python
+
+        >>> from testing import fs
+        >>> field = fs.sortable.set(renderer=SortableTokenTextFieldRenderer)
+        >>> print field.render() #doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+        <input type="hidden" value="fisrt;second" id="Sample--sortable" name="Sample--sortable" />
+        <ul id="Sample--sortable_sortable" class="fa_sortable">
+        <li class="ui-state-default" alt="fisrt"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>fisrt</li>
+        <li class="ui-state-default" alt="second"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>second</li>
+        </ul>
+        <script type="text/javascript">
+          jQuery.fa.sortable({name:'Sample--sortable', sep:';'});
+        </script>...
+    """
     class Renderer(fields.TextFieldRenderer):
         template=templates.get_template('sortable.mako')
         def render_readonly(self):
@@ -127,7 +143,7 @@ def SortableTextFieldRenderer(sep=';', show_input=False, **jq_options):
             return self.template.render(**kwargs)
     return Renderer
 
-sortable_text = SortableTextFieldRenderer
+sortable_token = SortableTokenTextFieldRenderer
 
 def ColorPickerFieldRenderer(show_input=False, **jq_options):
     """Color Picker using http://www.syronex.com/software/jquery-color-picker:
@@ -259,12 +275,15 @@ class SelectableFieldRenderer(fields.SelectFieldRenderer):
         <li class="ui-widget-content" alt="f">f</li>
         </ul>
         <script type="text/javascript">
-          jQuery.fa.selectable({name:'Sample--selectable', sep:';', multiple:false});
+          jQuery.fa.selectable({"multiple": false, "name": "Sample--selectable"});
         </script>...
 
     """
+    multiple=False
+    sep=';'
     template = templates.get_template('selectable.mako')
     def render(self, options, **kwargs):
+        name = self.name
         value = self._value or ''
         if callable(options):
             L = fields._normalized_options(options(self.field.parent))
@@ -278,9 +297,29 @@ class SelectableFieldRenderer(fields.SelectFieldRenderer):
             else:
                 L = [fields._stringify(k) for k in L]
                 L = [(k, k) for k in L]
-        return self.template.render(name=self.name, value=value, options=L)
+        jq_options=dict(name=name, multiple=self.multiple)
+        if self.multiple:
+            jq_options['sep'] = self.sep
+        return self.template.render(name=name, value=value, options=L, jq_options=dumps(jq_options))
 
 selectable = SelectableFieldRenderer
+
+class SelectableTokenFieldRenderer(SelectableFieldRenderer):
+    """Same as SelectFieldRenderer but allow multiple selection saved as
+    token:
+
+    .. sourcecode:: python
+
+        >>> from testing import fs
+        >>> field = fs.selectable.set(renderer=SelectableTokenFieldRenderer)
+        >>> print field.render() #doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+        <input type="hidden" value="" id="Sample--selectable" name="Sample--selectable" />
+        ...
+        <script type="text/javascript">
+          jQuery.fa.selectable({"multiple": true, "name": "Sample--selectable", "sep": ";"});
+        </script>...
+    """
+    multiple = True
 
 default_renderers = {
     types.Date:date,

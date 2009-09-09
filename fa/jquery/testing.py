@@ -22,6 +22,7 @@ class ISample(interface.Interface):
     ajax = schema.TextLine(title=u'Auto complete with an ajax request')
     color = schema.TextLine(title=u'Color picker')
     selectable = schema.TextLine(title=u'Selectable')
+    selectable_token = schema.TextLine(title=u'Selectable token')
     sortable = schema.TextLine(title=u'Sortable token')
     slider = schema.Int(title=u'Integer as slider')
     date = schema.Date(title=u'Date')
@@ -33,7 +34,8 @@ Form.ajax.set(renderer=AutoCompleteFieldRenderer('/fa.jquery/ajax_values'))
 Form.color.set(renderer=ColorPickerFieldRenderer())
 Form.slider.set(renderer=SliderFieldRenderer)
 Form.selectable.set(renderer=SelectableFieldRenderer, options=[l for l in 'abcdef'])
-Form.sortable.set(renderer=SortableTextFieldRenderer)
+Form.selectable_token.set(renderer=SelectableTokenFieldRenderer, options=[l for l in 'abcdef'])
+Form.sortable.set(renderer=SortableTokenTextFieldRenderer)
 
 obj = Form.gen_model()
 obj.context['sortable'] = 'fisrt;second'

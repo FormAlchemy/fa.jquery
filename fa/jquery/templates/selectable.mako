@@ -8,5 +8,5 @@
 %endfor
 </ul>
 <script type="text/javascript">
-  jQuery.fa.selectable({name:'${name}', sep:';', multiple:false});
+  jQuery.fa.selectable(${jq_options});
 </script>

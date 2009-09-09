@@ -1,28 +1,41 @@
 jQuery.extend({fa:{}});
 jQuery.extend(jQuery.fa, {
   selectable: function(options) {
-    var sep = options.sep;
     var field = $(document.getElementById(options.name));
     var selectable = $(document.getElementById(options.name+'_selectable'));
     var error = $(document.getElementById(options.name+'_error'));
     var initValue = function() {
-      var value = field.val();
-      $('li', selectable).each(function(){
-          var item = $(this);
-          if (item.attr('alt') == value) { item.addClass('ui-selected'); }
-      });
+      if (!options.multiple) {
+          var value = field.val();
+          $('li', selectable).each(function(){
+              var item = $(this);
+              if (item.attr('alt') == value) { item.addClass('ui-selected'); }
+          });
+      } else {
+          var values = field.val().split(new RegExp(options.sep, 'g'));
+          $('li', selectable).each(function(){
+              var item = $(this);
+              $(values).each(function(){
+                  if (item.attr('alt') == this) { item.addClass('ui-selected'); }
+              });
+          });
+      }
     }
     selectable.selectable({
         stop: function(){
           var selected = $(".ui-selected", this);
-          if (options.multiple && selected.length > 1) {
+          if (!options.multiple && selected.length > 1) {
             selected.removeClass('ui-selected');
             initValue();
             dialog = error.clone();
             dialog.dialog({height: 140,modal: true});
           } else {
-            selected.each(function(){val=val+$(this).text()+sep;});
-            field.val(val.substring(0, val.length-1));
+            var value = new Array();
+            selected.each(function(){value.push($(this).attr('alt'));});
+            if (options.multiple)
+                field.val(value.join(options.sep));
+            else
+                field.val(value.join(''));
           }
         }
     });
@@ -35,10 +48,10 @@ jQuery.extend(jQuery.fa, {
     var sortable = $(document.getElementById(options.name+'_sortable'));
     sortable.sortable({
         stop: function(){
-          var val = '';
+          var value = new Array();
           var sorted = $("li", this);
-          sorted.each(function(){val=val+$(this).text()+sep;});
-          field.val(val.substring(0, val.length-1));
+          sorted.each(function(){value.push($(this).text());});
+          field.val(value.join(sep));
         }
     });
     sortable.disableSelection();

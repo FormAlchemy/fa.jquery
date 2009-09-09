@@ -19,6 +19,7 @@ class Demo(object):
             obj = Form.gen_model()
             obj.context['sortable'] = '1;2;3'
             obj.context['selectable'] = 'f'
+            obj.context['selectable_token'] = 'b;c'
             fs = Form.bind(obj, data=req.POST or None)
 
             tabs = Tabs('my_tabs',
@@ -34,7 +35,8 @@ class Demo(object):
                     tabs.sync()
 
             template = templates.get_template('index.mako')
-            body = template.render(fs=fs, tabs=tabs, headers=self.headers)
+            head = templates.get_template('head.mako').render()
+            body = template.render(fs=fs, tabs=tabs, headers=self.headers, head=head)
 
             if self.headers:
                 resp = Response()
