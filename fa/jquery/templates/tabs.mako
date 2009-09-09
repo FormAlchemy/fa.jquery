@@ -1,14 +1,14 @@
 <div id="${id}">
 <ul>
-%for form in forms:
-<li><a href="#${form['id']}">${form['title']}</a></li>
+%for fs in fieldsets:
+<li><a href="#${fs['id']}">${fs['title']}</a></li>
 %endfor
 </ul>
-%for form in forms:
-<div id="${form['id']}">
-${header % form}
-${form['fs'].render()}
-${footer % form}
+%for fs in fieldsets:
+<div id="${fs['id']}">
+${header % fs}
+${fs['fs'].render()}
+${footer % fs}
 </div>
 %endfor
 </div>

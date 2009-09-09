@@ -13,7 +13,7 @@ class Tabs(object):
         ...             footer='<input type="submit" name="%(id)s" />')
         >>> tabs.append('tab2', 'The second', fs2)
         >>> tabs.tab1 = tabs.tab1.bind(obj1)
-        >>> tabs.bind(obj2, 'tab2')
+        >>> tabs.bind(obj2, tabs.tab2)
         >>> print tabs.render(selected=2) #doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
         <div id="my_tabs">
         <ul>
@@ -38,69 +38,84 @@ class Tabs(object):
             
     """
     template = templates.get_template('tabs.mako')
-    def __init__(self, id, *forms, **options):
+    def __init__(self, id, *fieldsets, **options):
         if not isinstance(id, basestring):
             raise TypeError('id must be a string. got %r' % (id,))
         self._id = id
         self._fs = []
         self._fs_dict = {}
         self._options = options
-        for form in forms:
-            if not isinstance(form, (tuple, list)) or len(form) != 3:
-                raise ValueError('A form is defined by (id, title, form) got %r' % (form,))
-            self.append(*form)
+        for fs in fieldsets:
+            if not isinstance(fs, (tuple, list)) or len(fs) != 3:
+                raise ValueError('A form is defined by (id, title, form) got %r' % (fs,))
+            self.append(*fs)
 
     def __getattr__(self, attr):
         return self._fs_dict.get(attr)
 
-    def __setattr__(self, attr, form):
+    def __setattr__(self, attr, fs):
         if attr.startswith('_'):
-            object.__setattr__(self, attr, form)
+            object.__setattr__(self, attr, fs)
         else:
-            self._fs_dict[attr] = form
+            fs.__name__ = attr
+            self._fs_dict[attr] = fs
 
     def append(self, id, title, fs):
         """add a fieldset to tabs"""
+        fs.__name__ = id
         self._fs.append((id, title))
         self._fs_dict[id] = fs
 
+    def get(self, fs):
+        if isinstance(fs, basestring):
+            fs = self._fs_dict[fs]
+        return fs
+
     def bind(self, model, *ids, **kwargs):
-        """Bind forms to model.  If no ids is provided, all forms are bound to
-        model. Session and data can be passed as kwargs."""
+        """Bind fieldsets to model.  If no ids is provided, all fieldsets are
+        bound to model. Session and data can be passed as kwargs."""
         ids = ids or self._fs_dict.keys()
         for id in ids:
-            fs = self._fs_dict[id]
-            self._fs_dict[id] = fs.bind(model, **kwargs)
+            fs = self.get(id)
+            id = fs.__name__
+            fs = fs.bind(model, **kwargs)
+            fs.__name__ = id
+            self._fs_dict[id] = fs
 
     def validate(self, *ids):
-        """Validate forms. If no ids is provided, all forms are validate."""
-        forms = []
+        """Validate fieldsets. If no ids is provided, all fieldsets are
+        validate."""
+        fieldsets = []
         ids = ids or self._fs_dict.keys()
         for id in ids:
-            forms.append(self._fs_dict[id])
-        validated = [fs.validate() for fs in forms]
+            fieldsets.append(self.get(id))
+        validated = [fs.validate() for fs in fieldsets]
         if False in validated:
             return False
         return True
 
     def sync(self, *ids):
-        """Sync forms. If no ids is provided, all forms are validate."""
+        """Sync fieldsets. If no ids is provided, all fieldsets are
+        validate."""
         ids = ids or self._fs_dict.keys()
         for id in ids:
-            self._fs_dict[id].sync()
+            self.get(id).sync()
 
     def render(self, *ids, **options):
-        forms = []
-        ids = ids or self._fs_dict.keys()
+        fieldsets = []
+        if ids:
+            ids = [self.get(id).__name__ for id in ids]
+        else:
+            ids = self._fs_dict.keys()
         for id, title in self._fs:
             if id in ids:
                 fs = self._fs_dict[id]
                 fs.focus = False
-                forms.append(dict(id=id, title=title, fs=fs))
+                fieldsets.append(dict(id=id, title=title, fs=fs))
         kwargs = dict(footer='', header='')
         kwargs.update(self._options)
         return self.template.render(id=self._id,
-                                    forms=forms,
+                                    fieldsets=fieldsets,
                                     submit=self._submit,
                                     options=options and dumps(options) or '',
                                     **kwargs)

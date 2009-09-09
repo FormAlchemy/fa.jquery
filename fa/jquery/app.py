@@ -6,8 +6,9 @@ from testing import *
 
 class Demo(object):
 
-    def __init__(self, app):
+    def __init__(self, app, headers=False):
         self.app = app
+        self.headers = headers
 
     def __call__(self, environ, start_response):
         req = Request(environ)
@@ -22,19 +23,23 @@ class Demo(object):
 
             tabs = Tabs('my_tabs',
                         ('tab1', 'My first tab', fs1),
+                        ('tab2', 'The second', fs2),
                         footer='<input type="submit" name="%(id)s" />')
-            tabs.append('tab2', 'The second', fs2)
-            tabs.tab1 = tabs.tab1.bind(obj1, data=req.POST or None)
+            tabs.bind(obj1, 'tab1', data=req.POST or None)
             tabs.bind(obj2, 'tab2', data=req.POST or None)
             if req.POST:
                 tabs.validate()
 
             template = templates.get_template('index.mako')
-            body = template.render(fs=fs, tabs=tabs, headers=req.GET.get('headers', False))
+            body = template.render(fs=fs, tabs=tabs, headers=self.headers)
 
-            req.method = 'get'
-            resp = req.get_response(self.app)
-            resp.body = resp.body.replace('<div id="demo"/>', body)
+            if self.headers:
+                resp = Response()
+                resp.body = body
+            else:
+                req.method = 'get'
+                resp = req.get_response(self.app)
+                resp.body = resp.body.replace('<div id="demo"/>', body)
         else:
             return self.app(environ, start_response)
         return resp(environ, start_response)
@@ -44,7 +49,7 @@ def make_app(global_config, **kwargs):
     import os
     from paste.urlparser import StaticURLParser
     app = StaticURLParser(os.path.join(global_config['here'], 'docs/_build/html'))
-    return Demo(app)
+    return Demo(app, headers=True)
 
 def make_demo(*args, **kwargs):
     def filter(app):
