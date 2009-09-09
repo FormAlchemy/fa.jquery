@@ -4,6 +4,8 @@ Online Demo
 This is the fa.jquery's demo page. fa.jquery use `FormAlchemy
 <http://docs.formalchemy.org>`_ and `jQuery.ui <http://jqueryui.com/>`_
 
+See :doc:`renderers` and :doc:`forms` for code example.
+
 .. raw:: html
 
   <div id="demo"></div>
