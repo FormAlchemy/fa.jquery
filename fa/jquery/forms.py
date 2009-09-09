@@ -32,7 +32,7 @@ class Tabs(object):
         </div>
         </div>
         <script type="text/javascript">
-          jQuery('#my_tabs').tabs({"selected": 2});
+          jQuery.fa.tabs('my_tabs', {"selected": 2});
         </script>
         <BLANKLINE>
             
@@ -117,6 +117,6 @@ class Tabs(object):
         return self.template.render(id=self._id,
                                     fieldsets=fieldsets,
                                     submit=self._submit,
-                                    options=options and dumps(options) or '',
+                                    options=dumps(options),
                                     **kwargs)
 

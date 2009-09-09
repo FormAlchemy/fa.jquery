@@ -5,10 +5,5 @@ ${html}
 %endif
 <${tag} id="${name}_${plugin}"></${tag}>
 <script type="text/javascript">
-jQuery(function() {
-jQuery.fa.${plugin}(
-    jQuery(document.getElementById('${name}')),
-    jQuery(document.getElementById('${name}_${plugin}')),
-    ${options});
-});
+  jQuery.fa.${plugin}('${name}', ${options});
 </script>

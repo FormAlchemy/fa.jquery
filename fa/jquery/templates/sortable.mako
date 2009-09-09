@@ -5,5 +5,5 @@
 %endfor
 </ul>
 <script type="text/javascript">
-  jQuery(function(){jQuery.fa.sortable({name:'${name}', sep:'${sep}'});});
+  jQuery.fa.sortable('${name}', {sep:'${sep}'});
 </script>

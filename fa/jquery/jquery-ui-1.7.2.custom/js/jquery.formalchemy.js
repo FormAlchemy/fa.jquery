@@ -1,26 +1,57 @@
 (function($) {
-$.extend({fa:{}});
-$.extend($.fa, {
+
+var log = function(message) {
+    try { window.console.log(message); } catch (e) {};
+}
+
+var pluginGen = function(plugin_id, func) {
+    return function(name, options) {
+        // assume plugin is launch onload
+        $(function(){
+            try {
+                var field = $(document.getElementById(name));
+                var plugin = $(document.getElementById(name+'_'+plugin_id));
+                $.fa_plugins[plugin_id](field, plugin, options);
+            } catch (e) {
+                log('Error while loading '+plugin_id+' for '+name+' - '+options+': '+e);
+            }
+        });
+    }
+}
+
+$.extend({
+  fa_plugins:{},
+  fa: {
+      extend: function(plugins) {
+        for (k in plugins) {
+            $.extend($.fa_plugins, plugins);
+            $.fa[k] = pluginGen(k, plugins[k]);
+        }
+  }
+}});
+
+$.fa.extend({
+  datepicker: function(field, plugin, options) {
+    field.datepicker(options);
+  },
   autocomplete: function(field, plugin, options) {
     plugin.remove();
     var data = options.data;
     delete options.data;
     field.autocomplete(data, options);
   },
-  selectable: function(options) {
-    var field = $(document.getElementById(options.name));
-    var selectable = $(document.getElementById(options.name+'_selectable'));
+  selectable: function(field, plugin, options) {
     var error = $(document.getElementById(options.name+'_error'));
     var initValue = function() {
       if (!options.multiple) {
           var value = field.val();
-          $('li', selectable).each(function(){
+          $('li', plugin).each(function(){
               var item = $(this);
               if (item.attr('alt') == value) { item.addClass('ui-selected'); }
           });
       } else {
           var values = field.val().split(new RegExp(options.sep, 'g'));
-          $('li', selectable).each(function(){
+          $('li', plugin).each(function(){
               var item = $(this);
               $(values).each(function(){
                   if (item.attr('alt') == this) { item.addClass('ui-selected'); }
@@ -28,7 +59,7 @@ $.extend($.fa, {
           });
       }
     }
-    selectable.selectable({
+    plugin.selectable({
         stop: function(){
           var selected = $(".ui-selected", this);
           if (!options.multiple && selected.length > 1) {
@@ -47,10 +78,9 @@ $.extend($.fa, {
     initValue();
   },
 
-  sortable: function(options) {
+  sortable: function(field, plugin, options) {
     var sep = options.sep;
-    var field = $(document.getElementById(options.name));
-    var sortable = $(document.getElementById(options.name+'_sortable'));
+    var sortable = plugin;
     sortable.sortable({
         stop: function(){
           var value = new Array();
@@ -84,14 +114,16 @@ $.extend($.fa, {
     plugin.slider(options);
   },
 
-  colorpicker: function(options) {
-    var field = $(document.getElementById(options.name));
-    var picker = $(document.getElementById(options.name+'_colors'));
-    var opts = options.options;
-    $.extend(opts, { click: function(color) { field.val(color); } });
-    picker.colorPicker(opts);
-  }
-
+  colorpicker: function(field, plugin, options) {
+    $.extend(options, {
+        click: function(color) { field.val(color); },
+        defaultColor: field.val()
+    });
+    plugin.colorPicker(options);
+  },
+  tabs: function(field, plugin, options) {field.tabs(options);}
 
 });
+
+
 })(jQuery);

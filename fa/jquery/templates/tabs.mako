@@ -13,5 +13,5 @@ ${footer % fs}
 %endfor
 </div>
 <script type="text/javascript">
-  jQuery('#${id}').tabs(${options});
+  jQuery.fa.tabs('${id}', ${options});
 </script>

@@ -17,32 +17,30 @@ def jQueryFieldRenderer(plugin, show_input=False, tag='div', renderer=fields.Tex
         >>> renderer = jQueryFieldRenderer('myplugin', option1=True, option2=['a', 'b'])
         >>> field = fs.title.set(renderer=renderer)
         >>> print field.render() #doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-        <div style="display:none;"><input id="Sample--title" name="Sample--title" type="text" /></div>
+        <div style="display:none;"><input autocomplete="off" id="Sample--title" name="Sample--title" type="text" /></div>
         <div id="Sample--title_myplugin"></div>
         <script type="text/javascript">
-        jQuery(function() {
-        jQuery.fa.myplugin(
-            jQuery(document.getElementById('Sample--title')),
-            jQuery(document.getElementById('Sample--title_myplugin')),
-            {"option2": ["a", "b"], "option1": true});
-        });
+          jQuery.fa.myplugin('Sample--title', {"option2": ["a", "b"], "option1": true});
         </script>...
 
     Then in your javascript code:
 
     .. sourcecode:: javascript
 
-        jQuery.extend(jQuery.fa, {
+       jQuery.fa.extend({
             myplugin: function(field, plugin, options) {
                 // do what you want
            }
        });
 
+    Where field is the input, plugin the empty div and options the jq_options passed to the renderer.
+
     """
+    template_name = jq_options.get('_template', 'jquery')
     class Renderer(renderer):
-        template=templates.get_template('jquery.mako')
+        template=templates.get_template('%s.mako' % template_name)
         def render(self, **kwargs):
-            html = renderer.render(self, **kwargs)
+            html = renderer.render(self, autocomplete='off', **kwargs)
             kwargs.update(jq_options)
             options = dict(
                 tag=tag,
@@ -71,7 +69,7 @@ def AutoCompleteFieldRenderer(url_or_data, renderer=fields.TextFieldRenderer, **
 
         >>> field = fs.title.set(
         ...     renderer=AutoCompleteFieldRenderer(
-        ...         ['aa', 'bb'],
+        ...         '/my/uri',
         ...         width=320,
         ...         scroll=True,
         ...         scrollHeight=300,
@@ -97,7 +95,7 @@ def SortableTokenTextFieldRenderer(sep=';', show_input=False, **jq_options):
         <li class="ui-state-default" alt="second"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>second</li>
         </ul>
         <script type="text/javascript">
-          jQuery(function(){jQuery.fa.sortable({name:'Sample--sortable', sep:';'});});
+          jQuery.fa.sortable('Sample--sortable', {sep:';'});
         </script>...
     """
     class Renderer(fields.TextFieldRenderer):
@@ -121,17 +119,24 @@ def SortableTokenTextFieldRenderer(sep=';', show_input=False, **jq_options):
 
 sortable_token = SortableTokenTextFieldRenderer
 
-def ColorPickerFieldRenderer(show_input=False, **jq_options):
+def ColorPickerFieldRenderer(**jq_options):
     """Color Picker using http://www.syronex.com/software/jquery-color-picker:
 
     .. sourcecode:: python
 
         >>> from testing import fs
         >>> print fs.color.render() #doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-        <input type="hidden" value="" id="Sample--color" name="Sample--color" />
+        <div style="display:none;"><input autocomplete="off" id="Sample--color" name="Sample--color" type="text" /></div>
+        <div id="Sample--color_colorpicker"></div>
+        <script type="text/javascript">
+          jQuery.fa.colorpicker('Sample--color', {"color": ["#FFFFFF", ..., "#FF0096", "#B02B2C", "#000000"]});
+        </script>
+        <BLANKLINE>
+        
+        <div style="display:none;"><input autocomplete="off" id="Sample--color" name="Sample--color" type="text" /></div>
         <div id="Sample--color_colors"></div>
         <script type="text/javascript">
-          jQuery.fa.colorpicker({name:'Sample--color', options:{"color": ["#FFFFFF", ..., "#FF0096", "#B02B2C", "#000000"]}});
+          jQuery.fa.colorpicker('Sample--color', {"color": ["#FFFFFF", ..., "#FF0096", "#B02B2C", "#000000"]});
         </script>...
 
     """
@@ -141,25 +146,7 @@ def ColorPickerFieldRenderer(show_input=False, **jq_options):
             "#006E2E", "#C3D9FF", "#4096EE", "#356AA0", "#FF0096", "#B02B2C",
             "#000000"
             ]
-    color = jq_options['color']
-    class Renderer(fields.TextFieldRenderer):
-        template=templates.get_template('colorpicker.mako')
-        def render_readonly(self):
-            return '<span style="background-color:%s">&nbsp;</span>' % self._value
-        def render(self, **kwargs):
-            value=self._value or ''
-            try:
-                jq_options['defaultColor'] = color.index(value)
-            except:
-                pass
-            kwargs.update(
-                name=self.name,
-                value=value,
-                show_input=show_input,
-                jq_options=dumps(jq_options),
-            )
-            return self.template.render(**kwargs)
-    return Renderer
+    return jQueryFieldRenderer('colorpicker', **jq_options)
 
 colorpicker = ColorPickerFieldRenderer
 
@@ -172,7 +159,7 @@ class DateFieldRenderer(fields.DateFieldRenderer):
         >>> print fs.date.render() #doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
         <input type="text" autocomplete="off" size="10" value="" id="Sample--date" name="Sample--date" />
         <script type="text/javascript">
-          jQuery(document.getElementById('Sample--date')).datepicker({"dateFormat": "yy-mm-dd"});
+          jQuery.fa.datepicker('Sample--date', {"dateFormat": "yy-mm-dd"});
         </script>...
 
     """
@@ -232,9 +219,6 @@ class SelectableFieldRenderer(fields.SelectFieldRenderer):
         >>> from testing import fs
         >>> print fs.selectable.render() #doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
         <input type="hidden" value="" id="Sample--selectable" name="Sample--selectable" />
-        <div id="Sample--selectable_error" title="Error" style="display:none">
-          <p>You can only select one value</p>
-        </div>
         <ul id="Sample--selectable_selectable" class="fa_selectable">
         <li class="ui-widget-content" alt="a">a</li>
         <li class="ui-widget-content" alt="b">b</li>
@@ -244,7 +228,7 @@ class SelectableFieldRenderer(fields.SelectFieldRenderer):
         <li class="ui-widget-content" alt="f">f</li>
         </ul>
         <script type="text/javascript">
-          jQuery.fa.selectable({"multiple": false, "name": "Sample--selectable"});
+          jQuery.fa.selectable('Sample--selectable', {"multiple": false});
         </script>...
 
     """
@@ -256,8 +240,6 @@ class SelectableFieldRenderer(fields.SelectFieldRenderer):
         value = self._value or ''
         if callable(options):
             L = fields._normalized_options(options(self.field.parent))
-            if not self.field.is_required() and not self.field.is_collection:
-                L.insert(0, self.field._null_option)
         else:
             L = list(options)
         if len(L) > 0:
@@ -266,7 +248,7 @@ class SelectableFieldRenderer(fields.SelectFieldRenderer):
             else:
                 L = [fields._stringify(k) for k in L]
                 L = [(k, k) for k in L]
-        jq_options=dict(name=name, multiple=self.multiple)
+        jq_options=dict(multiple=self.multiple)
         if self.multiple:
             jq_options['sep'] = self.sep
         return self.template.render(name=name, value=value, options=L, jq_options=dumps(jq_options))
@@ -285,7 +267,7 @@ class SelectableTokenFieldRenderer(SelectableFieldRenderer):
         <input type="hidden" value="" id="Sample--selectable" name="Sample--selectable" />
         ...
         <script type="text/javascript">
-          jQuery.fa.selectable({"multiple": true, "name": "Sample--selectable", "sep": ";"});
+          jQuery.fa.selectable('Sample--selectable', {"multiple": true, "sep": ";"});
         </script>...
     """
     multiple = True
