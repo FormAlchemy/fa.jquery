@@ -61,7 +61,7 @@ jQuery.extend(jQuery.fa, {
     var field = $(document.getElementById(options.name));
     var slider = $(document.getElementById(options.name+'_slider'));
     slider.slider({
-        value: 0,
+        value: parseInt(field.val()),
         stop:  function(event, ui) {
           field.val(slider.slider('value'));
         }
