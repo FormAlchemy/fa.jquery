@@ -44,7 +44,7 @@ class Demo(object):
             else:
                 req.method = 'get'
                 resp = req.get_response(self.app)
-                resp.body = resp.body.replace('<div id="demo"/>', body)
+                resp.body = resp.body.replace('<div id="demo"></div>', body)
         else:
             return self.app(environ, start_response)
         return resp(environ, start_response)
