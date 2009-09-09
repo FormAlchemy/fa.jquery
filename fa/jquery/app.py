@@ -16,6 +16,8 @@ class Demo(object):
             resp = Response()
             resp.body = '\n'.join(['Ajax','Borax','Corax', 'Dorax','Manix'])
         elif req.path.endswith('/fa.jquery/demo.html'):
+            script_name = req.environ.get('HTTP_X_FORWARDED_PATH', '')
+            Form.ajax.set(renderer=AutoCompleteFieldRenderer(script_name+'/fa.jquery/ajax_values'))
             obj = Form.gen_model()
             obj.context['sortable'] = '1;2;3'
             obj.context['selectable'] = 'f'
