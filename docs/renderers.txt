@@ -1,4 +1,4 @@
-:mod:`fa.jquery.renderers` -- Renderers
+:mod:`~fa.jquery.renderers` -- Renderers
 =================================================
 
 This is the predefined renderers. You can have a look at the :doc:`demo`.

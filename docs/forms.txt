@@ -1,4 +1,4 @@
-:mod:`fa.jquery.forms` -- Forms
+:mod:`~fa.jquery.forms` -- Forms
 =================================================
 
 .. automodule:: fa.jquery.forms
