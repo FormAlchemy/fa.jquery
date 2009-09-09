@@ -22,8 +22,10 @@ class ISample(interface.Interface):
     ajax = schema.TextLine(title=u'Auto complete with an ajax request')
     color = schema.TextLine(title=u'Color picker')
     selectable = schema.TextLine(title=u'Selectable')
-    selectable_token = schema.TextLine(title=u'Selectable token')
-    sortable = schema.TextLine(title=u'Sortable token')
+    selectable_token = schema.TextLine(title=u'Selectable token - '
+                              'Save values as a string separate by a semi comma')
+    sortable = schema.TextLine(title=u'Sortable token - '
+                              'Save values as a string separate by a semi comma')
     slider = schema.Int(title=u'Integer as slider')
     date = schema.Date(title=u'Date')
     datetime = schema.Datetime(title=u'Datetime')

@@ -20,11 +20,14 @@ def jQueryFieldRenderer(plugin, show_input=False, tag='div', renderer=fields.Tex
         <div style="display:none;"><input id="Sample--title" name="Sample--title" type="text" /></div>
         <div id="Sample--title_myplugin"></div>
         <script type="text/javascript">
-          jQuery.fa.myplugin(jQuery(document.getElementById('Sample--title')),
-                             jQuery(document.getElementById('Sample--title_myplugin')),
-                             {"option2": ["a", "b"], "option1": true});
+        jQuery(function() {
+        jQuery.fa.myplugin(
+            jQuery(document.getElementById('Sample--title')),
+            jQuery(document.getElementById('Sample--title_myplugin')),
+            {"option2": ["a", "b"], "option1": true});
+        });
         </script>...
-        
+
     Then in your javascript code:
 
     .. sourcecode:: javascript
@@ -61,14 +64,6 @@ def AutoCompleteFieldRenderer(url_or_data, renderer=fields.TextFieldRenderer, **
 
         >>> from testing import fs
         >>> field = fs.title.set(renderer=AutoCompleteFieldRenderer(['aa', 'bb']))
-        >>> print field.render() #doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-        <input id="Sample--title" name="Sample--title" type="text" />
-        <script type="text/javascript">
-          (function($) {
-          var autocomplete = $(document.getElementById('Sample--title'));
-          autocomplete.autocomplete(["aa", "bb"]);
-          })(jQuery);
-        </script>
 
     With more advanced options:
 
@@ -79,31 +74,12 @@ def AutoCompleteFieldRenderer(url_or_data, renderer=fields.TextFieldRenderer, **
         ...         ['aa', 'bb'],
         ...         width=320,
         ...         scroll=True,
-        ...         scrollHeight=300, 
+        ...         scrollHeight=300,
         ...         ))
-        >>> print field.render() #doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-        <input id="Sample--title" name="Sample--title" type="text" />
-        <script type="text/javascript">
-          (function($) {
-          var autocomplete = $(document.getElementById('Sample--title'));
-          autocomplete.autocomplete(["aa", "bb"], {"width": 320, "scroll": true, "scrollHeight": 300});
-          })(jQuery);
-        </script>
-            
+
     """
-    class Renderer(renderer):
-        template=templates.get_template('autocomplete.mako')
-        def render(self, options=None, **kwargs):
-            html = renderer.render(self, **kwargs)
-            data = url_or_data or options or []
-            kwargs.update(
-                html=html,
-                name=self.name,
-                data=dumps(data),
-                jq_options=jq_options and dumps(jq_options) or '',
-            )
-            return self.template.render(**kwargs)
-    return Renderer
+    jq_options.update(data=url_or_data, show_input=True)
+    return jQueryFieldRenderer('autocomplete', renderer=renderer, **jq_options)
 
 autocomplete = AutoCompleteFieldRenderer
 
@@ -121,7 +97,7 @@ def SortableTokenTextFieldRenderer(sep=';', show_input=False, **jq_options):
         <li class="ui-state-default" alt="second"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>second</li>
         </ul>
         <script type="text/javascript">
-          jQuery.fa.sortable({name:'Sample--sortable', sep:';'});
+          jQuery(function(){jQuery.fa.sortable({name:'Sample--sortable', sep:';'});});
         </script>...
     """
     class Renderer(fields.TextFieldRenderer):
@@ -157,7 +133,7 @@ def ColorPickerFieldRenderer(show_input=False, **jq_options):
         <script type="text/javascript">
           jQuery.fa.colorpicker({name:'Sample--color', options:{"color": ["#FFFFFF", ..., "#FF0096", "#B02B2C", "#000000"]}});
         </script>...
-            
+
     """
     if 'color' not in jq_options:
         jq_options['color'] = [
@@ -198,7 +174,7 @@ class DateFieldRenderer(fields.DateFieldRenderer):
         <script type="text/javascript">
           jQuery(document.getElementById('Sample--date')).datepicker({"dateFormat": "yy-mm-dd"});
         </script>...
-        
+
     """
     template = templates.get_template('date.mako')
     jq_options = dict(dateFormat='yy-mm-dd')
@@ -235,23 +211,16 @@ class DateTimeFieldRenderer(DateFieldRenderer, fields.TimeFieldRenderer):
 
 datetime = DateTimeFieldRenderer
 
-class SliderFieldRenderer(fields.IntegerFieldRenderer):
+def SliderFieldRenderer(min=0, max=100, show_value=True, **jq_options):
     """Fill an integer field using http://jqueryui.com/demos/slider/:
 
     .. sourcecode:: python
 
         >>> from testing import fs
-        >>> print fs.slider.render() #doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-        <input type="hidden" value="0" id="Sample--slider" name="Sample--slider" />
-        <div id="Sample--slider_slider"></div>
-        <script type="text/javascript">
-          jQuery.fa.slider({name:'Sample--slider'});
-        </script>...
+        >>> field = fs.slider.set(renderer=SliderFieldRenderer(min=10, max=150))
     """
-    template = templates.get_template('slider.mako')
-    def render(self, **kwargs):
-        value = self._value or 0
-        return self.template.render(name=self.name, value=value)
+    jq_options.update(min=min, max=max, show_value=show_value)
+    return jQueryFieldRenderer('slider', renderer=fields.IntegerFieldRenderer, **jq_options)
 
 slider = SliderFieldRenderer
 

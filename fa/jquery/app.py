@@ -19,6 +19,7 @@ class Demo(object):
             script_name = req.environ.get('HTTP_X_FORWARDED_PATH', '')
             Form.ajax.set(renderer=AutoCompleteFieldRenderer(script_name+'/fa.jquery/ajax_values'))
             obj = Form.gen_model()
+            obj.context['slider'] = '10'
             obj.context['sortable'] = '1;2;3'
             obj.context['selectable'] = 'f'
             obj.context['selectable_token'] = 'b;c'

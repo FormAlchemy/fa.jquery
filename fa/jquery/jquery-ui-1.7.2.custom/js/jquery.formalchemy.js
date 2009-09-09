@@ -1,5 +1,12 @@
-jQuery.extend({fa:{}});
-jQuery.extend(jQuery.fa, {
+(function($) {
+$.extend({fa:{}});
+$.extend($.fa, {
+  autocomplete: function(field, plugin, options) {
+    plugin.remove();
+    var data = options.data;
+    delete options.data;
+    field.autocomplete(data, options);
+  },
   selectable: function(options) {
     var field = $(document.getElementById(options.name));
     var selectable = $(document.getElementById(options.name+'_selectable'));
@@ -27,8 +34,6 @@ jQuery.extend(jQuery.fa, {
           if (!options.multiple && selected.length > 1) {
             selected.removeClass('ui-selected');
             initValue();
-            dialog = error.clone();
-            dialog.dialog({height: 140,modal: true});
           } else {
             var value = new Array();
             selected.each(function(){value.push($(this).attr('alt'));});
@@ -57,15 +62,26 @@ jQuery.extend(jQuery.fa, {
     sortable.disableSelection();
   },
 
-  slider: function(options) {
-    var field = $(document.getElementById(options.name));
-    var slider = $(document.getElementById(options.name+'_slider'));
-    slider.slider({
+  slider: function(field, plugin, options) {
+    if (options.show_value) {
+        var value = plugin.attr('id')+'_value';
+        plugin.before('<label id="'+value+'">'+field.val()+'</label>');
+        value = $('#'+value);
+        $.extend(options, {
+            slide: function(event, ui) {
+              value.html(plugin.slider('value'));
+            }
+        });
+    }
+    $.extend(options, {
         value: parseInt(field.val()),
         stop:  function(event, ui) {
-          field.val(slider.slider('value'));
+          field.val(plugin.slider('value'));
+          if (options.show_value)
+              value.html(plugin.slider('value'));
         }
     });
+    plugin.slider(options);
   },
 
   colorpicker: function(options) {
@@ -78,3 +94,4 @@ jQuery.extend(jQuery.fa, {
 
 
 });
+})(jQuery);
