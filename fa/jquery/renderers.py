@@ -211,7 +211,11 @@ class DateTimeFieldRenderer(DateFieldRenderer, fields.TimeFieldRenderer):
         return h.content_tag('span', DateFieldRenderer.render(self, **kwargs) + ' ' + fields.TimeFieldRenderer._render(self, **kwargs))
 
     def _serialized_value(self):
-        return DateFieldRenderer._serialized_value(self) + ' ' + fields.TimeFieldRenderer._serialized_value(self)
+        date = DateFieldRenderer._serialized_value(self)
+        if date:
+            return date + ' ' + fields.TimeFieldRenderer._serialized_value(self)
+        else:
+            return ''
 
 datetime = DateTimeFieldRenderer
 

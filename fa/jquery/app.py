@@ -28,7 +28,10 @@ class Demo(object):
             tabs.bind(obj1, 'tab1', data=req.POST or None)
             tabs.bind(obj2, 'tab2', data=req.POST or None)
             if req.POST:
-                tabs.validate()
+                if fs.validate():
+                    fs.sync()
+                if tabs.validate():
+                    tabs.sync()
 
             template = templates.get_template('index.mako')
             body = template.render(fs=fs, tabs=tabs, headers=self.headers)
