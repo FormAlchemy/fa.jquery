@@ -10,7 +10,9 @@ var pluginGen = function(plugin_id, func) {
         $(function(){
             try {
                 var field = $(document.getElementById(name));
-                var plugin = $(document.getElementById(name+'_'+plugin_id));
+                var plugin = document.getElementById(name+'_'+plugin_id);
+                if (plugin)
+                    plugin = $(plugin);
                 $.fa_plugins[plugin_id](field, plugin, options);
             } catch (e) {
                 log('Error while loading '+plugin_id+' for '+name+' - '+options+': '+e);

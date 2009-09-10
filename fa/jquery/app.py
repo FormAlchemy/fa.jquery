@@ -39,7 +39,8 @@ class Demo(object):
 
             template = templates.get_template('index.mako')
             head = templates.get_template('head.mako').render()
-            body = template.render(fs=fs, tabs=tabs, headers=self.headers, head=head)
+            body = template.render(fs=fs, tabs=tabs, headers=self.headers,
+                                   head=head, mim=req.GET.get('mim', False))
 
             if self.headers:
                 resp = Response()
