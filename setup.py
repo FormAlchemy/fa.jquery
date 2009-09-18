@@ -1,12 +1,19 @@
 from setuptools import setup, find_packages
 import os
 
-version = '0.2'
+version = '0.3'
+
+long_description = open("README.txt").read()
+long_description += """
+CHANGES
+==========
+"""
+long_description += open("CHANGES.txt").read()
 
 setup(name='fa.jquery',
       version=version,
       description="jQuery widgets for formalchemy",
-      long_description=open("README.txt").read(),
+      long_description=long_description,
       # Get more strings from http://www.python.org/pypi?%3Aaction=list_classifiers
       classifiers=[
         "Programming Language :: Python",

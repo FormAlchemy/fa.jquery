@@ -1,0 +1,6 @@
+0.3
+---
+
+- fix MANIFEST.in to include mako templates in distribution.
+
+
