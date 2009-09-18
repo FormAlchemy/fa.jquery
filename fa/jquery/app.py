@@ -32,11 +32,10 @@ class Demo(object):
             tabs.bind(obj1, 'tab1', data=req.POST or None)
             tabs.bind(obj2, 'tab2', data=req.POST or None)
             accordion = Accordion('my_accordion',
-                        ('tab1', 'My first section', fs1),
-                        ('tab2', 'The second', fs2),
+                        ('tab1', 'My first section', fs3),
+                        ('tab2', 'The second', fs4),
                         footer='<input type="submit" name="%(id)s" />')
-            accordion.bind(obj1, 'tab1', data=req.POST or None)
-            accordion.bind(obj2, 'tab2', data=req.POST or None)
+            accordion.bind(obj3, data=req.POST or None)
             if req.POST:
                 if fs.validate():
                     fs.sync()

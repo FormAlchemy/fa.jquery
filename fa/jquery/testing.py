@@ -12,10 +12,19 @@ class ITab2(interface.Interface):
     title = schema.TextLine(title=u'title')
     description = schema.TextLine(title=u'description')
 
+class IAccordion(interface.Interface):
+    field1 = schema.TextLine(title=u'field 1')
+    field2 = schema.TextLine(title=u'field 2')
+
 fs1 = FieldSet(ITab1)
 obj1 = fs1.gen_model()
 fs2 = FieldSet(ITab2)
 obj2 = fs2.gen_model()
+fs3 = FieldSet(IAccordion)
+fs3.configure(include=[fs3.field1])
+obj3 = fs3.gen_model()
+fs4 = FieldSet(IAccordion)
+fs4.configure(include=[fs4.field2])
 
 class ISample(interface.Interface):
     title = schema.TextLine(title=u'Autocomplete')
