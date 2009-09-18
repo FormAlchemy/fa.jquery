@@ -120,3 +120,8 @@ class Tabs(object):
                                     options=dumps(options),
                                     **kwargs)
 
+class Accordion(Tabs):
+    """Work like :class:`~fa.jquery.forms.Tabs` but use
+    http://jqueryui.com/demos/accordion/
+    """
+    template = templates.get_template('accordion.mako')

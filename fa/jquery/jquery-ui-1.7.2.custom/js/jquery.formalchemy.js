@@ -123,7 +123,8 @@ $.fa.extend({
     });
     plugin.colorPicker(options);
   },
-  tabs: function(field, plugin, options) {field.tabs(options);}
+  tabs: function(field, plugin, options) {field.tabs(options);},
+  accordion: function(field, plugin, options) {field.accordion(options);}
 
 });
 

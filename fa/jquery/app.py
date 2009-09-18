@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from webob import Request, Response
 from renderers import templates
-from forms import Tabs
+from forms import Tabs, Accordion
 from testing import *
 
 class Demo(object):
@@ -31,15 +31,24 @@ class Demo(object):
                         footer='<input type="submit" name="%(id)s" />')
             tabs.bind(obj1, 'tab1', data=req.POST or None)
             tabs.bind(obj2, 'tab2', data=req.POST or None)
+            accordion = Accordion('my_accordion',
+                        ('tab1', 'My first section', fs1),
+                        ('tab2', 'The second', fs2),
+                        footer='<input type="submit" name="%(id)s" />')
+            accordion.bind(obj1, 'tab1', data=req.POST or None)
+            accordion.bind(obj2, 'tab2', data=req.POST or None)
             if req.POST:
                 if fs.validate():
                     fs.sync()
                 if tabs.validate():
                     tabs.sync()
+                if accordion.validate():
+                    accordion.sync()
 
             template = templates.get_template('index.mako')
             head = templates.get_template('head.mako').render()
-            body = template.render(fs=fs, tabs=tabs, headers=self.headers,
+            body = template.render(fs=fs, tabs=tabs, accordion=accordion,
+                                   headers=self.headers,
                                    head=head, mim=req.GET.get('mim', False))
 
             if self.headers:

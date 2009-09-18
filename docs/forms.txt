@@ -9,4 +9,10 @@ Tabs
 .. autoclass:: fa.jquery.forms.Tabs
     :members:
 
+Accordion
+--------------------------
+
+.. autoclass:: fa.jquery.forms.Accordion
+    :members:
+
 

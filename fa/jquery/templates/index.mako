@@ -29,8 +29,14 @@
       </p>
       <h2>Forms</h2>
       <p>
+      <h3>Tabs</h3>
       <div>&nbsp;</div>
       ${tabs.render()}
+      </p>
+      <p>
+      <h3>Accordion</h3>
+      <div>&nbsp;</div>
+      ${accordion.render()}
       </p>
     </form>
 </div>
