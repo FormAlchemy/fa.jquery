@@ -1,3 +1,4 @@
+.fa_field .ui-state-error {margin:0.3em 0em; padding:0.2em; width:20em;}
 .fa_selectable .ui-selecting { background: #DFEFFC; }
 .fa_selectable .ui-selected { background: #C3D9FF; color: #2E6E9E; }
 .fa_selectable { list-style-type: none; margin: 0; padding: 0; width: 60%; }

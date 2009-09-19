@@ -1,8 +1,12 @@
 # -*- coding: utf-8 -*-
 from webob import Request, Response
 from renderers import templates
+from formalchemy import config
+from utils import TemplateEngine
 from forms import Tabs, Accordion
 from testing import *
+
+config.engine = TemplateEngine()
 
 class Demo(object):
 

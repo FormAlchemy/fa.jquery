@@ -97,7 +97,8 @@ $.fa.extend({
   slider: function(field, plugin, options) {
     if (options.show_value) {
         var value = plugin.attr('id')+'_value';
-        plugin.before('<label id="'+value+'">'+field.val()+'</label>');
+        var widget = $(plugin.parents('div.fa_field')[0])
+        $('div.label', widget).append('<label id="'+value+'">'+field.val()+'</label>');
         value = $('#'+value);
         $.extend(options, {
             slide: function(event, ui) {

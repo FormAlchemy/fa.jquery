@@ -17,15 +17,16 @@
 
 <style type="text/css">
   form label {font-weight:bold;}
-  form div {margin:1em;}
+  form .fa_field {margin:1em 0.3em;}
+  form {width:50%;}
   .ui-widget {font-size:1em;font-family:'Lucida Grande','Lucida Sans Unicode','Geneva','Verdana',sans-serif;}
 </style>
-<div class="ui-widget">
+<div>
     <form action="" method="POST">
       <h2>Renderers</h2>
       <p>
       ${fs.render()}
-      <div><input type="submit" /></div>
+      <div class="ui-widget"><input type="submit" /></div>
       </p>
       <h2>Forms</h2>
       <p>

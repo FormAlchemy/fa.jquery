@@ -24,23 +24,20 @@ Else you can choose what to include:
 
 And set your own css:
 
-.. sourcecode:: html
-
-    <style type="text/css">
-      .fa_selectable .ui-selecting { background: #DFEFFC; }
-      .fa_selectable .ui-selected { background: #C3D9FF; color: #2E6E9E; }
-      .fa_selectable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
-      .fa_selectable li { margin: 3px; padding: 0.4em; font-size: 1.4em; height: 18px; cursor:pointer;}
-      .fa_sortable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
-      .fa_sortable li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px; cursor:move;}
-      .fa_sortable li span { position: absolute; margin-left: -1.3em; }
-    </style>
+.. literalinclude:: ../fa/jquery/jquery-ui-1.7.2/css/jquery.formalchemy.css
+   :language: css
 
 You can update FormAlchemy's default_renderers to always use fa.jquery::
 
     >>> from formalchemy import Fieldset
     >>> from fa.jquery import renderers as jquery
     >>> Fieldset.default_renderers = jquery.default_renderers
+
+You can change the template engine to have more friendly forms::
+
+    >>> from formalchemy import config
+    >>> from fa.jquery.utils import TemplateEngine
+    >>> config.engine = TemplateEngine()
 
 That's it. You are ready to use you :mod:`~fa.jquery.forms` and :mod:`~fa.jquery.renderers`.
 

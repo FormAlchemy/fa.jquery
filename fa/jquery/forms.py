@@ -21,14 +21,8 @@ class Tabs(object):
             <li><a href="#tab2">The second</a></li>
         </ul>
         <div id="tab1">...
-            <div>
-              <label class="field_req" for="Tab1--title">title</label>
-              <input id="Tab1--title" name="Tab1--title" type="text" />
-            </div>...
-            <input type="submit" name="tab1" />
         </div>
         <div id="tab2">...
-            <input type="submit" name="tab2" />
         </div>
         </div>
         <script type="text/javascript">
