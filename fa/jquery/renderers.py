@@ -38,7 +38,7 @@ def jQueryFieldRenderer(plugin, show_input=False, tag='div', renderer=fields.Tex
     """
     template_name = jq_options.get('_template', 'jquery')
     class Renderer(renderer):
-        template=templates.get_template('%s.mako' % template_name)
+        template=templates.get_template('/renderers/%s.mako' % template_name)
         def render(self, **kwargs):
             html = renderer.render(self, autocomplete='off', **kwargs)
             kwargs.update(jq_options)
@@ -99,7 +99,7 @@ def SortableTokenTextFieldRenderer(sep=';', show_input=False, **jq_options):
         </script>...
     """
     class Renderer(fields.TextFieldRenderer):
-        template=templates.get_template('sortable.mako')
+        template=templates.get_template('/renderers/sortable.mako')
         def render_readonly(self):
             return ', '.join(self._value.split(sep))
         def render(self, **kwargs):
@@ -163,7 +163,7 @@ class DateFieldRenderer(fields.DateFieldRenderer):
         </script>...
 
     """
-    template = templates.get_template('date.mako')
+    template = templates.get_template('/renderers/date.mako')
     jq_options = dict(dateFormat='yy-mm-dd')
     def render(self, **kwargs):
         value = self._value or ''
@@ -184,7 +184,7 @@ date = DateFieldRenderer
 class DateTimeFieldRenderer(DateFieldRenderer, fields.TimeFieldRenderer):
     """Use http://jqueryui.com/demos/datepicker/"""
     format = '%Y-%m-%d %H:%M:%S'
-    template = templates.get_template('date.mako')
+    template = templates.get_template('/renderers/date.mako')
     jq_options = dict(dateFormat='yy-mm-dd')
     def render(self, **kwargs):
         return h.content_tag('span', DateFieldRenderer.render(self, **kwargs) + ' ' + fields.TimeFieldRenderer._render(self, **kwargs))
@@ -234,7 +234,7 @@ class SelectableFieldRenderer(fields.SelectFieldRenderer):
     """
     multiple=False
     sep=';'
-    template = templates.get_template('selectable.mako')
+    template = templates.get_template('/renderers/selectable.mako')
     def render(self, options, **kwargs):
         name = self.name
         value = self._value or ''

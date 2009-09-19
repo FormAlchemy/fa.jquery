@@ -37,7 +37,7 @@ class Tabs(object):
         <BLANKLINE>
             
     """
-    template = templates.get_template('tabs.mako')
+    template = templates.get_template('/forms/tabs.mako')
     def __init__(self, id, *fieldsets, **options):
         if not isinstance(id, basestring):
             raise TypeError('id must be a string. got %r' % (id,))
@@ -124,4 +124,4 @@ class Accordion(Tabs):
     """Work like :class:`~fa.jquery.forms.Tabs` but use
     http://jqueryui.com/demos/accordion/
     """
-    template = templates.get_template('accordion.mako')
+    template = templates.get_template('/forms/accordion.mako')
