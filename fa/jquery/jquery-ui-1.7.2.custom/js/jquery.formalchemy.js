@@ -4,6 +4,13 @@ var log = function(message) {
     try { window.console.log(message); } catch (e) {};
 }
 
+$.fn.extend({
+    getFaField: function(name) {
+        var id = $(this).attr('id').split('-', 2).join('-');
+        return $('#'+id+'-'+name);
+    }
+});
+
 var pluginGen = function(plugin_id, func) {
     return function(name, options) {
         // assume plugin is launch onload
