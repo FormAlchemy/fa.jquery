@@ -44,6 +44,18 @@ class Tabs(object):
                 raise ValueError('A form is defined by (id, title, form) got %r' % (fs,))
             self.append(*fs)
 
+    def jsonify(self):
+        fields = []
+        for fs in self._fs:
+            for f in fs.render_fields.values():
+                fields.append((f.key, f.model_value))
+        return dict(fields)
+
+    @property
+    def model(self):
+        if self._fs:
+            return self._fs[0].model
+
     def __getattr__(self, attr):
         return self._fs_dict.get(attr)
 
