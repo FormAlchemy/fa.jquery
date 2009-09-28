@@ -13,10 +13,19 @@ class TemplateEngine(BaseTemplateEngine):
         options = dict(input_encoding='utf-8', output_encoding='utf-8')
         options.update(kwargs)
         dirnames = list(dirnames)
+        try:
+            from pylons import config
+        except ImportError:
+            pass
+        else:
+            dirnames[0:0] = config['pylons.paths']['templates']
         dirnames.append(dirname)
         self.templates = TemplateLookup(dirnames, **options)
 
     def render(self, name, **kwargs):
-        template = self.templates.get_template('/forms/%s.mako' % name)
+        name = name.strip('/')
+        if not name.endswith('.mako'):
+            name = '%s.mako' % name
+        template = self.templates.get_template('/forms/%s' % name)
         return literal(template.render(**kwargs))
 

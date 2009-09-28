@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 <%
+from formalchemy import fatypes
 _ = F_
 _focus_rendered = False
 %>\
@@ -18,6 +19,9 @@ _focus_rendered = False
   %if field.requires_label:
     <div class="fa_field ui-widget">
       <div class="label">
+        %if isinstance(field.type, fatypes.Boolean):
+          ${field.render()|n}
+        %endif
         <label class="${field.is_required() and 'field_req' or 'field_opt'}" for="${field.renderer.name}">
           ${[field.label_text, fieldset.prettify(field.key)][int(field.label_text is None)]|h}
         </label>
@@ -34,7 +38,9 @@ _focus_rendered = False
         % endfor
         </div>
       %endif
-      ${field.render()|n}
+      %if not isinstance(field.type, fatypes.Boolean):
+        ${field.render()|n}
+      %endif
     </div>
     %if (fieldset.focus == field or fieldset.focus is True) and not _focus_rendered:
       %if not field.is_readonly():
