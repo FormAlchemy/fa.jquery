@@ -31,6 +31,7 @@ setup(name='fa.jquery',
       install_requires=[
           'setuptools',
           'FormAlchemy>=1.2.3',
+          'WebHelpers',
           'simplejson',
           'mako',
       ],
