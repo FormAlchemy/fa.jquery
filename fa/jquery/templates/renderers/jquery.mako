@@ -1,3 +1,8 @@
+%for resource in resources:
+<script type="text/javascript">
+  jQuery.fa.add_resource("${resource}");
+</script>
+%endfor
 %if show_input:
 ${html}
 %else:

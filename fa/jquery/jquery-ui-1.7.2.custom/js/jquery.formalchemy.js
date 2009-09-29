@@ -7,9 +7,11 @@ var log = function(message) {
 $.fn.extend({
     getFaField: function(name) {
         var id = $(this).attr('id').split('-', 2).join('-');
-        return $('#'+id+'-'+name);
+        var field = document.getElementById(id+'-'+name);
+        return $(field);
     }
 });
+
 
 var pluginGen = function(plugin_id, func) {
     return function(name, options) {
@@ -30,14 +32,44 @@ var pluginGen = function(plugin_id, func) {
 
 $.extend({
   fa_plugins:{},
+  fa_resources:[],
   fa: {
       extend: function(plugins) {
         for (k in plugins) {
             $.extend($.fa_plugins, plugins);
             $.fa[k] = pluginGen(k, plugins[k]);
         }
+      },
+      add_resource: function(url) {
+        if (!url || $.fa_resources.indexOf(url) > -1)
+            return;
+        $.fa_resources.push(url);
+        var head = document.getElementsByTagName("head")[0] || document.documentElement;
+        if (/\.js$/.test(url)) {
+            if ($.browser.safari) {
+                document.write('<scr'+'ipt type="text\/javascr'+'ipt" src="'+url+'"><\/scr'+'ipt>');
+            } else {
+                var obj = document.createElement("script");
+                obj.src = url;
+                head.insertBefore(obj, head.firstChild);
+            }
+        } else if (/\.css$/.test(url)) {
+            var obj = document.createElement("link");
+            obj.setAttribute('type', 'text/css');
+            obj.setAttribute('rel', 'stylesheet');
+            obj.setAttribute('href', url);
+            head.insertBefore(obj, head.firstChild);
+        } else {
+            log('Invalid resource url: '+url);
+        }
+     }
+  },
+  getFaField: function(name) {
+      field = $('input[id$="'+name+'"]');
+      if (field.length == 1)
+          return field;
   }
-}});
+});
 
 $.fa.extend({
   datepicker: function(field, plugin, options) {

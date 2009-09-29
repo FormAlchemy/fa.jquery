@@ -8,7 +8,7 @@ from formalchemy import config
 
 from utils import templates
 
-def jQueryFieldRenderer(plugin, show_input=False, tag='div', renderer=fields.TextFieldRenderer, **jq_options):
+def jQueryFieldRenderer(plugin, show_input=False, tag='div', renderer=fields.TextFieldRenderer, resources=[], **jq_options):
     """Extending jQuery.fa:
 
     .. sourcecode:: python
@@ -48,6 +48,7 @@ def jQueryFieldRenderer(plugin, show_input=False, tag='div', renderer=fields.Tex
                 plugin=plugin,
                 name=self.name,
                 show_input=show_input,
+                resources=resources,
                 options=dumps(kwargs)
             )
             return self.template.render(**options)

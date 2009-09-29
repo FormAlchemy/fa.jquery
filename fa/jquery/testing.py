@@ -38,6 +38,7 @@ class ISample(interface.Interface):
     slider = schema.Int(title=u'Integer as slider')
     date = schema.Date(title=u'Date')
     datetime = schema.Datetime(title=u'Datetime')
+    resources  = schema.TextLine(title=u'Plugin with resources')
 
 Form = FieldSet(ISample)
 Form.title.set(renderer=AutoCompleteFieldRenderer(['aa', 'bb']))
@@ -47,6 +48,8 @@ Form.slider.set(renderer=SliderFieldRenderer)
 Form.selectable.set(renderer=SelectableFieldRenderer, options=[l for l in 'abcdef'])
 Form.selectable_token.set(renderer=SelectableTokenFieldRenderer, options=[l for l in 'abcdef'])
 Form.sortable.set(renderer=SortableTokenTextFieldRenderer)
+Form.resources.set(renderer=jQueryFieldRenderer('test_resources',
+                                                resources=['/jquery/fa.resource.js','/jquery/fa.resource.css']))
 
 obj = Form.gen_model()
 obj.context['sortable'] = 'fisrt;second'
