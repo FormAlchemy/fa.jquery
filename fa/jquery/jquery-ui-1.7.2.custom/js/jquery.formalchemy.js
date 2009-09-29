@@ -50,14 +50,15 @@ $.extend({
                 document.write('<scr'+'ipt type="text\/javascr'+'ipt" src="'+url+'"><\/scr'+'ipt>');
             } else {
                 var obj = document.createElement("script");
+                obj.type= 'text/javascript';
                 obj.src = url;
                 head.insertBefore(obj, head.firstChild);
             }
         } else if (/\.css$/.test(url)) {
             var obj = document.createElement("link");
-            obj.setAttribute('type', 'text/css');
-            obj.setAttribute('rel', 'stylesheet');
-            obj.setAttribute('href', url);
+            obj.type = 'text/css';
+            obj.rel = 'stylesheet';
+            obj.href = url;
             head.insertBefore(obj, head.firstChild);
         } else {
             log('Invalid resource url: '+url);

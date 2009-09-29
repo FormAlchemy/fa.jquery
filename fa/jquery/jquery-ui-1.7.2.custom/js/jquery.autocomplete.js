@@ -573,7 +573,7 @@ $.Autocompleter.Cache = function(options) {
 
 $.Autocompleter.Select = function (options, input, select, config) {
 	var CLASSES = {
-		ACTIVE: "ac_over"
+		ACTIVE: "ac_over ui-state-default"
 	};
 	
 	var listItems,
