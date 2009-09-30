@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-<table class="layout-grid">
 <thead>
   <tr class="ui-widget-header">
     %for field in collection.render_fields.itervalues():
@@ -18,4 +17,3 @@
   </tr>
 %endfor
 </tbody>
-</table>

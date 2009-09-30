@@ -1,6 +1,7 @@
 .layout-grid, .layout-grid th, .layout-grid td {border-spacing: 0px;border-collapse: collapse;border:1px; margin:0;}
 .layout-grid {border:thin solid #5C9CCC;}
-.layout-grid th, .layout-grid td {padding:0.1em 0.3em;border-left:thin solid #5C9CCC;}
+.layout-grid th, .layout-grid td {padding:0.2em 0.3em;border-left:thin solid #5C9CCC;}
+.layout-grid td {vertical-align:top;}
 
 .fa_field {font-size:1em;}
 .fa_field {margin-left:0.2em;margin-bottom:0.3em;}
@@ -26,3 +27,5 @@
 
 a.ui-widget-button input {display:none;}
 a.ui-widget-button, a.ui-widget-link {margin-right:1em;}
+
+.ui-pager {margin-bottom:1em;}
