@@ -7,7 +7,7 @@ from pylons import url
     <h1 class="ui-widget-header ui-corner-all">
       %if breadcrumb:
         <div class="breadcrumb">
-         /${'/'.join([u and '<a href="%s">%s</a>' % (u,n.lower()) or n.lower() for u,n in breadcrumb])} 
+         /${'/'.join([u and '<a href="%s">%s</a>' % (u,n.lower()) or n.lower() for u,n in breadcrumb])|n} 
         </div>
       %endif
       %if href:
@@ -67,7 +67,7 @@ from pylons import url
     <p>
       <a class="ui-widget-header ui-widget-link ui-corner-all" href="${model_url('new_%s' % member_name)}">
           <span class="ui-icon ui-icon-circle-plus"></span>
-          New ${member_name}
+          New ${model_name}
       </a>
     </p>
   %else:
@@ -82,19 +82,17 @@ from pylons import url
           Edit
         </a>
       </p>
+    %elif action == 'edit':
+      <form action="${model_url(member_name, id=id)}" method="POST" enctype="multipart/form-data">
+        ${fs.render()|n}
+        <input type="hidden" name="_method" value="PUT" />
+        ${buttons()}
+      </form>
     %else:
-      %if id:
-        <form action="${model_url(member_name, id=id)}" method="POST" enctype="multipart/form-data">
-          ${fs.render()|n}
-          <input type="hidden" name="_method" value="PUT" />
-          ${buttons()}
-        </form>
-      %else:
-        <form action="${model_url(collection_name)}" method="POST" enctype="multipart/form-data">
-          ${fs.render()|n}
-          ${buttons()}
-        </form>
-      %endif
+      <form action="${model_url(collection_name)}" method="POST" enctype="multipart/form-data">
+        ${fs.render()|n}
+        ${buttons()}
+      </form>
     %endif
   %endif
 </div>
