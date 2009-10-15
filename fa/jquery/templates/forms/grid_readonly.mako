@@ -2,7 +2,7 @@
 <thead>
   <tr class="ui-widget-header">
     %for field in collection.render_fields.itervalues():
-      <th>${F_(field.label_text or collection.prettify(field.key))|h}</th>
+      <th>${field.label_text or collection.prettify(field.key)|h}</th>
     %endfor
   </tr>
 </thead>
