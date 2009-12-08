@@ -46,8 +46,8 @@ $.extend({
         $.fa_resources.push(url);
         var head = document.getElementsByTagName("head")[0] || document.documentElement;
         if (/\.js$/.test(url)) {
-            if ($.browser.safari) {
-                document.write('<scr'+'ipt type="text\/javascr'+'ipt" src="'+url+'"><\/scr'+'ipt>');
+            if ($.browser.safari || $.browser.msie) {
+                document.write(unescape('%3Cscr'+'ipt type="text/javascr'+'ipt" src="'+url+'"%3E%3C/scr'+'ipt%3E');
             } else {
                 var obj = document.createElement("script");
                 obj.type= 'text/javascript';
