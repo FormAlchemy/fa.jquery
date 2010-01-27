@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 from simplejson import dumps
+from webhelpers.html import literal
 from formalchemy import helpers as h
 from formalchemy import types
 from formalchemy import fields
@@ -51,7 +52,7 @@ def jQueryFieldRenderer(plugin, show_input=False, tag='div', renderer=fields.Tex
                 resources=resources,
                 options=dumps(kwargs)
             )
-            return self.template.render(**options)
+            return literal(self.template.render(**options))
     return Renderer
 
 plugin = jQueryFieldRenderer
@@ -115,7 +116,7 @@ def SortableTokenTextFieldRenderer(sep=';', show_input=False, **jq_options):
                 show_input=show_input,
                 jq_options=dumps(jq_options),
             )
-            return self.template.render(**kwargs)
+            return literal(self.template.render(**kwargs))
     return Renderer
 
 sortable_token = SortableTokenTextFieldRenderer
@@ -174,7 +175,7 @@ class DateFieldRenderer(fields.DateFieldRenderer):
             value=value,
             jq_options=dumps(self.jq_options),
         )
-        return self.template.render(**kwargs)
+        return literal(self.template.render(**kwargs))
 
     def _serialized_value(self):
         value = self._params.getone(self.name) or ''
@@ -252,7 +253,7 @@ class SelectableFieldRenderer(fields.SelectFieldRenderer):
         jq_options=dict(multiple=self.multiple)
         if self.multiple:
             jq_options['sep'] = self.sep
-        return self.template.render(name=name, value=value, options=L, jq_options=dumps(jq_options))
+        return literal(self.template.render(name=name, value=value, options=L, jq_options=dumps(jq_options)))
 
 selectable = SelectableFieldRenderer
 
