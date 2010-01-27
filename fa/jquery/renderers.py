@@ -21,7 +21,7 @@ def jQueryFieldRenderer(plugin, show_input=False, tag='div', renderer=fields.Tex
         <div style="display:none;"><input autocomplete="off" id="Sample--title" name="Sample--title" type="text" /></div>
         <div id="Sample--title_myplugin"></div>
         <script type="text/javascript">
-          jQuery.fa.myplugin('Sample--title', {"option2": ["a", "b"], "option1": true});
+          jQuery.fa.myplugin('Sample--title', {"option2": ["a", "b"], "options": [], "option1": true});
         </script>...
 
     Then in your javascript code:
@@ -50,9 +50,15 @@ def jQueryFieldRenderer(plugin, show_input=False, tag='div', renderer=fields.Tex
                 name=self.name,
                 show_input=show_input,
                 resources=resources,
-                options=dumps(kwargs)
             )
-            return literal(self.template.render(**options))
+            try:
+                options.update(options=dumps(kwargs))
+            except TypeError:
+                options.update(options={})
+            try:
+                return literal(self.template.render(**options))
+            except:
+                raise ValueError('Invalid options: %s' % options)
     return Renderer
 
 plugin = jQueryFieldRenderer
@@ -89,7 +95,7 @@ def SortableTokenTextFieldRenderer(sep=';', show_input=False, **jq_options):
     .. sourcecode:: python
 
         >>> from testing import fs
-        >>> field = fs.sortable.set(renderer=SortableTokenTextFieldRenderer)
+        >>> field = fs.sortable.set(renderer=SortableTokenTextFieldRenderer())
         >>> print field.render() #doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
         <input type="hidden" value="fisrt;second" id="Sample--sortable" name="Sample--sortable" />
         <ul id="Sample--sortable_sortable" class="fa_sortable">
@@ -131,7 +137,7 @@ def ColorPickerFieldRenderer(**jq_options):
         <div style="display:none;"><input autocomplete="off" id="Sample--color" name="Sample--color" type="text" /></div>
         <div id="Sample--color_colorpicker"></div>
         <script type="text/javascript">
-          jQuery.fa.colorpicker('Sample--color', {"color": ["#FFFFFF", ..., "#FF0096", "#B02B2C", "#000000"]});
+          jQuery.fa.colorpicker('Sample--color', {"color": ["#FFFFFF", ...]});
         </script>
         <BLANKLINE>
         
