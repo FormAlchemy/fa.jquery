@@ -3,4 +3,3 @@
 <script type="text/javascript">
   jQuery.fa.colorpicker({name:'${name}', options:${jq_options}});
 </script>
-

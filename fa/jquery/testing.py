@@ -47,7 +47,7 @@ Form.color.set(renderer=ColorPickerFieldRenderer())
 Form.slider.set(renderer=SliderFieldRenderer)
 Form.selectable.set(renderer=SelectableFieldRenderer, options=[l for l in 'abcdef'])
 Form.selectable_token.set(renderer=SelectableTokenFieldRenderer, options=[l for l in 'abcdef'])
-Form.sortable.set(renderer=SortableTokenTextFieldRenderer)
+Form.sortable.set(renderer=SortableTokenTextFieldRenderer())
 Form.resources.set(renderer=jQueryFieldRenderer('test_resources',
                                                 resources=['/jquery/fa.resource.js','/jquery/fa.resource.css']))
 
