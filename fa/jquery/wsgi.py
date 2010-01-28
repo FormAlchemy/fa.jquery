@@ -3,7 +3,7 @@ from paste.urlparser import StaticURLParser
 import glob
 import os
 
-jquery_ui = 'jquery-ui-1.7.2.custom'
+jquery_ui = 'jquery-ui-1.8rc1.custom'
 
 dirname = os.path.join(os.path.dirname(__file__), jquery_ui)
 
