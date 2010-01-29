@@ -69,7 +69,88 @@ $.extend({
       field = $('input[id$="'+name+'"]');
       if (field.length == 1)
           return field;
-  }
+  },
+/**
+ * jQuery plugin to help dealing with UI dialogs
+ * Copyright (c) 2010, Vladimir Dronnikov, dronnikov@gmail.com
+ * Licensed under the MIT license
+ * http://www.opensource.org/licenses/mit-license.php
+ * Date: 2010-01-29
+ *
+ * Depends on: jquery.form
+ *
+ * Usage: jQuery.ajaxDialog({options});
+ *
+ * I18n: options.applyText -- text for Apply button
+ *       options.closeText -- text for Close button
+ *
+ */
+	ajaxDialog: function(options){
+		var div;
+		// patch options
+		options = $.extend({
+			id: 'dialog', // default placeholder id
+			modal: true,
+			//bgiframe: true, // use IE6 select workaround? No, let the sucker die!
+			autoOpen: false,
+			width: 500,
+			//show: 'transfer', // UI effect on show
+			//hide: 'explode', // UI effect on hide
+			//zIndex: 1000, // TODO: make datepicker of higher zIndex! Or datepicker is hidden by dialog
+			title: 'Dialog'
+		}, options || {});
+		// append buttons. N.B. this pervert method is due to buttons hash keys are texts of buttons.
+		// So buttons = {options.closeText: function...} doesn't work
+		options.buttons = {};
+		options.buttons[options.closeText || 'Close'] = function(){
+			$(this).dialog('close');
+		};
+		options.buttons[options.applyText || 'Apply'] = function(){
+			var form = $('form', this);
+			// on asyncronous submit reload the dialog
+			$('form', this).ajaxSubmit(function(text){
+				// empty result means OK, close the dialog
+				if ('' === text) {
+					div.dialog('close');
+					try{reloadPage();}catch(x){}
+				} else {
+					div.html(text);
+				}
+			});
+			return false;
+		};
+		// insert placeholder
+		$('body').append('<div id="'+options.id+'">'+(options.content||'')+'</div>');
+		div = $('#'+options.id);
+		// init dialog
+		div.dialog(options);
+		// setup background dimming
+		$('div.ui-widget-overlay').css({
+			'background': '#666666 url(images/ui-bg_diagonals-thick_18_b81900_40x40.png) repeat scroll 50% 50%;',
+			'opacity': '0.5'
+		});
+		// make anchors classed .load-dialog load href-ered content to this dialog
+		$('a.load-dialog').live('click', function(){
+			div.load($(this).attr('href'), function(text){
+				div.dialog('open');
+			});
+			/*
+			var a = $(this);
+			var data = undefined;
+			// first check confirmation
+			if (a.hasClass('confirm-operation'))
+				$.confirm();
+			// set request method
+			if (a.hasClass('method-delete'))
+				data = {_method: 'DELETE'};
+			div.load($(this).attr('href'), data, function(text){
+				div.dialog('open');
+			});
+			*/
+			return false;
+		});
+	}
+
 });
 
 $.fa.extend({

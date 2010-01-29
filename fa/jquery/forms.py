@@ -131,3 +131,20 @@ class Accordion(Tabs):
     http://jqueryui.com/demos/accordion/
     """
     template = templates.get_template('/forms/accordion.mako')
+
+class Dialog(object):
+    """Work like :class:`~fa.jquery.forms.Tabs` but use
+    http://jqueryui.com/demos/dialog/
+    """
+    template = templates.get_template('/forms/dialog.mako')
+    def __init__(self, id, **options):
+        if not isinstance(id, basestring):
+            raise TypeError('id must be a string. got %r' % (id,))
+        self._id = id
+        self._options = options
+
+    def render(self):
+        kwargs = {}
+        kwargs.update(self._options)
+        return self.template.render(id=self._id, **kwargs)
+
