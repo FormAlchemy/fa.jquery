@@ -64,7 +64,7 @@ def jQueryFieldRenderer(plugin, show_input=False, tag='div', renderer=fields.Tex
 plugin = jQueryFieldRenderer
 
 def AutoCompleteFieldRenderer(url_or_data, renderer=fields.TextFieldRenderer, **jq_options):
-    """Use http://bassistance.de/jquery-plugins/jquery-plugin-autocomplete/:
+    """Use http://docs.jquery.com/UI/Autocomplete:
 
     .. sourcecode:: python
 
@@ -84,7 +84,7 @@ def AutoCompleteFieldRenderer(url_or_data, renderer=fields.TextFieldRenderer, **
         ...         ))
 
     """
-    jq_options.update(data=url_or_data, show_input=True)
+    jq_options.update(source=url_or_data, show_input=True)
     return jQueryFieldRenderer('autocomplete', renderer=renderer, **jq_options)
 
 autocomplete = AutoCompleteFieldRenderer

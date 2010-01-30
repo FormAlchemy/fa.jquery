@@ -4,6 +4,7 @@ from renderers import templates
 from formalchemy import config
 from utils import TemplateEngine
 from forms import Tabs, Accordion
+import simplejson
 from testing import *
 
 config.engine = TemplateEngine()
@@ -18,7 +19,8 @@ class Demo(object):
         req = Request(environ)
         if req.path.endswith('/fa.jquery/ajax_values'):
             resp = Response()
-            resp.body = '\n'.join(['Ajax','Borax','Corax', 'Dorax','Manix'])
+            resp.content_type='application/json'
+            resp.body = simplejson.dumps([{'value':'Ajax'},{'value':'Borax'},{'value':'Corax'}, {'value':'Dorax'},{'value':'Manix'}])
         elif req.path.endswith('/fa.jquery/demo.html'):
             script_name = req.environ.get('HTTP_X_FORWARDED_PATH', '')
             Form.ajax.set(renderer=AutoCompleteFieldRenderer(script_name+'/fa.jquery/ajax_values'))
