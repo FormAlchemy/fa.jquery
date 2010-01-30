@@ -24,7 +24,7 @@ Else you can choose what to include:
 
 And set your own css:
 
-.. literalinclude:: ../fa/jquery/jquery-ui-1.7.2.custom/css/jquery.formalchemy.css
+.. literalinclude:: ../fa/jquery/jquery-ui-1.8rc1.custom/css/jquery.formalchemy.css
    :language: css
 
 You can update FormAlchemy's default_renderers to always use fa.jquery::
