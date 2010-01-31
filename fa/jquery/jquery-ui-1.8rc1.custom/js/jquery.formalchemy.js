@@ -93,7 +93,7 @@ $.extend({
 			modal: true,
 			//bgiframe: true, // use IE6 select workaround? No, let the sucker die!
 			autoOpen: false,
-			width: 500,
+			width: 720,
 			//show: 'transfer', // UI effect on show
 			//hide: 'explode', // UI effect on hide
 			//zIndex: 1000, // TODO: make datepicker of higher zIndex! Or datepicker is hidden by dialog
@@ -244,8 +244,9 @@ $.fa.extend({
     plugin.colorPicker(options);
   },
   tabs: function(field, plugin, options) {field.tabs(options);},
-  accordion: function(field, plugin, options) {field.accordion(options);}
+  accordion: function(field, plugin, options) {field.accordion(options);},
 
+  markitup: function(field, plugin, options) {field.markItUp($.extend(mySettings, options));}
 });
 
 
