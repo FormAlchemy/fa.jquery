@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+from textile import textile
 from simplejson import dumps
 from webhelpers.html import literal
 from formalchemy import helpers as h
@@ -298,7 +299,6 @@ class MarkupTextAreaFieldRenderer(fields.TextAreaFieldRenderer):
         value = self._value
         try:
             if self.markup == 'textile':
-                from textile import textile
                 return textile(value)
             elif self.markup == 'bbcode':
                 from postmarkup import render_bbcode

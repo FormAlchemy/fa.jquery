@@ -33,6 +33,7 @@ setup(name='fa.jquery',
           'FormAlchemy>=1.2.3',
           'WebHelpers',
           'simplejson',
+          'textile',
           'mako',
       ],
       entry_points="""

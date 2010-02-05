@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 from paste.urlparser import StaticURLParser
+from webob import Request, Response
+from textile import textile
 import glob
 import os
 
@@ -23,7 +25,6 @@ class Static(StaticURLParser):
             value = req.POST['value']
             try:
                 if markup == 'textile':
-                    from textile import textile
                     value = textile(value)
                 elif markup == 'bbcode':
                     from postmarkup import render_bbcode
