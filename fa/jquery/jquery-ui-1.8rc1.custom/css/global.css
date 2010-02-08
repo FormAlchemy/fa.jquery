@@ -1,0 +1,10 @@
+* {font-family:"Trebuchet MS","Helvetica","Arial","Verdana","sans-serif";font-size:12px;}
+label {font-weight:bold;}
+h1, h3 {padding:0.1 0.3em;}
+h1 a, h3 a {text-decoration:none;}
+a.ui-state-default {padding:0.1em 0.3em;}
+div.breadcrumb {float:right; font-size:0.7em;}
+div.breadcrumb a {text-decoration:underline;}
+h3 {font-size:1.1em;}
+h2 {font-size:1.5em;}
+h1 {font-size:2em;}

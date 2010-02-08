@@ -29,3 +29,6 @@ a.ui-widget-button input {display:none;}
 a.ui-widget-button, a.ui-widget-link {margin-right:1em;}
 
 .ui-pager {margin-bottom:1em;}
+
+/* colorbox */
+#cboxOverlay{background-image:css/ui-lightness/images/ui-bg_diagonals-thick_20_666666_40x40.png);}
