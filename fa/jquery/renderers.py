@@ -290,10 +290,8 @@ default_renderers = {
 # allow lightweight markup in textareas
 """Textareas support some of lightweight markup languages http://en.wikipedia.org/wiki/Lightweight_markup_language"""
 
-valid_markups = ['textile', 'bbcode', 'html']
-
 class MarkupTextAreaFieldRenderer(fields.TextAreaFieldRenderer):
-    markup = valid_markups[0] # TODO: setup markup via fieldset.configure!
+    markup = 'default'
     def render_readonly(self):
         value = self._value
         try:
@@ -308,17 +306,23 @@ class MarkupTextAreaFieldRenderer(fields.TextAreaFieldRenderer):
         return value
 
 class RichTextAreaFieldRenderer(MarkupTextAreaFieldRenderer):
-    template=templates.get_template('/renderers/textarea.mako')
-    # TODO: handle preview! Pitfall here is who is responsible for rendering preview?
-	# i) controller of fieldset entity? Then a special method + itsURL must be called
-	# ii) this renderer's render_readonly()? Then how to map it to URL
-    jq_options = {} #dict(previewTemplatePath='/jquery/markitup/templates/preview.html')
+    template = templates.get_template('/renderers/tinymce.mako')
+    storage_url = None
+    jq_options = {}
     def render(self, **kwargs):
         value=self._value or ''
         kwargs.update(
             name=self.name,
             value=value,
             markup=self.markup,
+            storage_url=self.storage_url,
             jq_options=dumps(self.jq_options),
         )
         return literal(self.template.render(**kwargs))
+
+class MarkitupTextAreaFieldRenderer(RichTextAreaFieldRenderer):
+    template = templates.get_template('/renderers/markitup.mako')
+    # TODO: handle preview! Pitfall here is who is responsible for rendering preview?
+	# i) controller of fieldset entity? Then a special method + itsURL must be called
+	# ii) this renderer's render_readonly()? Then how to map it to URL
+    jq_options = {} #dict(previewTemplatePath='/jquery/markitup/templates/preview.html')

@@ -1,0 +1,18 @@
+/* simplemodal */
+#simplemodal-overlay {
+	opacity: 1;
+	background: #666666 url(${url('fa_static', path_info='css/ui-lightness/images/ui-bg_diagonals-thick_20_666666_40x40.png')}) repeat scroll 50% 50%;
+}
+#simplemodal-container {
+	opacity: 1;
+	padding: 10px;
+	border: 6px solid gray;
+	background: #f0f0f0;
+}
+div.simplemodal-wrap iframe {
+	width: 100%;
+	height: 100%;
+	border: none;
+}
+#simplemodal-data {
+}
