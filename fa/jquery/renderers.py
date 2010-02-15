@@ -307,7 +307,6 @@ class MarkupTextAreaFieldRenderer(fields.TextAreaFieldRenderer):
 
 class RichTextAreaFieldRenderer(MarkupTextAreaFieldRenderer):
     template = templates.get_template('/renderers/tinymce.mako')
-    storage_url = None
     jq_options = {}
     def render(self, **kwargs):
         value=self._value or ''
@@ -315,7 +314,6 @@ class RichTextAreaFieldRenderer(MarkupTextAreaFieldRenderer):
             name=self.name,
             value=value,
             markup=self.markup,
-            storage_url=self.storage_url,
             jq_options=dumps(self.jq_options),
         )
         return literal(self.template.render(**kwargs))

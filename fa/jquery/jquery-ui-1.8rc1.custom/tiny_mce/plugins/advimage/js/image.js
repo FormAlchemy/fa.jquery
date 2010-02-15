@@ -6,6 +6,14 @@ var ImageDialog = {
 
 		if (url = tinyMCEPopup.getParam("external_image_list_url"))
 			document.write('<script language="javascript" type="text/javascript" src="' + tinyMCEPopup.editor.documentBaseURI.toAbsolute(url) + '"></script>');
+// uploadify stuff: dronnikov at gmail dot com, 2010
+document.write('\
+	<script type="text/javascript" src="../../../fa.jquery.min.js"></script>\
+	<script type="text/javascript" src="../../../upload/swfobject.js"></script>\
+	<script type="text/javascript" src="../../../upload/jquery.uploadify.v2.1.0.min.js"></script>\
+	<link rel="stylesheet" type="text/css" media="screen" href="/jquery/upload/jquery.uploadify.css" />\
+');
+// EO uploadify stuff
 	},
 
 	init : function(ed) {
@@ -86,6 +94,34 @@ var ImageDialog = {
 
 		this.changeAppearance();
 		this.showPreviewImage(nl.src.value, 1);
+
+// uploadify stuff: dronnikov at gmail dot com, 2010
+jQuery('#src').each(function(){
+	var file = $(this);
+	if (file.val()) return;
+	file.uploadify({
+		uploader: '../../../upload/uploadify.swf',
+		script: '/upload',
+		scriptAccess: 'always', // N.B. very important. Read docu!!!
+		cancelImg: '../../../upload/cancel.png',
+		buttonText: 'Upload...', // TODO: i18n
+		auto: true, //multi: true,
+		//onInit: function(){return true;},
+		//onSelect: function(){},
+		onOpen: function(event, queueID, fileObj){
+			var name = fileObj.name;
+			$('#alt').val(name);
+			$('#title').val(name.replace(/\.\w+$/, ''));
+		},
+		onComplete: function(event, queueID, fileObj, response, data){
+			//alert(response);
+			file.val(response);
+			return true;
+		}
+	});
+});
+// EO uploadify stuff
+
 	},
 
 	insert : function(file, title) {
