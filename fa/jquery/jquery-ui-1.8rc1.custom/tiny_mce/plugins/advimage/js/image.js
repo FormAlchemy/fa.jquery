@@ -105,7 +105,7 @@ jQuery('#src').each(function(){
 		scriptAccess: 'always', // N.B. very important. Read docu!!!
 		cancelImg: '../../../upload/cancel.png',
 		buttonText: 'Upload...', // TODO: i18n
-		auto: true, //multi: true,
+		auto: true, multi: true,
 		//onInit: function(){return true;},
 		//onSelect: function(){},
 		onOpen: function(event, queueID, fileObj){
