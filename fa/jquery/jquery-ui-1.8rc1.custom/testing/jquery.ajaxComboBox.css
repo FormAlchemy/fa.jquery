@@ -1,0 +1,437 @@
+/*
+Contents
+==========================================================================================
+	01. ComboBox (Normal-size)
+	02. Package  (Normal-size)
+	03. ComboBox (Minil-size)
+	04. Package  (Minil-size)
+==========================================================================================
+*/
+
+
+/*
+==========================================================================================
+ 01. ComboBox  (Normal-size)
+------------------------------------------------------------------------------------------
+*/
+.ac_combobox_area{
+	margin           : 0;
+	padding          : 0;
+}
+
+.ac_input {
+	border           : none;
+	background-color : white;
+	display          : inline !important;
+	font-size        : 16px;
+	margin           : 0;
+}
+
+.ac_result_area {
+	border           : 0;
+	background-color : white;
+	margin           : 0;
+	padding          : 0;
+	list-style       : none;
+	position         : absolute;
+	z-index          : 1000;
+	display          : none;
+}
+/**************************************
+ table
+**************************************/
+.ac_table, .ac_table th, .ac_table td{
+	margin           : 0;
+	width            : auto;
+	border-collapse  : separate;
+	border-spacing   : 1px;
+	background       : white;
+}
+.ac_table{
+	border           : 1px solid #79b;
+	padding          : 0;
+}
+.ac_table th{
+	padding          : 3px;
+	border           : 0px;
+}
+.ac_table td{
+	/*
+	プルダウンボタン画像と、Ajaxローディング画像の幅は
+	どちらも16pxでそろえています。
+	セルの幅も、それと同じく16pxにする必要があります。
+	*/
+	border           : 1px solid #abd;
+	padding          : 0px 3px;
+	width            : 16px;
+	text-align       : center;
+	vertical-align   : middle;
+	background-position: 50% 50%;
+}
+.ac_table .ac_btn_on{
+	background-color : #def;
+	background-image : url("../img/btn_on.png");
+	cursor           : pointer;
+}
+.ac_table .ac_btn_out{
+	background-color : #cdf;
+	background-image : url("../img/btn_out.png");
+	cursor           : default;
+}
+.ac_table img{
+	padding          : 0;
+	margin           : 0;
+
+	/* IE7用に、幅と高さを指定する必要があります */
+	width            : 16px;
+	height           : 16px;
+}
+/**************************************
+ results
+**************************************/
+.ac_results {
+	border           : 1px solid #79b;
+	background-color : white;
+	margin           : 0;
+	padding          : 0;
+	list-style       : none;
+}
+.ac_results li {
+	border           : 0px solid #79b;
+	margin           : 0;
+	height           : auto !important;
+	padding          : 3px 5px;
+	white-space      : nowrap;
+	color            : #000;
+	text-align       : left;
+	overflow         : hidden;
+	font-size        : 14px;
+	line-height      : 1;
+	position         : relative;
+}
+.ac_over {
+	cursor           : pointer;
+	background-color : #36c;
+	color            : #fff !important;
+}
+.ac_match {
+	text-decoration  : underline;
+}
+.ac_over .ac_match{
+	text-decoration  : none;
+}
+
+/**************************************
+ navi
+**************************************/
+.ac_navi{
+	border           : 1px solid #79b;
+	border-bottom    : 0px;
+	margin           : 0;
+	padding          : 4px;
+
+	text-align       : right;
+	font-size        : 13px;
+	font-family      : "ＭＳ Ｐゴシック",sans-serif;
+	font-weight      : normal;
+	line-height      : 1;
+}
+.ac_navi a:link,
+.ac_navi a:visited,
+.ac_navi a:hover,
+.ac_navi a:active{
+	color            : blue;
+	text-decoration  : underline;
+	margin           : 0px 4px;
+	font-weight      : normal;
+	
+}
+.ac_navi p{
+	font-size        : 15px;
+	text-align       : center;
+	color            : black;
+	padding-top      : 4px;
+	margin           : 0;
+}
+.ac_navi .current{
+	font-weight      : bold;
+	font-size        : 16px;
+	color            : #00c;
+}
+.ac_navi .page_end{
+	color            : gray;
+	margin           : 0px 4px;
+	font-weight      : normal;
+}
+
+/**************************************
+ Sub-info
+**************************************/
+.ac_attached table,
+.ac_attached th,
+.ac_attached td{
+	border-collapse  : collapse;
+	border           : 1px solid #aaa;
+}
+.ac_attached table{
+	margin           : 0;
+	position         : absolute;
+	background       : #eee;
+	display          : none;
+	color            : #000;
+}
+.ac_attached td{
+	margin           : 0;
+	padding          : 2px 4px;
+	font-size        : 13px;
+	width            : 152px;
+}
+.ac_attached th{
+	margin           : 0;
+	padding          : 2px 4px;
+	font-size        : 13px;
+	text-align       : left;
+	font-weight      : normal;
+	background       : #CEDFF7;
+	color            : #47587A;
+	width            : 92px;
+}
+
+
+/*
+==========================================================================================
+ 02. Package(Normal-size)
+------------------------------------------------------------------------------------------
+*/
+.box_area{
+	padding-bottom   : 4px;
+}
+.combo_box{
+	float            : left;
+}
+.add_area,
+.del_area{
+	width            : 30px;
+	text-align       : center;
+	padding          : 6px 0;
+}
+.del_area{
+	float            : left;
+}
+.add_area img, .del_area img{
+	cursor           : pointer;
+}
+
+
+/*
+==========================================================================================
+ 03. ComboBox  (Mini-size)
+------------------------------------------------------------------------------------------
+*/
+.ac_combobox_area_mini{
+	margin           : 0;
+	padding          : 0;
+}
+
+.ac_input_mini {
+	border           : none;
+	background-color : white;
+	display          : inline !important;
+	font-size        : 14px;
+	margin           : 0;
+}
+
+.ac_result_area_mini {
+	border           : 0;
+	background-color : white;
+	margin           : 0;
+	padding          : 0;
+	list-style       : none;
+	position         : absolute;
+	z-index          : 1000;
+	display          : none;
+}
+/**************************************
+ table
+**************************************/
+.ac_table_mini, .ac_table_mini th, .ac_table_mini td{
+	margin           : 0;
+	width            : auto;
+	border-collapse  : separate;
+	border-spacing   : 1px;
+	background       : white;
+}
+.ac_table_mini{
+	border           : 1px solid #79b;
+	padding          : 0;
+}
+.ac_table_mini th{
+	padding          : 1px;
+	border           : 0px;
+}
+.ac_table_mini td{
+	/*
+	プルダウンボタン画像と、Ajaxローディング画像の幅は
+	どちらも14pxでそろえています。
+	セルの幅も、それと同じく14pxにする必要があります。
+	*/
+	border           : 1px solid #abd;
+	padding          : 0px 1px;
+	width            : 14px;
+	text-align       : center;
+	vertical-align   : middle;
+	background-position: 50% 50%;
+}
+.ac_table_mini .ac_btn_on_mini{
+	background-color : #def;
+	background-image : url("../img/btn_on.png");
+	cursor           : pointer;
+}
+.ac_table_mini .ac_btn_out_mini{
+	background-color : #cdf;
+	background-image : url("../img/btn_out.png");
+	cursor           : default;
+}
+.ac_table_mini img{
+	padding          : 0px;
+	margin           : 0px;
+
+	/* IE7用に、幅と高さを指定する必要があります */
+	width            : 14px;
+	height           : 14px;
+}
+/**************************************
+ results
+**************************************/
+.ac_results_mini {
+	border           : 1px solid #79b;
+	background-color : white;
+	margin           : 0;
+	padding          : 0;
+	list-style       : none;
+}
+.ac_results_mini li {
+	border           : 0px solid #79b;
+	margin           : 0;
+	height           : auto !important;
+	padding          : 3px 5px;
+	white-space      : nowrap;
+	color            : #000;
+	text-align       : left;
+	overflow         : hidden;
+	font-size        : 13px;
+	line-height      : 1;
+	position         : relative;
+}
+.ac_over_mini {
+	cursor           : pointer;
+	background-color : #36c;
+	color            : #fff !important;
+}
+.ac_match_mini {
+	text-decoration  : underline;
+}
+.ac_over_mini .ac_match_mini{
+	text-decoration  : none;
+}
+
+/**************************************
+ navi
+**************************************/
+.ac_navi_mini{
+	border           : 1px solid #79b;
+	border-bottom    : 0px;
+	margin           : 0;
+	padding          : 2px;
+
+	text-align       : right;
+	font-size        : 12px;
+	font-family      : "ＭＳ Ｐゴシック",sans-serif;
+	font-weight      : normal;
+	line-height      : 1;
+}
+.ac_navi_mini a:link,
+.ac_navi_mini a:visited,
+.ac_navi_mini a:hover,
+.ac_navi_mini a:active{
+	color            : blue;
+	text-decoration  : underline;
+	margin           : 0px 3px;
+	font-weight      : normal;
+	
+}
+.ac_navi_mini p{
+	font-size        : 12px;
+	text-align       : center;
+	color            : black;
+	padding-top      : 2px;
+	margin           : 0;
+}
+.ac_navi_mini .current{
+	font-weight      : bold;
+	font-size        : 12px;
+	color            : #00c;
+}
+.ac_navi_mini .page_end{
+	color            : gray;
+	margin           : 0px 3px;
+	font-weight      : normal;
+}
+
+/**************************************
+ Sub-info
+**************************************/
+.ac_attached_mini table,
+.ac_attached_mini th,
+.ac_attached_mini td{
+	border-collapse  : collapse;
+	border           : 1px solid #aaa;
+}
+.ac_attached_mini table{
+	margin           : 0;
+	position         : absolute;
+	background       : #eee;
+	display          : none;
+	color            : #000;
+}
+.ac_attached_mini td{
+	margin           : 0;
+	padding          : 2px 4px;
+	font-size        : 13px;
+	width            : 152px;
+}
+.ac_attached_mini th{
+	margin           : 0;
+	padding          : 2px 4px;
+	font-size        : 13px;
+	text-align       : left;
+	font-weight      : normal;
+	background       : #CEDFF7;
+	color            : #47587A;
+	width            : 92px;
+}
+
+
+/*
+==========================================================================================
+ 04. Package(Mini-size)
+------------------------------------------------------------------------------------------
+*/
+.box_area_mini{
+	padding-bottom   : 4px;
+}
+.combo_box_mini{
+	float            : left;
+}
+.add_area_mini,
+.del_area_mini{
+	width            : 30px;
+	text-align       : center;
+	padding          : 3px 0;
+}
+.del_area_mini{
+	float            : left;
+}
+.add_area_mini img, .del_area_mini img{
+	cursor           : pointer;
+}

@@ -1,0 +1,10 @@
+swfobject 2.2 should be patched:
+http://code.google.com/p/swfobject/issues/detail?id=408
+
+was:
+X.removeChild(aa)
+
+should be:
+if(aa.parentNode)aa.parentNode.removeChild(aa)
+
+=======================

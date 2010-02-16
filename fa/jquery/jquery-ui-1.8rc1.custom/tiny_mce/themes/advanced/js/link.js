@@ -6,14 +6,6 @@ var LinkDialog = {
 
 		if (url = tinyMCEPopup.getParam("external_link_list_url"))
 			document.write('<script language="javascript" type="text/javascript" src="' + tinyMCEPopup.editor.documentBaseURI.toAbsolute(url) + '"></script>');
-// uploadify stuff: dronnikov at gmail dot com, 2010
-document.write('\
-	<script type="text/javascript" src="../../../fa.jquery.min.js"></script>\
-	<script type="text/javascript" src="../../../upload/swfobject.js"></script>\
-	<script type="text/javascript" src="../../../upload/jquery.uploadify.v2.1.0.min.js"></script>\
-	<link rel="stylesheet" type="text/css" media="screen" href="/jquery/upload/jquery.uploadify.css" />\
-');
-// EO uploadify stuff
 	},
 
 	init : function() {

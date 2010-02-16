@@ -292,7 +292,7 @@ default_renderers = {
 
 class MarkupTextAreaFieldRenderer(fields.TextAreaFieldRenderer):
     markup = 'default'
-    def render_readonly(self):
+    def render_readonly(self, **kwargs):
         value = self._value
         try:
             if self.markup == 'textile':
@@ -302,7 +302,7 @@ class MarkupTextAreaFieldRenderer(fields.TextAreaFieldRenderer):
                 from postmarkup import render_bbcode
                 return render_bbcode(value)
         except:
-            pass
+			pass
         return value
 
 class RichTextAreaFieldRenderer(MarkupTextAreaFieldRenderer):
