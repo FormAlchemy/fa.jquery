@@ -1,0 +1,3 @@
+// jQuery available Plugin 1.4.1 (20100124)
+// By John Terenzio (http://terenz.io/) | MIT License
+(function($){$.available={list:[],interval:null,poll:function(){for(var i=0;i<$.available.list.length;i++){if($($.available.list[i][0]).length&&($($.available.list[i][0]).next().length||$.isReady)){$.available.list[i][1].apply($($.available.list[i][0]).eq(0));$.available.list=$.available.list.slice(0,i).concat($.available.list.slice(i+1));i--;}}if(!$.available.list.length||$.isReady){$.available.interval=clearInterval($.available.interval);}}};$.fn.available=function(fn){$.available.list.push([this.selector,fn]);if(!$.available.interval){$.available.interval=setInterval($.available.poll,1);}return this;};})(jQuery);

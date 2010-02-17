@@ -8,9 +8,7 @@
 	<script type="text/javascript" src="../../utils/validate.js"></script>
 	<script type="text/javascript" src="js/link.js"></script>
 	<script type="text/javascript" src="../../../fa.jquery.min.js"></script>
-	<script type="text/javascript" src="../../../upload/swfobject.js"></script>
-	<script type="text/javascript" src="../../../upload/jquery.uploadify.v2.1.0.min.js"></script>
-	<link rel="stylesheet" type="text/css" media="screen" href="/jquery/upload/jquery.uploadify.css" />
+	<script type="text/javascript" src="../../../plupload/plupload.full.min.js"></script>
 </head>
 <body id="link" style="display: none">
 <form onsubmit="LinkDialog.update();return false;" action="#">
@@ -27,7 +25,7 @@
           <tr>
             <td class="nowrap"><label for="href">{#advanced_dlg.link_url}</label></td>
             <td><table border="0" cellspacing="0" cellpadding="0"> 
-				  <tr> 
+				  <tr>
 					<td><input id="href" name="href" type="text" class="mceFocus" value="" style="width: 200px" onchange="LinkDialog.checkPrefix(this);" /></td> 
 					<td id="hrefbrowsercontainer">&nbsp;</td>
 				  </tr> 

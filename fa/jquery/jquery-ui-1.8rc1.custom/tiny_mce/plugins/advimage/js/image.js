@@ -87,32 +87,63 @@ var ImageDialog = {
 		this.changeAppearance();
 		this.showPreviewImage(nl.src.value, 1);
 
-// uploadify stuff: dronnikov at gmail dot com, 2010
-jQuery('#src').each(function(){
-	var file = $(this);
-	if (file.val()) return;
-	file.uploadify({
-		uploader: '../../../upload/uploadify.swf',
-		script: '/upload',
-		scriptAccess: 'always', // N.B. very important. Read docu!!!
-		cancelImg: '../../../upload/cancel.png',
-		buttonText: 'Upload...', // TODO: i18n
-		auto: true, multi: true,
-		//onInit: function(){return true;},
-		//onSelect: function(){},
-		onOpen: function(event, queueID, fileObj){
-			var name = fileObj.name;
-			$('#alt').val(name);
-			$('#title').val(name.replace(/\.\w+$/, ''));
-		},
-		onComplete: function(event, queueID, fileObj, response, data){
-			//alert(response);
-			file.val(response);
-			return true;
+// plupload stuff: dronnikov at gmail dot com, 2010-02-17
+$('#srcbrowser').each(function(event){
+	var self = $(this);
+	self.unbind('click');
+	var uploader = new plupload.Uploader({
+		// general settings
+		runtimes: 'html5,flash',
+		url: tinyMCEPopup.getParam('plupload_upload_url'), // || '/upload',
+		max_file_size: tinyMCEPopup.getParam('plupload_upload_max_file_size') || '2mb',
+		chunk_size: tinyMCEPopup.getParam('plupload_upload_chunk_size') || '1mb',
+		/***************
+		// resize images on clientside if we can
+		resize: {width: 320, height: 240, quality: 90},
+		***************/
+		// specify what files to browse for
+		filters: [
+			{title: 'Image files', extensions: 'jpg,gif,png'}
+		],
+		// flash settings
+		flash_swf_url: '../../../plupload/plupload.flash.swf',
+		browse_button: 'srcbrowser'
+	});
+
+	uploader.bind('FilesAdded', function(up, files){
+		$.each(files, function(i, file){
+			$('#alt').val(file.name.replace(/\..+$/, ''));
+			$('#title').val(file.name.replace(/\..+$/, ''));
+		});
+	});
+
+	uploader.bind('UploadFile', function(up, file){
+		// assign unique names
+		file.target_name = (up.settings.salt||'') + file.id + '.tmp';
+	});
+
+	uploader.bind('QueueChanged', function(up){
+		up.start();
+	});
+
+	uploader.bind('UploadProgress', function(up, file){
+		$('#src').val(file.percent+'%');
+		if (file.status == plupload.DONE)
+			$('#src').val(up.settings.url + '/' + file.target_name);
+	});
+
+	uploader.bind('FileUploaded', function(up, file){
+		if (file.status == plupload.DONE) {
+			$('#href').val(up.settings.url + '/' + file.target_name);
+		} else if (file.status == plupload.FAILED) {
+			// TODO: more friendly alert
+			window.alert('Upload failed!');
 		}
 	});
+
+	uploader.init();
 });
-// EO uploadify stuff
+// EO plupload stuff
 
 	},
 
