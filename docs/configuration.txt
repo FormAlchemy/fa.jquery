@@ -12,7 +12,7 @@ If you want to include all features you need to add this to your html header:
 
 .. sourcecode:: html
 
-		<link type="text/css" href="/jquery/css/redmond/jquery-ui-1.7.2.custom.css" rel="stylesheet" />	
+		<link type="text/css" href="/jquery/css/redmond/jquery-ui-1.8.custom.css" rel="stylesheet" />	
 		<link type="text/css" href="/jquery/fa.jquery.min.css" rel="stylesheet" />	
 		<script type="text/javascript" src="/jquery/fa.jquery.min.js"></script>
 
@@ -24,7 +24,7 @@ Else you can choose what to include:
 
 And set your own css:
 
-.. literalinclude:: ../fa/jquery/jquery-ui-1.8rc1.custom/css/jquery.formalchemy.css
+.. literalinclude:: ../fa/jquery/jquery-ui/css/jquery.formalchemy.css
    :language: css
 
 You can update FormAlchemy's default_renderers to always use fa.jquery::
