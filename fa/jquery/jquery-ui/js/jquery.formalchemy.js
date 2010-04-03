@@ -84,37 +84,36 @@ $.fa.extend({
     field.autocomplete(options);
   },
   selectable: function(field, plugin, options) {
-    var error = $(document.getElementById(options.name+'_error'));
+    var ui = $('<ul class="fa_selectable"></ul>');
+    plugin.append(ui);
+    $('option', field).each(function(){
+        var opt = $(this);
+        var ui_opt = ui.append('<li class="ui-widget-content" '+
+                  'alt="'+opt.attr('value')+'">'+opt.text()+'</li>');
+    });
     var initValue = function() {
+      var selected = $(".ui-selected", ui);
+      selected.removeClass('ui-selected');
       if (!options.multiple) {
-          var value = field.val();
-          $('li', plugin).each(function(){
-              var item = $(this);
-              if (item.attr('alt') == value) { item.addClass('ui-selected'); }
-          });
+          $('li[alt="'+field.val()+'"]', ui).addClass('ui-selected');
       } else {
-          var values = field.val().split(new RegExp(options.sep, 'g'));
-          $('li', plugin).each(function(){
-              var item = $(this);
-              $(values).each(function(){
-                  if (item.attr('alt') == this) { item.addClass('ui-selected'); }
-              });
+          $(field.val()).each(function(){
+            $('li[alt="'+this+'"]', ui).addClass('ui-selected');
           });
       }
     }
-    plugin.selectable({
+    ui.selectable({
         stop: function(){
           var selected = $(".ui-selected", this);
           if (!options.multiple && selected.length > 1) {
-            selected.removeClass('ui-selected');
             initValue();
           } else {
             var value = new Array();
             selected.each(function(){value.push($(this).attr('alt'));});
             if (options.multiple)
-                field.val(value.join(options.sep));
+                field.val(value);
             else
-                field.val(value.join(''));
+                field.val(value);
           }
         }
     });

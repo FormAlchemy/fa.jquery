@@ -19,7 +19,7 @@ class Static(StaticURLParser):
 
     def __call__(self, environ, start_response):
         path = environ['PATH_INFO']
-        if '/markup_preview.html' in path:
+        if '/markup_parser.html' in path:
             # markup preview helper
             req = Request(environ)
             resp = Response()

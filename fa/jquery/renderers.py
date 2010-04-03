@@ -24,17 +24,19 @@ def alias(obj, **alias_kwargs):
     def wrapped(func):
         if hasattr(obj, 'func_name'):
             def wrapper(*args, **kwargs):
-                """Alias for :func:`~fa.jquery.renderers.%s`""" % obj.func_name
+                """Alias for :func:`~fa.jquery.renderers.%s` with preset options %r""" % (obj.func_name, alias_kwargs)
                 kwargs.update(alias_kwargs)
                 return obj(*args, **kwargs)
             wrapper.func_name = func.func_name
             return wrapper
         else:
-            doc = """Alias for :func:`~fa.jquery.renderers.%s`""" % obj.__name__
-            return type(func.func_name, (obj,), {'__doc__': doc})
+            doc = """Alias for :func:`~fa.jquery.renderers.%s` with preset options %r""" % (obj.__name__, alias_kwargs)
+            alias_kwargs['__doc__'] = alias_kwargs
+            return type(func.func_name, (obj,), alias_kwargs)
     return wrapped
 
-def jQueryFieldRenderer(plugin, show_input=False, tag='div', renderer=fields.TextFieldRenderer, resources=[], **jq_options):
+def jQueryFieldRenderer(plugin, show_input=False, tag='div', renderer=fields.TextFieldRenderer,
+                        resources_prefix=None, resources=[], **jq_options):
     """Extending jQuery.fa:
 
     .. sourcecode:: python
@@ -63,18 +65,18 @@ def jQueryFieldRenderer(plugin, show_input=False, tag='div', renderer=fields.Tex
 
     """
     template_name = jq_options.get('_template', 'jquery')
+    template=templates.get_template('/renderers/%s.mako' % template_name)
     class Renderer(renderer):
-        template=templates.get_template('/renderers/%s.mako' % template_name)
         def render(self, **kwargs):
             html = renderer.render(self, autocomplete='off', **kwargs)
-            kwargs.update(jq_options)
+            kwargs.update(self.jq_options)
             options = dict(
                 tag=tag,
                 html=html,
                 plugin=plugin,
                 name=self.name,
                 show_input=show_input,
-                resources=[url(r) for r in resources],
+                resources=[url(r, prefix=self.resources_prefix) for r in resources],
             )
             try:
                 options.update(options=dumps(kwargs))
@@ -84,7 +86,10 @@ def jQueryFieldRenderer(plugin, show_input=False, tag='div', renderer=fields.Tex
                 return literal(self.template.render(**options))
             except:
                 raise ValueError('Invalid options: %s' % options)
-    return Renderer
+    return type('Renderer%s' % plugin.title(), (Renderer,),
+                dict(template=template,
+                     jq_options=jq_options,
+                     resources_prefix=resources_prefix))
 
 @alias(jQueryFieldRenderer)
 def plugin(): pass
@@ -251,67 +256,41 @@ def SliderFieldRenderer(min=0, max=100, show_value=True, **jq_options):
 @alias(SliderFieldRenderer)
 def slider(): pass
 
-class SelectableFieldRenderer(fields.SelectFieldRenderer):
+def SelectableFieldRenderer(multiple=False, **jq_options):
     """Fill a text field using http://jqueryui.com/demos/selectable/:
 
     .. sourcecode:: python
 
         >>> from testing import fs
         >>> print fs.selectable.render() #doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-        <input type="hidden" value="" id="Sample--selectable" name="Sample--selectable" />
-        <ul id="Sample--selectable_selectable" class="fa_selectable">
-        <li class="ui-widget-content" alt="a">a</li>
-        <li class="ui-widget-content" alt="b">b</li>
-        <li class="ui-widget-content" alt="c">c</li>
-        <li class="ui-widget-content" alt="d">d</li>
-        <li class="ui-widget-content" alt="e">e</li>
-        <li class="ui-widget-content" alt="f">f</li>
-        </ul>
+        <div style="display:none;"><select autocomplete="off" id="Sample--selectable" name="Sample--selectable">
+        <option value="a">a</option>
+        <option value="b">b</option>
+        <option value="c">c</option>
+        <option value="d">d</option>
+        <option value="e">e</option>
+        <option value="f">f</option>
+        </select></div>
+        <div id="Sample--selectable_selectable"></div>
         <script type="text/javascript">
-          jQuery.fa.selectable('Sample--selectable', {"multiple": false});
-        </script>...
+          jQuery.fa.selectable('Sample--selectable', {"multiple": false, "options": ["a", "b", "c", "d", "e", "f"]});
+        </script>
 
     """
-    multiple=False
-    sep=';'
-    template = templates.get_template('/renderers/selectable.mako')
-    def render(self, options, **kwargs):
-        name = self.name
-        value = self._value or ''
-        if callable(options):
-            L = fields._normalized_options(options(self.field.parent))
-        else:
-            L = list(options)
-        if len(L) > 0:
-            if len(L[0]) == 2:
-                L = [(k, self.stringify_value(v)) for k, v in L]
-            else:
-                L = [fields._stringify(k) for k in L]
-                L = [(k, k) for k in L]
-        jq_options=dict(multiple=self.multiple)
-        if self.multiple:
-            jq_options['sep'] = self.sep
-        return literal(self.template.render(name=name, value=value, options=L, jq_options=dumps(jq_options)))
+    jq_options.update(multiple=multiple)
+    class Renderer(fields.SelectFieldRenderer):
+        def render(self, *args, **kwargs):
+            kwargs['multiple'] = self.multiple
+            return fields.SelectFieldRenderer.render(self, *args, **kwargs)
+    return jQueryFieldRenderer('selectable',
+                               renderer=type('SelectableFieldRenderer', (Renderer,), dict(multiple=multiple)),
+                               **jq_options)
 
-@alias(SelectableFieldRenderer)
+@alias(SelectableFieldRenderer, multiple=False)
 def selectable():pass
 
-class SelectableTokenFieldRenderer(SelectableFieldRenderer):
-    """Same as SelectFieldRenderer but allow multiple selection saved as
-    token:
-
-    .. sourcecode:: python
-
-        >>> from testing import fs
-        >>> field = fs.selectable.set(renderer=SelectableTokenFieldRenderer)
-        >>> print field.render() #doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-        <input type="hidden" value="" id="Sample--selectable" name="Sample--selectable" />
-        ...
-        <script type="text/javascript">
-          jQuery.fa.selectable('Sample--selectable', {"multiple": true, "sep": ";"});
-        </script>...
-    """
-    multiple = True
+@alias(SelectableFieldRenderer, multiple=True)
+def selectables():pass
 
 default_renderers = {
     types.Date:date,
@@ -324,8 +303,8 @@ default_renderers = {
 """Textareas support some of lightweight markup languages http://en.wikipedia.org/wiki/Lightweight_markup_language"""
 
 
-def RichTextFieldRenderer(use='tinymce', **jq_options):
-    """RichTextFieldRenderer:
+def RichTextFieldRenderer(use='tinymce', resources_prefix=None, **jq_options):
+    """RichTextFieldRenderer using TinyMCE or MarkitUp!:
 
     .. sourcecode: python
 
@@ -339,8 +318,20 @@ def RichTextFieldRenderer(use='tinymce', **jq_options):
         <textarea autocomplete="off" id="Sample--rich" name="Sample--rich"></textarea>
         <div id="Sample--rich_tinymce"></div>
         <script type="text/javascript">
-          jQuery.fa.tinymce('Sample--rich', {"theme": "advanced", "options": []});
+          jQuery.fa.tinymce('Sample--rich', {... "theme": "advanced", ...});
         </script>
+
+    If you want to use your own TinyMCE/MarkitUp! version:
+
+    .. sourcecode: python
+
+        >>> field = fs.rich.set(renderer=RichTextFieldRenderer(use='tinymce', resources_prefix='/my_js'))
+        >>> print field.render() #doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+        <script type="text/javascript">
+          jQuery.fa.add_resource("/my_js/tiny_mce/tiny_mce.js");
+          jQuery.fa.add_resource("/my_js/tiny_mce/jquery.tinymce.js");
+        </script>
+        ...
 
     There is also some aliases:
 
@@ -355,13 +346,14 @@ def RichTextFieldRenderer(use='tinymce', **jq_options):
         <textarea autocomplete="off" id="Sample--rich" name="Sample--rich"></textarea>
         <div id="Sample--rich_tinymce"></div>
         <script type="text/javascript">
-          jQuery.fa.tinymce('Sample--rich', {"theme": "advanced", "options": []});
+          jQuery.fa.tinymce('Sample--rich', {... "theme": "advanced", ...});
         </script>
 
         >>> field = fs.rich.set(renderer=textile())
         >>> print field.render() #doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
         <script type="text/javascript">
           jQuery.fa.add_resource("/jquery/markitup/jquery.markitup.pack.js");
+          jQuery.fa.add_resource("/jquery/markitup/skins/simple/style.css");
           jQuery.fa.add_resource("/jquery/markitup/sets/textile/style.css");
           jQuery.fa.add_resource("/jquery/markitup/sets/textile/set.js");
         </script>
@@ -375,6 +367,7 @@ def RichTextFieldRenderer(use='tinymce', **jq_options):
         >>> print field.render() #doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
         <script type="text/javascript">
           jQuery.fa.add_resource("/jquery/markitup/jquery.markitup.pack.js");
+          jQuery.fa.add_resource("/jquery/markitup/skins/simple/style.css");
           jQuery.fa.add_resource("/jquery/markitup/sets/markdown/style.css");
           jQuery.fa.add_resource("/jquery/markitup/sets/markdown/set.js");
         </script>
@@ -388,6 +381,7 @@ def RichTextFieldRenderer(use='tinymce', **jq_options):
         >>> print field.render() #doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
         <script type="text/javascript">
           jQuery.fa.add_resource("/jquery/markitup/jquery.markitup.pack.js");
+          jQuery.fa.add_resource("/jquery/markitup/skins/simple/style.css");
           jQuery.fa.add_resource("/jquery/markitup/sets/bbcode/style.css");
           jQuery.fa.add_resource("/jquery/markitup/sets/bbcode/set.js");
         </script>
@@ -403,11 +397,16 @@ def RichTextFieldRenderer(use='tinymce', **jq_options):
     if use == 'tinymce':
         resources = ['tiny_mce/tiny_mce.js', 'tiny_mce/jquery.tinymce.js']
         defaults['theme'] = 'advanced'
+        defaults['theme_advanced_toolbar_location'] = "top"
+        defaults['theme_advanced_toolbar_align'] = "left"
+        defaults['theme_advanced_statusbar_location'] = "bottom"
+        defaults['theme_advanced_resizing'] = True
     elif use in ('textile', 'bbcode', 'markdown'):
         plugin_name = 'markitup'
         defaults['nameSpace'] = use
         defaults['resizeHandle'] = True
-        defaults['previewParserPath'] = '~/../markup_preview.html?markup=%s' % use
+        defaults['previewAutoRefresh'] = True
+        defaults['previewParserPath'] = url('markup_parser.html?markup=%s' % use)
         resources = ['markitup/jquery.markitup.pack.js',
                      'markitup/skins/simple/style.css',
                      'markitup/sets/%s/style.css' % use,
@@ -436,7 +435,8 @@ def RichTextFieldRenderer(use='tinymce', **jq_options):
             if meth is not None:
                 return meth()
             return fields.TextAreaFieldRenderer.render(self, **kwargs)
-    return jQueryFieldRenderer(plugin_name, show_input=True, renderer=Renderer, resources=resources, **jq_options)
+    return jQueryFieldRenderer(plugin_name, show_input=True, renderer=Renderer,
+                               resources_prefix=resources_prefix, resources=resources, **jq_options)
 
 @alias(RichTextFieldRenderer, use='tinymce')
 def tinymce(): pass
@@ -450,37 +450,3 @@ def markdown(): pass
 @alias(RichTextFieldRenderer, use='bbcode')
 def bbcode(): pass
 
-class MarkupTextAreaFieldRenderer(fields.TextAreaFieldRenderer):
-    markup = 'default'
-    def render_readonly(self, **kwargs):
-        value = self._value
-        try:
-            if self.markup == 'textile':
-                from textile import textile
-                return textile(value)
-            elif self.markup == 'bbcode':
-                from postmarkup import render_bbcode
-                return render_bbcode(value)
-        except:
-			pass
-        return value
-
-class RichTextAreaFieldRenderer(MarkupTextAreaFieldRenderer):
-    template = templates.get_template('/renderers/tinymce.mako')
-    jq_options = {}
-    def render(self, **kwargs):
-        value=self._value or ''
-        kwargs.update(
-            name=self.name,
-            value=value,
-            markup=self.markup,
-            jq_options=dumps(self.jq_options),
-        )
-        return literal(self.template.render(**kwargs))
-
-class MarkitupTextAreaFieldRenderer(RichTextAreaFieldRenderer):
-    template = templates.get_template('/renderers/markitup.mako')
-    # TODO: handle preview! Pitfall here is who is responsible for rendering preview?
-	# i) controller of fieldset entity? Then a special method + itsURL must be called
-	# ii) this renderer's render_readonly()? Then how to map it to URL
-    jq_options = {} #dict(previewTemplatePath='/jquery/markitup/templates/preview.html')
