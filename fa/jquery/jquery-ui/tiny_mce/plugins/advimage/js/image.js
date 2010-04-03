@@ -86,65 +86,6 @@ var ImageDialog = {
 
 		this.changeAppearance();
 		this.showPreviewImage(nl.src.value, 1);
-
-// plupload stuff: dronnikov at gmail dot com, 2010-02-17
-$('#srcbrowser').each(function(event){
-	var self = $(this);
-	self.unbind('click');
-	var uploader = new plupload.Uploader({
-		// general settings
-		runtimes: 'html5,flash',
-		url: tinyMCEPopup.getParam('plupload_upload_url'), // || '/upload',
-		max_file_size: tinyMCEPopup.getParam('plupload_upload_max_file_size') || '2mb',
-		chunk_size: tinyMCEPopup.getParam('plupload_upload_chunk_size') || '1mb',
-		/***************
-		// resize images on clientside if we can
-		resize: {width: 320, height: 240, quality: 90},
-		***************/
-		// specify what files to browse for
-		filters: [
-			{title: 'Image files', extensions: 'jpg,gif,png'}
-		],
-		// flash settings
-		flash_swf_url: '../../../plupload/plupload.flash.swf',
-		browse_button: 'srcbrowser'
-	});
-
-	uploader.bind('FilesAdded', function(up, files){
-		$.each(files, function(i, file){
-			$('#alt').val(file.name.replace(/\..+$/, ''));
-			$('#title').val(file.name.replace(/\..+$/, ''));
-		});
-	});
-
-	uploader.bind('UploadFile', function(up, file){
-		// assign unique names
-		file.target_name = (up.settings.salt||'') + file.id + '.tmp';
-	});
-
-	uploader.bind('QueueChanged', function(up){
-		up.start();
-	});
-
-	uploader.bind('UploadProgress', function(up, file){
-		$('#src').val(file.percent+'%');
-		if (file.status == plupload.DONE)
-			$('#src').val(up.settings.url + '/' + file.target_name);
-	});
-
-	uploader.bind('FileUploaded', function(up, file){
-		if (file.status == plupload.DONE) {
-			$('#href').val(up.settings.url + '/' + file.target_name);
-		} else if (file.status == plupload.FAILED) {
-			// TODO: more friendly alert
-			window.alert('Upload failed!');
-		}
-	});
-
-	uploader.init();
-});
-// EO plupload stuff
-
 	},
 
 	insert : function(file, title) {

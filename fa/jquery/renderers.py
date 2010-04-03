@@ -6,8 +6,11 @@ from formalchemy import helpers as h
 from formalchemy import types
 from formalchemy import fields
 from formalchemy import config
+from postmarkup import render_bbcode
+from textile import textile as render_textile
 
 from utils import templates
+from utils import url
 
 __doc__ = """
 This is the predefined renderers. You can have a look at the :doc:`../demo`.
@@ -16,12 +19,13 @@ If you need your own, use the :class:`~fa.jquery.renderers.jQueryFieldRenderer`
 as base class.
 """
 
-def alias(obj):
+def alias(obj, **alias_kwargs):
     """decorator to make aliases with docs"""
     def wrapped(func):
         if hasattr(obj, 'func_name'):
             def wrapper(*args, **kwargs):
                 """Alias for :func:`~fa.jquery.renderers.%s`""" % obj.func_name
+                kwargs.update(alias_kwargs)
                 return obj(*args, **kwargs)
             wrapper.func_name = func.func_name
             return wrapper
@@ -70,7 +74,7 @@ def jQueryFieldRenderer(plugin, show_input=False, tag='div', renderer=fields.Tex
                 plugin=plugin,
                 name=self.name,
                 show_input=show_input,
-                resources=resources,
+                resources=[url(r) for r in resources],
             )
             try:
                 options.update(options=dumps(kwargs))
@@ -318,6 +322,116 @@ default_renderers = {
 
 # allow lightweight markup in textareas
 """Textareas support some of lightweight markup languages http://en.wikipedia.org/wiki/Lightweight_markup_language"""
+
+
+def RichTextFieldRenderer(use='tinymce', **jq_options):
+    """RichTextFieldRenderer:
+
+    .. sourcecode: python
+
+        >>> from testing import fs
+        >>> field = fs.rich.set(renderer=RichTextFieldRenderer(use='tinymce', theme='advanced'))
+        >>> print field.render() #doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+        <script type="text/javascript">
+          jQuery.fa.add_resource("/jquery/tiny_mce/tiny_mce.js");
+          jQuery.fa.add_resource("/jquery/tiny_mce/jquery.tinymce.js");
+        </script>
+        <textarea autocomplete="off" id="Sample--rich" name="Sample--rich"></textarea>
+        <div id="Sample--rich_tinymce"></div>
+        <script type="text/javascript">
+          jQuery.fa.tinymce('Sample--rich', {"theme": "advanced", "options": []});
+        </script>
+
+    There is also some aliases:
+
+    .. sourcecode: python
+
+        >>> field = fs.rich.set(renderer=tinymce())
+        >>> print field.render() #doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+        <script type="text/javascript">
+          jQuery.fa.add_resource("/jquery/tiny_mce/tiny_mce.js");
+          jQuery.fa.add_resource("/jquery/tiny_mce/jquery.tinymce.js");
+        </script>
+        <textarea autocomplete="off" id="Sample--rich" name="Sample--rich"></textarea>
+        <div id="Sample--rich_tinymce"></div>
+        <script type="text/javascript">
+          jQuery.fa.tinymce('Sample--rich', {"theme": "advanced", "options": []});
+        </script>
+
+        >>> field = fs.rich.set(renderer=textile())
+        >>> print field.render() #doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+        <script type="text/javascript">
+          jQuery.fa.add_resource("/jquery/markitup/jquery.markitup.js");
+          jQuery.fa.add_resource("/jquery/markitup/sets/textile/style.css");
+          jQuery.fa.add_resource("/jquery/markitup/sets/textile/set.js");
+        </script>
+        <textarea autocomplete="off" id="Sample--rich" name="Sample--rich"></textarea>
+        <div id="Sample--rich_markitup"></div>
+        <script type="text/javascript">
+          jQuery.fa.markitup('Sample--rich', {... "nameSpace": "textile", ...});
+        </script>
+        
+        >>> field = fs.rich.set(renderer=bbcode())
+        >>> print field.render() #doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+        <script type="text/javascript">
+          jQuery.fa.add_resource("/jquery/markitup/jquery.markitup.js");
+          jQuery.fa.add_resource("/jquery/markitup/sets/bbcode/style.css");
+          jQuery.fa.add_resource("/jquery/markitup/sets/bbcode/set.js");
+        </script>
+        <textarea autocomplete="off" id="Sample--rich" name="Sample--rich"></textarea>
+        <div id="Sample--rich_markitup"></div>
+        <script type="text/javascript">
+          jQuery.fa.markitup('Sample--rich', {... "nameSpace": "bbcode", ...});
+        </script>
+
+    """
+    plugin_name = use
+    defaults = {}
+    if use == 'tinymce':
+        resources = ['tiny_mce/tiny_mce.js', 'tiny_mce/jquery.tinymce.js']
+        defaults['theme'] = 'advanced'
+    elif use in ('textile', 'bbcode'):
+        plugin_name = 'markitup'
+        defaults['nameSpace'] = use
+        defaults['resizeHandle'] = True
+        defaults['previewInWindow'] = 'width=800, height=600, resizable=yes, scrollbars=yes'
+        resources = ['markitup/jquery.markitup.js',
+                     'markitup/sets/%s/style.css' % use,
+                     'markitup/sets/%s/set.js' % use]
+
+    else:
+        resources = []
+
+    for k, v in defaults.items():
+        if k not in jq_options:
+            jq_options[k] = v
+
+    class Renderer(fields.TextAreaFieldRenderer):
+        markup = use
+
+        def render_textile(self, **kwargs):
+            value = self._value
+            return value and render_textile(value) or ''
+
+        def render_bbcode(self, **kwargs):
+            value = self._value
+            return value and render_bbcode(value) or ''
+
+        def render_readonly(self, **kwargs):
+            meth = getattr(self, 'render_%s' % self.markup, None)
+            if meth is not None:
+                return meth()
+            return fields.TextAreaFieldRenderer.render(self, **kwargs)
+    return jQueryFieldRenderer(plugin_name, show_input=True, renderer=Renderer, resources=resources, **jq_options)
+
+@alias(RichTextFieldRenderer, use='tinymce')
+def tinymce(): pass
+
+@alias(RichTextFieldRenderer, use='textile')
+def textile(): pass
+
+@alias(RichTextFieldRenderer, use='bbcode')
+def bbcode(): pass
 
 class MarkupTextAreaFieldRenderer(fields.TextAreaFieldRenderer):
     markup = 'default'

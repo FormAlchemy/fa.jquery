@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from pylons import request
 from formalchemy.ext.pylons.controller import _ModelsController as Base
 from fa.jquery.wsgi import StaticApp
 

@@ -29,6 +29,7 @@ fs4.configure(include=[fs4.field2])
 class ISample(interface.Interface):
     title = schema.TextLine(title=u'Autocomplete')
     ajax = schema.TextLine(title=u'Auto complete with an ajax request')
+    rich = schema.Text(title=u'Rich text editor')
     color = schema.TextLine(title=u'Color picker')
     selectable = schema.TextLine(title=u'Selectable')
     selectable_token = schema.TextLine(title=u'Selectable token',
@@ -43,6 +44,7 @@ class ISample(interface.Interface):
 Form = FieldSet(ISample)
 Form.title.set(renderer=AutoCompleteFieldRenderer(['aa', 'bb']))
 Form.ajax.set(renderer=AutoCompleteFieldRenderer('/fa.jquery/ajax_values'))
+Form.rich.set(renderer=RichTextFieldRenderer('tinymce'))
 Form.color.set(renderer=ColorPickerFieldRenderer())
 Form.slider.set(renderer=SliderFieldRenderer)
 Form.selectable.set(renderer=SelectableFieldRenderer, options=[l for l in 'abcdef'])

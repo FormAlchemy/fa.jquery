@@ -31,6 +31,25 @@ class TemplateEngine(BaseTemplateEngine):
         template = self.templates.get_template('/forms/%s' % name)
         return literal(template.render(**kwargs))
 
+def url(*args):
+    """return a path to script. you can change the root_url. default to `/jquery`:
+
+    .. sourcecode: python
+
+        >>> url.root_url = '/path_to_static'
+        >>> print url('/absolute.js')
+        /absolute.js
+        >>> print url('relative', 'plugin.js')
+        /path_to_static/relative/plugin.js
+        >>> print url('..', 'plugin.js')
+        /path_to_static/../plugin.js
+    """
+    if args and not args[0].startswith('/'):
+        args = list(args)
+        args.insert(0, url.root_url)
+    return '/'.join([args[0].rstrip('/')]+[a.strip('/') for a in args[1:]])
+url.root_url = '/jquery'
+
 class Flash(object):
     """Flash messaging using jQGrowl:
 

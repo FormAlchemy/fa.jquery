@@ -9,8 +9,6 @@
 	<script type="text/javascript" src="../../utils/editable_selects.js"></script>
 	<script type="text/javascript" src="js/image.js"></script>
 	<link href="css/advimage.css" rel="stylesheet" type="text/css" />
-	<script type="text/javascript" src="../../../fa.jquery.min.js"></script>
-	<script type="text/javascript" src="../../../plupload/plupload.full.min.js"></script>
 </head>
 <body id="advimage" style="display: none">
     <form onsubmit="ImageDialog.insert();return false;" action="#"> 
@@ -226,13 +224,8 @@
 		</div>
 
 		<div class="mceActionPanel">
-			<div style="float: left">
-				<input type="submit" id="insert" name="insert" value="{#insert}" />
-			</div>
-
-			<div style="float: right">
-				<input type="button" id="cancel" name="cancel" value="{#cancel}" onclick="tinyMCEPopup.close();" />
-			</div>
+			<input type="submit" id="insert" name="insert" value="{#insert}" />
+			<input type="button" id="cancel" name="cancel" value="{#cancel}" onclick="tinyMCEPopup.close();" />
 		</div>
     </form>
 </body> 

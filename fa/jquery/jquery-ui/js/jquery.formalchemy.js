@@ -163,7 +163,22 @@ $.fa.extend({
     plugin.colorPicker(options);
   },
   tabs: function(field, plugin, options) {field.tabs(options);},
-  accordion: function(field, plugin, options) {field.accordion(options);}
+  accordion: function(field, plugin, options) {field.accordion(options);},
+  markitup: function(field, plugin, options) {plugin.remove();field.markItUp(options);},
+  tinymce: function(field, plugin, options) {
+        plugin.remove();
+        var css = [];
+        $('link[rel=stylesheet]').each(function(){
+	        css.push($(this).attr('href'));
+        });
+        css = css.join(',');
+        options['content_css'] = css;
+        if (!options.width)
+            field.css('width','100%');
+        if (!options.height)
+            field.css('height','20em');
+        field.tinymce(options)
+  }
 
 });
 
