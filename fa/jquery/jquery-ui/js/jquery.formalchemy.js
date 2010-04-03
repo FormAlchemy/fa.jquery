@@ -173,12 +173,6 @@ $.fa.extend({
   },
   tinymce: function(field, plugin, options) {
         plugin.remove();
-        var css = [];
-        $('link[rel=stylesheet]').each(function(){
-	        css.push($(this).attr('href'));
-        });
-        css = css.join(',');
-        options['content_css'] = css;
         if (!options.width)
             field.css('width','100%');
         if (!options.height)

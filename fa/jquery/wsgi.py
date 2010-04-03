@@ -17,12 +17,14 @@ def html_headers():
 class Static(StaticURLParser):
     """subclass to add a few helpers like markup preview"""
 
+    def static_app(self, environ, start_response):
+        return StaticURLParser.__call__(self, environ, start_response)
+
     def __call__(self, environ, start_response):
-        path = environ['PATH_INFO']
-        if '/markup_parser.html' in path:
-            # markup preview helper
-            req = Request(environ)
+        req = Request(environ)
+        if '/markup_parser.html' in req.path_info:
             resp = Response()
+            # markup preview helper
             resp.charset = 'utf-8'
             markup = req.GET.get('markup', 'textile')
             value = req.POST.get('data')
@@ -35,8 +37,10 @@ class Static(StaticURLParser):
             if isinstance(value, unicode):
                 value = value.encode('utf-8')
             resp.body = value
-            return resp(environ, start_response)
-        return StaticURLParser.__call__(self, environ, start_response)
+        else:
+            resp = req.get_response(self.static_app)
+        resp.headers['X-Salade'] = 'none'
+        return resp(environ, start_response)
 
 def StaticApp(*args, **local_conf):
     path = local_conf.get('jquery_ui', dirname)

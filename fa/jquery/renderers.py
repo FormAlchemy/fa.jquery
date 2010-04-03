@@ -400,6 +400,8 @@ def RichTextFieldRenderer(use='tinymce', resources_prefix=None, **jq_options):
         defaults['theme_advanced_toolbar_align'] = "left"
         defaults['theme_advanced_statusbar_location'] = "bottom"
         defaults['theme_advanced_resizing'] = True
+        if 'content_css' in jq_options:
+            jq_options['content_css'] = [url(c, prefix=resources_prefix) for c in jq_options['content_css']]
     elif use in ('textile', 'bbcode', 'markdown'):
         plugin_name = 'markitup'
         defaults['nameSpace'] = use
