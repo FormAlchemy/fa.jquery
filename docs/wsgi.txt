@@ -1,7 +1,0 @@
-:mod:`fa.jquery.wsgi` -- WSGIApplication
-=================================================
-
-.. automodule:: fa.jquery.wsgi
-
-.. autoclass:: fa.jquery.wsgi.StaticApp
-

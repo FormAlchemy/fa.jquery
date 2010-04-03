@@ -19,12 +19,11 @@ Contents
 ========
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 4
+   :glob:
 
    configuration
-   renderers
-   forms
-   wsgi
+   modules/index
    demo
    news
 

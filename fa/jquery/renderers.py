@@ -9,6 +9,27 @@ from formalchemy import config
 
 from utils import templates
 
+__doc__ = """
+This is the predefined renderers. You can have a look at the :doc:`../demo`.
+
+If you need your own, use the :class:`~fa.jquery.renderers.jQueryFieldRenderer`
+as base class.
+"""
+
+def alias(obj):
+    """decorator to make aliases with docs"""
+    def wrapped(func):
+        if hasattr(obj, 'func_name'):
+            def wrapper(*args, **kwargs):
+                """Alias for :func:`~fa.jquery.renderers.%s`""" % obj.func_name
+                return obj(*args, **kwargs)
+            wrapper.func_name = func.func_name
+            return wrapper
+        else:
+            doc = """Alias for :func:`~fa.jquery.renderers.%s`""" % obj.__name__
+            return type(func.func_name, (obj,), {'__doc__': doc})
+    return wrapped
+
 def jQueryFieldRenderer(plugin, show_input=False, tag='div', renderer=fields.TextFieldRenderer, resources=[], **jq_options):
     """Extending jQuery.fa:
 
@@ -61,7 +82,8 @@ def jQueryFieldRenderer(plugin, show_input=False, tag='div', renderer=fields.Tex
                 raise ValueError('Invalid options: %s' % options)
     return Renderer
 
-plugin = jQueryFieldRenderer
+@alias(jQueryFieldRenderer)
+def plugin(): pass
 
 def AutoCompleteFieldRenderer(url_or_data, renderer=fields.TextFieldRenderer, **jq_options):
     """Use http://docs.jquery.com/UI/Autocomplete:
@@ -87,7 +109,8 @@ def AutoCompleteFieldRenderer(url_or_data, renderer=fields.TextFieldRenderer, **
     jq_options.update(source=url_or_data, show_input=True)
     return jQueryFieldRenderer('autocomplete', renderer=renderer, **jq_options)
 
-autocomplete = AutoCompleteFieldRenderer
+@alias(AutoCompleteFieldRenderer)
+def autocomplete(): pass
 
 def SortableTokenTextFieldRenderer(sep=';', show_input=False, **jq_options):
     """Sortable token using http://jqueryui.com/demos/sortable/:
@@ -125,7 +148,8 @@ def SortableTokenTextFieldRenderer(sep=';', show_input=False, **jq_options):
             return literal(self.template.render(**kwargs))
     return Renderer
 
-sortable_token = SortableTokenTextFieldRenderer
+@alias(SortableTokenTextFieldRenderer)
+def sortable_token(): pass
 
 def ColorPickerFieldRenderer(**jq_options):
     """Color Picker using http://www.syronex.com/software/jquery-color-picker:
@@ -156,7 +180,8 @@ def ColorPickerFieldRenderer(**jq_options):
             ]
     return jQueryFieldRenderer('colorpicker', **jq_options)
 
-colorpicker = ColorPickerFieldRenderer
+@alias(ColorPickerFieldRenderer)
+def colorpicker(): pass
 
 class DateFieldRenderer(fields.DateFieldRenderer):
     """Use http://jqueryui.com/demos/datepicker/:
@@ -187,7 +212,8 @@ class DateFieldRenderer(fields.DateFieldRenderer):
         value = self.params.getone(self.name) or ''
         return value
 
-date = DateFieldRenderer
+@alias(DateFieldRenderer)
+def date(): pass
 
 class DateTimeFieldRenderer(DateFieldRenderer, fields.TimeFieldRenderer):
     """Use http://jqueryui.com/demos/datepicker/"""
@@ -204,7 +230,8 @@ class DateTimeFieldRenderer(DateFieldRenderer, fields.TimeFieldRenderer):
         else:
             return ''
 
-datetime = DateTimeFieldRenderer
+@alias(DateTimeFieldRenderer)
+def datetime(): pass
 
 def SliderFieldRenderer(min=0, max=100, show_value=True, **jq_options):
     """Fill an integer field using http://jqueryui.com/demos/slider/:
@@ -217,7 +244,8 @@ def SliderFieldRenderer(min=0, max=100, show_value=True, **jq_options):
     jq_options.update(min=min, max=max, show_value=show_value)
     return jQueryFieldRenderer('slider', renderer=fields.IntegerFieldRenderer, **jq_options)
 
-slider = SliderFieldRenderer
+@alias(SliderFieldRenderer)
+def slider(): pass
 
 class SelectableFieldRenderer(fields.SelectFieldRenderer):
     """Fill a text field using http://jqueryui.com/demos/selectable/:
@@ -261,7 +289,8 @@ class SelectableFieldRenderer(fields.SelectFieldRenderer):
             jq_options['sep'] = self.sep
         return literal(self.template.render(name=name, value=value, options=L, jq_options=dumps(jq_options)))
 
-selectable = SelectableFieldRenderer
+@alias(SelectableFieldRenderer)
+def selectable():pass
 
 class SelectableTokenFieldRenderer(SelectableFieldRenderer):
     """Same as SelectFieldRenderer but allow multiple selection saved as

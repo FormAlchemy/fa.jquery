@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # fa.jquery documentation build configuration file, created by
-# sphinx-quickstart on Sat Sep  5 11:26:03 2009.
+# sphinx-quickstart on Mon Mar  8 11:07:46 2010.
 #
 # This file is execfile()d with the current directory set to its containing dir.
 #
@@ -38,14 +38,14 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'fa.jquery'
-copyright = u'2009, Gael Pasgrimaud'
+copyright = u'Gael Pasgrimaud'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
 # built documents.
 #
 # The short X.Y version.
-version = '0.5'
+version = '0.1'
 # The full version, including alpha/beta/rc tags.
 release = version
 
@@ -91,7 +91,7 @@ pygments_style = 'sphinx'
 
 # The theme to use for HTML and HTML Help pages.  Major themes that come with
 # Sphinx are currently 'default' and 'sphinxdoc'.
-html_theme = 'default'
+html_theme = 'sphinxdoc'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -158,7 +158,7 @@ html_static_path = ['_static']
 #html_file_suffix = ''
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'fajquerydoc'
+htmlhelp_basename = 'eggdoc'
 
 
 # -- Options for LaTeX output --------------------------------------------------
@@ -172,7 +172,7 @@ htmlhelp_basename = 'fajquerydoc'
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'fajquery.tex', u'fa.jquery Documentation',
+  ('index', 'egg.tex', u'\\{\\{egg\\}\\} Documentation',
    u'Gael Pasgrimaud', 'manual'),
 ]
 
@@ -192,3 +192,30 @@ latex_documents = [
 
 # If false, no module index is generated.
 #latex_use_modindex = True
+
+# Custom stuff
+
+rstctl_exclude = ['fa.jquery.app', 'fa.jquery.pylons']
+
+try:
+    import rstctl
+    extensions = ['sphinx.ext.autodoc', 'rstctl.sphinx']
+except ImportError:
+    pass
+else:
+    del rstctl
+
+from os import path
+pkg_dir = path.abspath(__file__).split('/docs')[0]
+setup = path.join(pkg_dir, 'setup.py')
+if path.isfile(setup):
+    for line_ in open(setup):
+        if line_.startswith("version"):
+            version = line_.split('=')[-1]
+            version = version.strip()
+            version = version.strip("'\"")
+            release = version
+            break
+del pkg_dir, setup, path
+
+
