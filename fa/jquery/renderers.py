@@ -22,7 +22,7 @@ Some plugins use extra resources stored at the
 :class:`~fa.jquery.wsgi.StaticApp`. By default the prefix used is ``/jquery``.
 If you want to change this you can use this snippet:
 
-.. sourcecode: python
+.. sourcecode:: python
 
     >>> from fa.jquery import renderers
     >>> renderers.url.root_url = '/jquery'
@@ -305,7 +305,7 @@ def selectables():pass
 def RichTextFieldRenderer(use='tinymce', resources_prefix=None, **jq_options):
     """RichTextFieldRenderer using TinyMCE or MarkitUp!:
 
-    .. sourcecode: python
+    .. sourcecode:: python
 
         >>> from testing import fs
         >>> field = fs.rich.set(renderer=RichTextFieldRenderer(use='tinymce', theme='advanced'))
@@ -322,7 +322,7 @@ def RichTextFieldRenderer(use='tinymce', resources_prefix=None, **jq_options):
 
     If you want to use your own TinyMCE/MarkitUp! version:
 
-    .. sourcecode: python
+    .. sourcecode:: python
 
         >>> field = fs.rich.set(renderer=RichTextFieldRenderer(use='tinymce', resources_prefix='/my_js'))
         >>> print field.render() #doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
@@ -334,7 +334,7 @@ def RichTextFieldRenderer(use='tinymce', resources_prefix=None, **jq_options):
 
     There is also some aliases:
 
-    .. sourcecode: python
+    .. sourcecode:: python
 
         >>> field = fs.rich.set(renderer=tinymce())
         >>> print field.render() #doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
@@ -343,10 +343,7 @@ def RichTextFieldRenderer(use='tinymce', resources_prefix=None, **jq_options):
           jQuery.fa.add_resource("/jquery/tiny_mce/jquery.tinymce.js");
         </script>
         <textarea autocomplete="off" id="Sample--rich" name="Sample--rich"></textarea>
-        <div id="Sample--rich_tinymce"></div>
-        <script type="text/javascript">
-          jQuery.fa.tinymce('Sample--rich', {... "theme": "advanced", ...});
-        </script>
+        ...
 
         >>> field = fs.rich.set(renderer=textile())
         >>> print field.render() #doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
@@ -357,10 +354,7 @@ def RichTextFieldRenderer(use='tinymce', resources_prefix=None, **jq_options):
           jQuery.fa.add_resource("/jquery/markitup/sets/textile/set.js");
         </script>
         <textarea autocomplete="off" id="Sample--rich" name="Sample--rich"></textarea>
-        <div id="Sample--rich_markitup"></div>
-        <script type="text/javascript">
-          jQuery.fa.markitup('Sample--rich', {... "nameSpace": "textile", ...});
-        </script>
+        ...
         
         >>> field = fs.rich.set(renderer=markdown())
         >>> print field.render() #doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
@@ -371,10 +365,7 @@ def RichTextFieldRenderer(use='tinymce', resources_prefix=None, **jq_options):
           jQuery.fa.add_resource("/jquery/markitup/sets/markdown/set.js");
         </script>
         <textarea autocomplete="off" id="Sample--rich" name="Sample--rich"></textarea>
-        <div id="Sample--rich_markitup"></div>
-        <script type="text/javascript">
-          jQuery.fa.markitup('Sample--rich', {... "nameSpace": "markdown", ...});
-        </script>
+        ...
 
         >>> field = fs.rich.set(renderer=bbcode())
         >>> print field.render() #doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
@@ -385,10 +376,7 @@ def RichTextFieldRenderer(use='tinymce', resources_prefix=None, **jq_options):
           jQuery.fa.add_resource("/jquery/markitup/sets/bbcode/set.js");
         </script>
         <textarea autocomplete="off" id="Sample--rich" name="Sample--rich"></textarea>
-        <div id="Sample--rich_markitup"></div>
-        <script type="text/javascript">
-          jQuery.fa.markitup('Sample--rich', {... "nameSpace": "bbcode", ...});
-        </script>
+        ...
 
     """
     plugin_name = use

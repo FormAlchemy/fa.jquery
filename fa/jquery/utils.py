@@ -36,7 +36,7 @@ class TemplateEngine(BaseTemplateEngine):
 def url(*args, **kwargs):
     """return a path to script. you can change the root_url. default to `/jquery`:
 
-    .. sourcecode: python
+    .. sourcecode:: python
 
         >>> url.root_url = '/path_to_static'
         >>> print url('/absolute.js')
@@ -60,16 +60,45 @@ url.root_url = '/jquery'
 class Flash(object):
     """Flash messaging using jQGrowl:
 
-    .. sourcecode: python
+    .. sourcecode:: python
 
         >>> f = Flash()
         >>> f.info('my info')
         >>> f.warn('my warn')
         >>> print f.render() #doctest: +NORMALIZE_WHITESPACE
-        jQuery(document).ready(function{
-        jQuery.jGrowl("my info", {"theme": "info"});
-        jQuery.jGrowl("my warn", {"theme": "warn"});
+        <script language="javascript">
+        jQuery(document).ready(function () {
+        jQuery.jGrowl("my info", {"header": "Info", "theme": "ui-state-info", "life": 2000});
+        jQuery.jGrowl("my warn", {"header": "Warning", "theme": "ui-state-warning", "life": 3000});
         });
+        </script>
+
+    You can also render messages inline:
+
+    .. sourcecode:: python
+
+        >>> print f.render_inline() #doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+        <div class="jGrowl" style="position:relative;">
+        <div id="message_..." style="width:auto;display:none;" class="jGrowl-notification ui-state-highlight ui-corner-all ui-state-info">
+        <div class="header">Info</div>
+        my info
+        </div>
+        <div id="message_..." style="width:auto;display:none;" class="jGrowl-notification ui-state-highlight ui-corner-all ui-state-warning">
+        <div class="header">Warning</div>
+        my warn
+        </div>
+        <script language="javascript">
+        jQuery(document).ready(function () {
+        jQuery("#message_...").slideDown('slow', function() {
+        var self = $(this);setTimeout(function() { self.slideUp('slow', function(){self.remove();}); }, 20...);
+        });
+        jQuery("#message_...").slideDown('slow', function() {
+        var self = $(this);setTimeout(function() { self.slideUp('slow', function(){self.remove();}); }, 30...);
+        });
+        });
+        </script>
+        </div>
+
 
     """
     def __init__(self, level=logging.INFO, show_headers=True, options={}):
@@ -78,7 +107,7 @@ class Flash(object):
         self.show_headers = show_headers
         self.options = {
                 logging.INFO: {'header': 'Info', 'theme': 'ui-state-info'},
-                logging.WARN: {'header': 'warning', 'theme': 'ui-state-warning'},
+                logging.WARN: {'header': 'Warning', 'theme': 'ui-state-warning'},
                 logging.ERROR: {'header': 'Error', 'theme': 'ui-state-error'},
                 logging.CRITICAL: {'header': 'Critical', 'theme': 'ui-state-error', 'sticky': True},
                 logging.DEBUG: {'header': 'Debug', 'theme': 'ui-state-debug'},
@@ -124,6 +153,8 @@ class Flash(object):
             id = 'message_%s' % str(random.random())[2:]
             messages.append((id, options['theme'], options.get('header'), message))
             if 'life' not in options and 'sticky' not in options:
+                if level < 20:
+                    level = 20
                 lifes.append((id, level*100+random.randint(10, 100)))
             else:
                 lifes.append((id, 0))
@@ -138,6 +169,8 @@ class Flash(object):
             if not self.show_headers and 'header' in option:
                 options.pop('header')
             if 'life' not in options:
+                if level < 20:
+                    level = 20
                 options['life'] = level*100
             message = dumps([message, options])
             messages.append(message.strip('[]'))
