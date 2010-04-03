@@ -39,7 +39,7 @@ def alias(obj, **alias_kwargs):
             return wrapper
         else:
             doc = """Alias for :func:`~fa.jquery.renderers.%s` with preset options %r""" % (obj.__name__, alias_kwargs)
-            alias_kwargs['__doc__'] = alias_kwargs
+            alias_kwargs['__doc__'] = doc
             return type(func.func_name, (obj,), alias_kwargs)
     return wrapped
 
@@ -94,7 +94,7 @@ def jQueryFieldRenderer(plugin, show_input=False, tag='div', renderer=fields.Tex
                 return literal(self.template.render(**options))
             except:
                 raise ValueError('Invalid options: %s' % options)
-    return type('Renderer%s' % plugin.title(), (Renderer,),
+    return type('%sPluginRenderer' % plugin.title(), (Renderer,),
                 dict(template=template,
                      jq_options=jq_options,
                      resources_prefix=resources_prefix))
@@ -168,7 +168,7 @@ def SortableTokenTextFieldRenderer(sep=';', show_input=False, **jq_options):
 @alias(SortableTokenTextFieldRenderer)
 def sortable_token(): pass
 
-def ColorPickerFieldRenderer(**jq_options):
+def ColorPickerFieldRenderer(colors=[], **jq_options):
     """Color Picker using http://www.syronex.com/software/jquery-color-picker:
 
     .. sourcecode:: python
@@ -189,8 +189,7 @@ def ColorPickerFieldRenderer(**jq_options):
         </script>...
 
     """
-    if 'color' not in jq_options:
-        jq_options['color'] = [
+    jq_options['color'] = colors or [
             "#FFFFFF", "#EEEEEE", "#FFFF88", "#FF7400", "#CDEB8B", "#6BBA70",
             "#006E2E", "#C3D9FF", "#4096EE", "#356AA0", "#FF0096", "#B02B2C",
             "#000000"
