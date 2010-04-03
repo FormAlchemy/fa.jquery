@@ -19,7 +19,7 @@ If you need your own, use the :class:`~fa.jquery.renderers.jQueryFieldRenderer`
 as base class.
 
 Some plugins use extra resources stored at the
-:class:`~fa.jquery.wsgi.StaticApp`. By default the prefix used is ``/jquery ``.
+:class:`~fa.jquery.wsgi.StaticApp`. By default the prefix used is ``/jquery``.
 If you want to change this you can use this snippet:
 
 .. sourcecode: python
@@ -38,9 +38,10 @@ def alias(obj, **alias_kwargs):
                 kwargs.update(alias_kwargs)
                 return obj(*args, **kwargs)
             wrapper.func_name = func.func_name
+            wrapper.func_doc = """Alias for :func:`~fa.jquery.renderers.%s` with preset options %r""" % (obj.func_name, alias_kwargs)
             return wrapper
         else:
-            doc = """Alias for :func:`~fa.jquery.renderers.%s` with preset options %r""" % (obj.__name__, alias_kwargs)
+            doc = """Alias for :class:`~fa.jquery.renderers.%s` with preset options %r""" % (obj.__name__, alias_kwargs)
             alias_kwargs['__doc__'] = doc
             return type(func.func_name, (obj,), alias_kwargs)
     return wrapped
