@@ -35,7 +35,7 @@ from pylons import url
     <title>
     ${collection_name.title()}
     </title>
-    <link type="text/css" rel="stylesheet" href="${url('jquery', path_info='css/ui-lightness/jquery-ui-1.8rc1.custom.css')}" />
+    <link type="text/css" rel="stylesheet" href="${url('jquery', path_info='css/redmond/jquery-ui-1.8.custom.css')}" />
     <link type="text/css" rel="stylesheet" href="${url('jquery', path_info='fa.jquery.min.css')}" />
     <style type="text/css">
       label {font-weight:bold;}

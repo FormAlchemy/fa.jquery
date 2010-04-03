@@ -5,7 +5,7 @@ from textile import textile
 import glob
 import os
 
-jquery_ui = 'jquery-ui-1.8rc1.custom'
+jquery_ui = 'jquery-ui'
 
 dirname = os.path.join(os.path.dirname(__file__), jquery_ui)
 

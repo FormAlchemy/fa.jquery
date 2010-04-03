@@ -184,7 +184,7 @@ class DateFieldRenderer(fields.DateFieldRenderer):
         return literal(self.template.render(**kwargs))
 
     def _serialized_value(self):
-        value = self._params.getone(self.name) or ''
+        value = self.params.getone(self.name) or ''
         return value
 
 date = DateFieldRenderer
