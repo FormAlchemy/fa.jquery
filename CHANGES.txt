@@ -1,3 +1,8 @@
+0.6.1
+-----
+
+Add Flash message
+
 0.6
 ---
 
