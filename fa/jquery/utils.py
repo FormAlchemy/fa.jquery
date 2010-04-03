@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from formalchemy.templates import TemplateEngine as BaseTemplateEngine
+from formalchemy import types as fatypes
 from webhelpers.html import escape, literal
 from mako.lookup import TemplateLookup
 from simplejson import dumps
@@ -108,3 +109,22 @@ class Flash(object):
             messages.append(message.strip('[]'))
         return literal(template.render(messages=messages, onload=onload))
 
+class Color(fatypes.String):
+    """Alias of fatypes.String to bind a ColorPickerFieldRenderer"""
+fatypes.Color = Color
+
+class HTML(fatypes.Text):
+    """Alias of fatypes.Text to bind a RichTextFieldRenderer"""
+fatypes.HTML = HTML
+
+class Slider(fatypes.Integer):
+    """Alias of fatypes.Integer to bind a SliderFieldRenderer"""
+fatypes.Slider = Slider
+
+class Selectable(fatypes.String):
+    """Alias of fatypes.String to bind a selectable()"""
+fatypes.Selectable = Selectable
+
+class Selectables(fatypes.List):
+    """Alias of fatypes.List to bind a selectables()"""
+fatypes.Selectables = Selectables

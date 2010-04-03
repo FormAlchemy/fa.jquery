@@ -17,6 +17,14 @@ This is the predefined renderers. You can have a look at the :doc:`../demo`.
 
 If you need your own, use the :class:`~fa.jquery.renderers.jQueryFieldRenderer`
 as base class.
+
+Some plugins use extra resources stored at the
+:class:`~fa.jquery.wsgi.StaticApp`. By default the prefix used is ``/jquery ``.
+If you want to change this you can use this snippet::
+
+    >>> from fa.jquery import renderers
+    >>> renderers.url.root_url = '/jquery'
+
 """
 
 def alias(obj, **alias_kwargs):
@@ -292,17 +300,6 @@ def selectable():pass
 @alias(SelectableFieldRenderer, multiple=True)
 def selectables():pass
 
-default_renderers = {
-    types.Date:date,
-    types.DateTime:datetime,
-    'slider':slider,
-    'selectable':selectable,
-}
-
-# allow lightweight markup in textareas
-"""Textareas support some of lightweight markup languages http://en.wikipedia.org/wiki/Lightweight_markup_language"""
-
-
 def RichTextFieldRenderer(use='tinymce', resources_prefix=None, **jq_options):
     """RichTextFieldRenderer using TinyMCE or MarkitUp!:
 
@@ -449,4 +446,14 @@ def markdown(): pass
 
 @alias(RichTextFieldRenderer, use='bbcode')
 def bbcode(): pass
+
+default_renderers = {
+    types.Date:date,
+    types.DateTime:datetime,
+    types.HTML: tinymce(),
+    types.Slider: slider,
+    types.Color: ColorPickerFieldRenderer,
+    types.Selectable: selectable(),
+    types.Selectables: selectables(),
+}
 
