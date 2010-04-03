@@ -20,7 +20,9 @@ as base class.
 
 Some plugins use extra resources stored at the
 :class:`~fa.jquery.wsgi.StaticApp`. By default the prefix used is ``/jquery ``.
-If you want to change this you can use this snippet::
+If you want to change this you can use this snippet:
+
+.. sourcecode: python
 
     >>> from fa.jquery import renderers
     >>> renderers.url.root_url = '/jquery'
