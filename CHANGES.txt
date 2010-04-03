@@ -3,6 +3,8 @@
 
 Switch to jquery.ui 1.8. Autocomplete should now return a json array of {"value": "v"}.
 
+Better implementation of RichTextFieldRenderer allowing to use TinyMCE and MarkitUp!
+
 0.4
 ---
 
