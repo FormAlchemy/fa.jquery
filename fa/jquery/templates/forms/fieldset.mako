@@ -39,7 +39,7 @@ _focus_rendered = False
         </div>
       %endif
       %if not isinstance(field.type, fatypes.Boolean):
-        ${field.render()|n}
+        <div>${field.render()|n}</div>
       %endif
     </div>
     %if (fieldset.focus == field or fieldset.focus is True) and not _focus_rendered:
