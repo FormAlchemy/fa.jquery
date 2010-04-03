@@ -5,7 +5,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>jQuery UI Example Page</title>
     %if mim:
-      <link type="text/css" href="/jquery/css/redmond/jquery-ui-1.8rc1.custom.css" rel="stylesheet" />
+      <link type="text/css" href="/jquery/css/redmond/jquery-ui-1.8.custom.css" rel="stylesheet" />
       <link type="text/css" href="/jquery/fa.jquery.min.css" rel="stylesheet" />	
       <script type="text/javascript" src="/jquery/fa.jquery.min.js"></script>
     %else:
