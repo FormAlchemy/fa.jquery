@@ -13,7 +13,7 @@ Installation
 
 Using setuptools::
 
-  $ easy_install "FormAlchemy>=1.2.3" fa.jquery
+  $ easy_install "FormAlchemy>=1.3.3" fa.jquery
 
 Contents
 ========
