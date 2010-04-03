@@ -9,7 +9,7 @@
 // ----------------------------------------------------------------------------
 // Feel free to add more tags
 // ----------------------------------------------------------------------------
-mySettings = {
+markitup_settings['bbcode'] = {
 	previewParserPath:	'', // path to your BBCode parser
 	markupSet: [
 		{name:'Bold', key:'B', openWith:'[b]', closeWith:'[/b]'},

@@ -35,6 +35,7 @@ setup(name='fa.jquery',
           'simplejson',
           'textile',
           'postmarkup',
+          'markdown',
           'mako',
       ],
       entry_points="""

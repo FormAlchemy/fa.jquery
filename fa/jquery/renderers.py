@@ -361,7 +361,7 @@ def RichTextFieldRenderer(use='tinymce', **jq_options):
         >>> field = fs.rich.set(renderer=textile())
         >>> print field.render() #doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
         <script type="text/javascript">
-          jQuery.fa.add_resource("/jquery/markitup/jquery.markitup.js");
+          jQuery.fa.add_resource("/jquery/markitup/jquery.markitup.pack.js");
           jQuery.fa.add_resource("/jquery/markitup/sets/textile/style.css");
           jQuery.fa.add_resource("/jquery/markitup/sets/textile/set.js");
         </script>
@@ -371,10 +371,23 @@ def RichTextFieldRenderer(use='tinymce', **jq_options):
           jQuery.fa.markitup('Sample--rich', {... "nameSpace": "textile", ...});
         </script>
         
+        >>> field = fs.rich.set(renderer=markdown())
+        >>> print field.render() #doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+        <script type="text/javascript">
+          jQuery.fa.add_resource("/jquery/markitup/jquery.markitup.pack.js");
+          jQuery.fa.add_resource("/jquery/markitup/sets/markdown/style.css");
+          jQuery.fa.add_resource("/jquery/markitup/sets/markdown/set.js");
+        </script>
+        <textarea autocomplete="off" id="Sample--rich" name="Sample--rich"></textarea>
+        <div id="Sample--rich_markitup"></div>
+        <script type="text/javascript">
+          jQuery.fa.markitup('Sample--rich', {... "nameSpace": "markdown", ...});
+        </script>
+
         >>> field = fs.rich.set(renderer=bbcode())
         >>> print field.render() #doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
         <script type="text/javascript">
-          jQuery.fa.add_resource("/jquery/markitup/jquery.markitup.js");
+          jQuery.fa.add_resource("/jquery/markitup/jquery.markitup.pack.js");
           jQuery.fa.add_resource("/jquery/markitup/sets/bbcode/style.css");
           jQuery.fa.add_resource("/jquery/markitup/sets/bbcode/set.js");
         </script>
@@ -390,12 +403,13 @@ def RichTextFieldRenderer(use='tinymce', **jq_options):
     if use == 'tinymce':
         resources = ['tiny_mce/tiny_mce.js', 'tiny_mce/jquery.tinymce.js']
         defaults['theme'] = 'advanced'
-    elif use in ('textile', 'bbcode'):
+    elif use in ('textile', 'bbcode', 'markdown'):
         plugin_name = 'markitup'
         defaults['nameSpace'] = use
         defaults['resizeHandle'] = True
-        defaults['previewInWindow'] = 'width=800, height=600, resizable=yes, scrollbars=yes'
-        resources = ['markitup/jquery.markitup.js',
+        defaults['previewParserPath'] = '~/../markup_preview.html?markup=%s' % use
+        resources = ['markitup/jquery.markitup.pack.js',
+                     'markitup/skins/simple/style.css',
                      'markitup/sets/%s/style.css' % use,
                      'markitup/sets/%s/set.js' % use]
 
@@ -429,6 +443,9 @@ def tinymce(): pass
 
 @alias(RichTextFieldRenderer, use='textile')
 def textile(): pass
+
+@alias(RichTextFieldRenderer, use='markdown')
+def markdown(): pass
 
 @alias(RichTextFieldRenderer, use='bbcode')
 def bbcode(): pass

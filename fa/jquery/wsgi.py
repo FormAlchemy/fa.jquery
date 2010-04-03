@@ -2,6 +2,8 @@
 from paste.urlparser import StaticURLParser
 from webob import Request, Response
 from textile import textile
+from postmarkup import render_bbcode
+import markdown
 import glob
 import os
 
@@ -17,20 +19,19 @@ class Static(StaticURLParser):
 
     def __call__(self, environ, start_response):
         path = environ['PATH_INFO']
-        if path == '/markup_preview.html':
+        if '/markup_preview.html' in path:
             # markup preview helper
             req = Request(environ)
             resp = Response()
-            markup = req.POST.get('markup', 'textile')
-            value = req.POST['value']
-            try:
-                if markup == 'textile':
-                    value = textile(value)
-                elif markup == 'bbcode':
-                    from postmarkup import render_bbcode
-                    value = render_bbcode(value)
-            except:
-                pass
+            resp.charset = 'utf-8'
+            markup = req.GET.get('markup', 'textile')
+            value = req.POST.get('data')
+            if markup == 'textile':
+                value = textile(value)
+            elif markup == 'markdown':
+                value = markdown.markdown(value)
+            elif markup == 'bbcode':
+                value = render_bbcode(value)
             if isinstance(value, unicode):
                 value = value.encode('utf-8')
             resp.body = value

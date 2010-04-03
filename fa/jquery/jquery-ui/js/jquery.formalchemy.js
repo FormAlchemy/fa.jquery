@@ -1,3 +1,6 @@
+
+var markitup_settings = {};
+
 (function($) {
 
 var log = function(message) {
@@ -164,7 +167,11 @@ $.fa.extend({
   },
   tabs: function(field, plugin, options) {field.tabs(options);},
   accordion: function(field, plugin, options) {field.accordion(options);},
-  markitup: function(field, plugin, options) {plugin.remove();field.markItUp(options);},
+  markitup: function(field, plugin, options) {
+      plugin.remove();
+      var nameSpace = options['nameSpace'];
+      field.markItUp($.extend(markitup_settings[nameSpace], options));
+  },
   tinymce: function(field, plugin, options) {
         plugin.remove();
         var css = [];
