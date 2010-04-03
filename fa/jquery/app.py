@@ -2,7 +2,7 @@
 from webob import Request, Response
 from renderers import templates
 from formalchemy import config
-from utils import TemplateEngine
+from utils import TemplateEngine, Flash
 from forms import Tabs, Accordion
 import simplejson
 from testing import *
@@ -17,6 +17,16 @@ class Demo(object):
 
     def __call__(self, environ, start_response):
         req = Request(environ)
+        req.flash = Flash()
+        req.flash.info('info message')
+        req.flash.warn('warning message')
+        req.flash.error('error message')
+        req.flash.critical('critical message is sticky')
+        req.inline_flash = Flash()
+        req.inline_flash.info('info message')
+        req.inline_flash.warn('warning message')
+        req.inline_flash.error('error message')
+        req.inline_flash.critical('critical message is sticky')
         if req.path.endswith('/fa.jquery/ajax_values'):
             resp = Response()
             resp.content_type='application/json'
@@ -52,7 +62,7 @@ class Demo(object):
 
             template = templates.get_template('index.mako')
             head = templates.get_template('head.mako').render()
-            body = template.render(fs=fs, tabs=tabs, accordion=accordion,
+            body = template.render(req=req, fs=fs, tabs=tabs, accordion=accordion,
                                    headers=self.headers,
                                    head=head, mim=req.GET.get('mim', False))
 

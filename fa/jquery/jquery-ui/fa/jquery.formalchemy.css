@@ -30,6 +30,21 @@ a.ui-widget-button, a.ui-widget-link {margin-right:1em;}
 
 .ui-pager {margin-bottom:1em;}
 
+/* jGrowl */
+div.ui-state-info {
+    background-color: #FFFFCC;
+    border:1px solid #336633;
+    color:#000000;
+}
+
+div.ui-state-warning {
+    background-color: #FF9966;
+    border:1px solid #FF3300;
+    color:#FF3300;
+}
+
+
+
 /* colorbox */
 #cboxOverlay{background-image:css/ui-lightness/images/ui-bg_diagonals-thick_20_666666_40x40.png);}
 

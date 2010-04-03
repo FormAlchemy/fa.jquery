@@ -21,6 +21,8 @@
   form {width:50%;}
   .ui-widget {font-size:1em;font-family:'Lucida Grande','Lucida Sans Unicode','Geneva','Verdana',sans-serif;}
 </style>
+${req.inline_flash.render_inline()}
+${req.flash.render()}
 <div>
     <form action="" method="POST">
       <h2>Renderers</h2>

@@ -5,6 +5,7 @@ from webhelpers.html import escape, literal
 from mako.lookup import TemplateLookup
 from simplejson import dumps
 import logging
+import random
 import os
 
 dirname = os.path.join(os.path.dirname(__file__), 'templates')
@@ -71,15 +72,18 @@ class Flash(object):
         });
 
     """
-    cssClasses = {
-            logging.INFO: 'info',
-            logging.WARN: 'warn',
-            logging.ERROR: 'error',
-            logging.DEBUG: 'debug',
-        }
-    def __init__(self, level=logging.INFO):
+    def __init__(self, level=logging.INFO, show_headers=True, options={}):
         self.messages = []
         self.level = level
+        self.show_headers = show_headers
+        self.options = {
+                logging.INFO: {'header': 'Info', 'theme': 'ui-state-info'},
+                logging.WARN: {'header': 'warning', 'theme': 'ui-state-warning'},
+                logging.ERROR: {'header': 'Error', 'theme': 'ui-state-error'},
+                logging.CRITICAL: {'header': 'Critical', 'theme': 'ui-state-error', 'sticky': True},
+                logging.DEBUG: {'header': 'Debug', 'theme': 'ui-state-debug'},
+            }
+        self.options.update(options)
 
     def log(self, message, level=logging.INFO):
         if level >= self.level:
@@ -92,20 +96,50 @@ class Flash(object):
     def warn(self, message):
         """warn level"""
         self.log(message, logging.WARN)
+    warning = warn
 
-    def error(self, message):
+    def err(self, message):
         """error level"""
         self.log(message, logging.ERROR)
+    error = err
+
+    def critical(self, message):
+        """critical level"""
+        self.log(message, logging.CRITICAL)
 
     def debug(self, message):
         """debug level"""
         self.log(message, logging.DEBUG)
 
+    def render_inline(self):
+        """render the notifications inplace
+        """
+        template=templates.get_template('/utils/inline_flash.mako')
+        messages = []
+        lifes = []
+        for message, level in self.messages:
+            options = self.options[level].copy()
+            if not self.show_headers and 'header' in option:
+                options.pop('header')
+            id = 'message_%s' % str(random.random())[2:]
+            messages.append((id, options['theme'], options.get('header'), message))
+            if 'life' not in options and 'sticky' not in options:
+                lifes.append((id, level*100+random.randint(10, 100)))
+            else:
+                lifes.append((id, 0))
+        return literal(template.render(messages=messages, lifes=lifes, show_headers=self.show_headers))
+
     def render(self, onload=True):
+        """render notification using jGrowl"""
         template=templates.get_template('/utils/flash.mako')
         messages = []
         for message, level in self.messages:
-            message = dumps([message, dict(theme=self.cssClasses[level])])
+            options = self.options[level].copy()
+            if not self.show_headers and 'header' in option:
+                options.pop('header')
+            if 'life' not in options:
+                options['life'] = level*100
+            message = dumps([message, options])
             messages.append(message.strip('[]'))
         return literal(template.render(messages=messages, onload=onload))
 

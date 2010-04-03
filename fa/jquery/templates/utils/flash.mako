@@ -1,5 +1,6 @@
+<script language="javascript">
 %if onload:
-jQuery(document).ready(function{
+jQuery(document).ready(function () {
 %endif
 %for message in messages:
 jQuery.jGrowl(${message});
@@ -7,3 +8,4 @@ jQuery.jGrowl(${message});
 %if onload:
 });
 %endif
+</script>
