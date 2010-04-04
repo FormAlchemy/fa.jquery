@@ -16,7 +16,7 @@ if (!Array.indexOf) {
 (function($) {
 
 var log = function(message) {
-    try { window.console1.log(message); } catch (e) {}
+    try { window.console.log(message); } catch (e) {}
 }
 
 $.fn.extend({
