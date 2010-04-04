@@ -177,7 +177,7 @@ $.fa.extend({
             field.css('width','100%');
         if (!options.height)
             field.css('height','20em');
-        field.tinymce(options)
+        field.tinymce(options);
   }
 
 });
