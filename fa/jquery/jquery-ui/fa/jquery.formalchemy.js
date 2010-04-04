@@ -1,10 +1,22 @@
 
 var markitup_settings = {};
 
+if (!Array.indexOf) {
+  // Old IE do not support indexOf
+  Array.prototype.indexOf = function (obj, start) {
+    for (var i = (start || 0); i < this.length; i++) {
+      if (this[i] == obj) {
+        return i;
+      }
+    }
+    return -1;
+  }
+}
+
 (function($) {
 
 var log = function(message) {
-    try { window.console.log(message); } catch (e) {};
+    try { window.console1.log(message); } catch (e) {}
 }
 
 $.fn.extend({
@@ -35,7 +47,7 @@ var pluginGen = function(plugin_id, func) {
 
 $.extend({
   fa_plugins:{},
-  fa_resources:[],
+  fa_resources:new Array(),
   fa: {
       extend: function(plugins) {
         for (k in plugins) {

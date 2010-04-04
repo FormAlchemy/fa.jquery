@@ -1,3 +1,8 @@
+0.6.2
+-----
+
+IE do not support indexOf. Fix Array prototype.
+
 0.6.1
 -----
 

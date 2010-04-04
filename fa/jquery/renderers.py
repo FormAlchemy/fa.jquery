@@ -240,7 +240,8 @@ class DateTimeFieldRenderer(DateFieldRenderer, fields.TimeFieldRenderer):
     template = templates.get_template('/renderers/date.mako')
     jq_options = dict(dateFormat='yy-mm-dd')
     def render(self, **kwargs):
-        return h.content_tag('span', DateFieldRenderer.render(self, **kwargs) + ' ' + fields.TimeFieldRenderer._render(self, **kwargs))
+        return h.content_tag('span', DateFieldRenderer.render(self, **kwargs) + literal(' ') + \
+                                     literal(fields.TimeFieldRenderer._render(self, **kwargs)))
 
     def _serialized_value(self):
         date = DateFieldRenderer._serialized_value(self)
