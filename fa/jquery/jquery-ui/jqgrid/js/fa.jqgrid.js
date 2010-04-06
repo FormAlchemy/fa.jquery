@@ -17,6 +17,7 @@ $.fa.extend({
                 url: edit_url,
                 beforeShowForm: function(form) {
                     form.empty();
+                    $('.navButton', form.parents('.ui-jqdialog')).remove();
                     form.load(item_url);
                 },
                 beforeSubmit: function(data, form) {
@@ -44,6 +45,7 @@ $.fa.extend({
         var settings = {
            datatype: "json",
            height: $(document).height()-200,
+           width: $(document).width()-30,
            rowNum: parseInt(($(document).height()-200)/22),
            rowList:[20,50, 100],
            pager: '#'+pager.attr('id'),

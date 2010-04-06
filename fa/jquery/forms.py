@@ -31,6 +31,7 @@ class Tabs(object):
         <BLANKLINE>
             
     """
+    engine = None
     template = templates.get_template('/forms/tabs.mako')
     def __init__(self, id, *fieldsets, **options):
         if not isinstance(id, basestring):
@@ -54,13 +55,13 @@ class Tabs(object):
     @property
     def model(self):
         if self._fs:
-            return self._fs[0].model
+            return self._fs_dict.get(self._fs[0][0]).model
 
     def __getattr__(self, attr):
         return self._fs_dict.get(attr)
 
     def __setattr__(self, attr, fs):
-        if attr.startswith('_'):
+        if attr.startswith('_') or attr in ('engine',):
             object.__setattr__(self, attr, fs)
         else:
             fs.__name__ = attr
@@ -77,16 +78,28 @@ class Tabs(object):
             fs = self._fs_dict[fs]
         return fs
 
-    def bind(self, model, *ids, **kwargs):
+    def bind(self, model=None, session=None, data=None, *ids, **kwargs):
         """Bind fieldsets to model.  If no ids is provided, all fieldsets are
         bound to model. Session and data can be passed as kwargs."""
-        ids = ids or self._fs_dict.keys()
-        for id in ids:
+        news = []
+        for id, title in self._fs:
             fs = self.get(id)
-            id = fs.__name__
-            fs = fs.bind(model, **kwargs)
-            fs.__name__ = id
-            self._fs_dict[id] = fs
+            if id in ids:
+                fs = fs.bind(model=model, data=data, session=session)
+            elif not ids:
+                fs = fs.bind(model=model, data=data, session=session)
+            else:
+                fs = fs.bind(model=fs.model, data=data, session=session)
+            news.append((id, title, fs))
+        return self.__class__(self._id, *news, **self._options.copy())
+
+    def copy(self):
+        news = []
+        for id, title in self._fs:
+            fs = self.get(id)
+            fs = fs.bind(model=fs.model)
+            news.append((id, title, fs))
+        return self.__class__(self._id, *news, **self._options.copy())
 
     def validate(self, *ids):
         """Validate fieldsets. If no ids is provided, all fieldsets are
