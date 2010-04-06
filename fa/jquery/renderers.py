@@ -269,7 +269,7 @@ def SliderFieldRenderer(min=0, max=100, show_value=True, **jq_options):
 def slider(): pass
 
 def SelectableFieldRenderer(multiple=False, **jq_options):
-    """Fill a text field using http://jqueryui.com/demos/selectable/:
+    """Fill a list field using http://jqueryui.com/demos/selectable/:
 
     .. sourcecode:: python
 
@@ -303,6 +303,41 @@ def selectable():pass
 
 @alias(SelectableFieldRenderer, multiple=True)
 def selectables():pass
+
+def ButtonSetFieldRenderer(multiple=False, **jq_options):
+    """Fill a list field using http://jqueryui.com/demos/button/:
+
+    .. sourcecode:: python
+
+        >>> from testing import fs
+        >>> print fs.buttonset.render() #doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+        <div style="display:none;"><select autocomplete="off" id="Sample--buttonset" name="Sample--buttonset">
+        <option value="a">a</option>
+        <option value="b">b</option>
+        <option value="c">c</option>
+        <option value="d">d</option>
+        <option value="e">e</option>
+        <option value="f">f</option>
+        </select></div>
+        <div id="Sample--buttonset_buttonset"></div>
+        <script type="text/javascript">
+          jQuery.fa.buttonset('Sample--buttonset', {"multiple": false, "options": ["a", "b", "c", "d", "e", "f"]});
+        </script>
+
+    """
+    jq_options.update(multiple=multiple)
+    class Renderer(fields.SelectFieldRenderer):
+        def render(self, *args, **kwargs):
+            kwargs['multiple'] = self.multiple
+            return fields.SelectFieldRenderer.render(self, *args, **kwargs)
+    renderer = type('%sFieldRenderer' % multiple and 'CheckboxSet' or 'RadioSet', (Renderer,), dict(multiple=multiple))
+    return jQueryFieldRenderer('buttonset', renderer=renderer, **jq_options)
+
+@alias(ButtonSetFieldRenderer, multiple=False)
+def radioset():pass
+
+@alias(ButtonSetFieldRenderer, multiple=True)
+def checkboxset():pass
 
 def RichTextFieldRenderer(use='tinymce', resources_prefix=None, **jq_options):
     """RichTextFieldRenderer using TinyMCE or MarkitUp!:

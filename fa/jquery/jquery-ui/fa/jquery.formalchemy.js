@@ -132,6 +132,25 @@ $.fa.extend({
     initValue();
   },
 
+  buttonset: function(field, plugin, options) {
+    if (options.multiple)
+        var field_type = 'checkbox';
+    else
+        var field_type = 'radio';
+    var field_name = plugin.attr('id')+'_field';
+    var i = 0;
+    $('option', field).each(function(){
+        var opt = $(this);
+        plugin.append('<input type="'+field_type+'" name="'+field_name+'"  id="'+field_name+i+'"' +
+                              'value="'+opt.attr('value')+'" /><label for="'+field_name+i+'">'+opt.text()+'</label>');
+        i ++;
+    });
+    var plugin_field = $('input[name="'+field_name+'"]');
+    plugin_field.val(field.val());
+    plugin_field.click(function() { field.val(plugin_field.val()); });
+    plugin.buttonset();
+  },
+
   sortable: function(field, plugin, options) {
     var sep = options.sep;
     var sortable = plugin;

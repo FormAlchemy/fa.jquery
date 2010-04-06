@@ -45,8 +45,8 @@ class Demo(object):
                         ('tab1', 'My first tab', fs1),
                         ('tab2', 'The second', fs2),
                         footer='<input type="submit" name="%(id)s" />')
-            tabs.bind(fs1.gen_model(), 'tab1', data=req.POST or None)
-            tabs.bind(fs2.gen_model(), 'tab2', data=req.POST or None)
+            tabs.tab1.rebind(fs1.gen_model(), data=req.POST or None)
+            tabs.tab2.rebind(fs2.gen_model(), data=req.POST or None)
             accordion = Accordion('my_accordion',
                         ('tab1', 'My first section', fs3),
                         ('tab2', 'The second', fs4),

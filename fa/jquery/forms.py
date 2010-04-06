@@ -40,6 +40,7 @@ class Tabs(object):
         self._id = id
         self._fs = []
         self._fs_dict = {}
+        self._bound_pk = None
         self._options = options
         for fs in fieldsets:
             if not isinstance(fs, (tuple, list)) or len(fs) != 3:
@@ -53,9 +54,15 @@ class Tabs(object):
                 fields.append((f.key, f.model_value))
         return dict(fields)
 
-    @property
-    def _bound_pk(self):
-        return _pk(self.model)
+    def _get_bound_pk(self):
+        for fs in self._fs:
+            return fs._bound_pk
+
+    def _set_bound_pk(self, value):
+        for fs in self._fs:
+            fs._bound_pk = value
+
+    _bound_pk = property(_get_bound_pk, _set_bound_pk)
 
     @property
     def model(self):
@@ -69,7 +76,7 @@ class Tabs(object):
             raise AttributeError(attr)
 
     def __setattr__(self, attr, fs):
-        if attr.startswith('_') or attr in ('engine',):
+        if attr.startswith('_') or attr in ('engine', 'readonly'):
             object.__setattr__(self, attr, fs)
         else:
             fs.__name__ = attr
