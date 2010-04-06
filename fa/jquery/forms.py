@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from formalchemy.fields import _pk
 from simplejson import dumps
 from utils import templates
 
@@ -13,7 +14,7 @@ class Tabs(object):
         ...             footer='<input type="submit" name="%(id)s" />')
         >>> tabs.append('tab2', 'The second', fs2)
         >>> tabs.tab1 = tabs.tab1.bind(obj1)
-        >>> tabs.bind(obj2, tabs.tab2)
+        >>> tabs.tab2.rebind(obj2)
         >>> print tabs.render(selected=2) #doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
         <div id="my_tabs">
         <ul>
@@ -53,12 +54,19 @@ class Tabs(object):
         return dict(fields)
 
     @property
+    def _bound_pk(self):
+        return _pk(self.model)
+
+    @property
     def model(self):
         if self._fs:
             return self._fs_dict.get(self._fs[0][0]).model
 
     def __getattr__(self, attr):
-        return self._fs_dict.get(attr)
+        if attr in self._fs_dict:
+            return self._fs_dict.get(attr)
+        else:
+            raise AttributeError(attr)
 
     def __setattr__(self, attr, fs):
         if attr.startswith('_') or attr in ('engine',):
@@ -78,20 +86,20 @@ class Tabs(object):
             fs = self._fs_dict[fs]
         return fs
 
-    def bind(self, model=None, session=None, data=None, *ids, **kwargs):
-        """Bind fieldsets to model.  If no ids is provided, all fieldsets are
-        bound to model. Session and data can be passed as kwargs."""
+    def bind(self, model=None, session=None, data=None):
+        """Bind fieldsets to model. All sub-fieldsets are bound to model."""
         news = []
         for id, title in self._fs:
             fs = self.get(id)
-            if id in ids:
-                fs = fs.bind(model=model, data=data, session=session)
-            elif not ids:
-                fs = fs.bind(model=model, data=data, session=session)
-            else:
-                fs = fs.bind(model=fs.model, data=data, session=session)
+            fs = fs.bind(model=model, data=data, session=session)
             news.append((id, title, fs))
         return self.__class__(self._id, *news, **self._options.copy())
+
+    def rebind(self, model=None, session=None, data=None):
+        """Bind fieldsets to model. All sub-fieldsets are bound to model."""
+        for id, title in self._fs:
+            fs = self.get(id)
+            fs.rebind(model=model, data=data, session=session)
 
     def copy(self):
         news = []
@@ -135,7 +143,6 @@ class Tabs(object):
         kwargs.update(self._options)
         return self.template.render(id=self._id,
                                     fieldsets=fieldsets,
-                                    submit=self._submit,
                                     options=dumps(options),
                                     **kwargs)
 
