@@ -311,20 +311,16 @@ def ButtonSetFieldRenderer(multiple=False, **jq_options):
     .. sourcecode:: python
 
         >>> from testing import fs
-        >>> print fs.buttonset.render() #doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-        <div style="display:none;"><select autocomplete="off" id="Sample--buttonset" name="Sample--buttonset">
-        <option value="a">a</option>
-        <option value="b">b</option>
-        <option value="c">c</option>
-        <option value="d">d</option>
-        <option value="e">e</option>
-        <option value="f">f</option>
-        </select></div>
-        <div id="Sample--buttonset_buttonset"></div>
+        >>> print fs.radioset.render() #doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+        <div style="display:none;"><input autocomplete="off" id="Sample--radioset_0" 
+                                          name="Sample--radioset" type="radio"
+                                          value="a" /><label for="Sample--radioset_0">a</label>...</div>
+        <div id="Sample--radioset_buttonset"></div>
         <script type="text/javascript">
-          jQuery.fa.buttonset('Sample--buttonset', {"multiple": false, "options": ["a", "b", "c", "d", "e", "f"]});
+          jQuery.fa.buttonset('Sample--radioset', {"multiple": false, "options": ["a", "b", "c", "d", "e", "f"]});
         </script>
-
+        <BLANKLINE>
+            
     """
     jq_options.update(multiple=multiple)
     Renderer = multiple and fields.CheckBoxSet or fields.RadioSet
