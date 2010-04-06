@@ -99,6 +99,8 @@ class Tabs(object):
         for id, title in self._fs:
             fs = self.get(id)
             fs = fs.bind(model=model, data=data, session=session)
+            if model is None:
+                model = fs.model
             news.append((id, title, fs))
         return self.__class__(self._id, *news, **self._options.copy())
 
@@ -107,6 +109,8 @@ class Tabs(object):
         for id, title in self._fs:
             fs = self.get(id)
             fs.rebind(model=model, data=data, session=session)
+            if model is None:
+                model = fs.model
 
     def copy(self):
         news = []

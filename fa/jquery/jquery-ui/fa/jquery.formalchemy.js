@@ -146,7 +146,8 @@ $.fa.extend({
     plugin.remove();
     div = field.parent('div');
     $('br', div).remove();
-    div.show().buttonset();
+    div.buttonset();
+    div.show();
   },
 
   sortable: function(field, plugin, options) {

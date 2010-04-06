@@ -21,14 +21,12 @@ $.fa.extend({
                     form.load(item_url);
                 },
                 beforeSubmit: function(data, form) {
-                    $(form.formToArray()).each(function() {
-                        data[this.name] = $('#'+this.name).val();
-                    });
-                    return [true, 'saved'];
+                    data['form_data'] = form.formToArray();
+                    return [true, 'success'];
                 },
                 serializeEditData: function(data) {
                     // avoid PHP arrays
-                    return $.param(data).replace(/%5B%5D=/g, '=');
+                    return $.param(data.form_data).replace(/%5B%5D=/g, '=');
                 },
                 afterComplete: function(response, postdata, form) {
                     if (id!='new') {
