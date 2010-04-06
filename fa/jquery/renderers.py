@@ -11,6 +11,7 @@ from textile import textile as render_textile
 
 from utils import TemplateEngine
 from utils import templates
+from utils import load_datas
 from utils import url
 
 __doc__ = """
@@ -127,7 +128,7 @@ def AutoCompleteFieldRenderer(url_or_data, renderer=fields.TextFieldRenderer, **
         ...         ))
 
     """
-    jq_options.update(source=url_or_data, show_input=True)
+    jq_options.update(source=url_or_data, show_input=False)
     return jQueryFieldRenderer('autocomplete', renderer=renderer, **jq_options)
 
 @alias(AutoCompleteFieldRenderer)
@@ -326,12 +327,8 @@ def ButtonSetFieldRenderer(multiple=False, **jq_options):
 
     """
     jq_options.update(multiple=multiple)
-    class Renderer(fields.SelectFieldRenderer):
-        def render(self, *args, **kwargs):
-            kwargs['multiple'] = self.multiple
-            return fields.SelectFieldRenderer.render(self, *args, **kwargs)
-    renderer = type('%sFieldRenderer' % multiple and 'CheckboxSet' or 'RadioSet', (Renderer,), dict(multiple=multiple))
-    return jQueryFieldRenderer('buttonset', renderer=renderer, **jq_options)
+    Renderer = multiple and fields.CheckBoxSet or fields.RadioSet
+    return jQueryFieldRenderer('buttonset', renderer=Renderer, **jq_options)
 
 @alias(ButtonSetFieldRenderer, multiple=False)
 def radioset():pass

@@ -4,6 +4,7 @@ from formalchemy import types as fatypes
 from webhelpers.html import escape, literal
 from mako.lookup import TemplateLookup
 from simplejson import dumps
+from simplejson import load
 import logging
 import random
 import os
@@ -34,6 +35,11 @@ class TemplateEngine(BaseTemplateEngine):
             name = '%s.mako' % name
         template = self.templates.get_template('/forms/%s' % name)
         return literal(template.render(**kwargs))
+
+def load_datas(filename):
+    dirname = os.path.join(os.path.dirname(__file__), 'datas')
+    filename = os.path.join(dirname, filename)
+    return load(open(filename))
 
 def url(*args, **kwargs):
     """return a path to script. you can change the root_url. default to `/jquery`:

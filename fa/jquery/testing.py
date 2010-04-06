@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from formalchemy.ext.zope import FieldSet
 from zope import interface, schema
+from utils import url
 from renderers import *
 
 FieldSet.default_renderers.update(default_renderers)

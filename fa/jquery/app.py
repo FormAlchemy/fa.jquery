@@ -37,6 +37,8 @@ class Demo(object):
             obj = Form.gen_model()
             obj.context['slider'] = '10'
             obj.context['sortable'] = '1;2;3'
+            obj.context['radioset'] = 'd'
+            obj.context['checkboxset'] = ['b', 'a']
             obj.context['selectable'] = 'f'
             obj.context['selectables'] = ['b', 'c']
             fs = Form.bind(obj, data=req.POST or None)
@@ -51,7 +53,8 @@ class Demo(object):
                         ('tab1', 'My first section', fs3),
                         ('tab2', 'The second', fs4),
                         footer='<input type="submit" name="%(id)s" />')
-            accordion.bind(fs3.gen_model(), data=req.POST or None)
+            accordion.tab1.rebind(fs3.gen_model(), data=req.POST or None)
+            accordion.tab2.rebind(fs4.gen_model(), data=req.POST or None)
             if req.POST:
                 if fs.validate():
                     fs.sync()

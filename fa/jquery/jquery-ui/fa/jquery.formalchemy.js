@@ -33,7 +33,11 @@ var pluginGen = function(plugin_id, func) {
         // assume plugin is launch onload
         $(function(){
             try {
-                var field = $(document.getElementById(name));
+                var field = document.getElementById(name);
+                if (field)
+                    field = $(field);
+                else
+                    field = $('input[name="'+name+'"]');
                 var plugin = document.getElementById(name+'_'+plugin_id);
                 if (plugin)
                     plugin = $(plugin);
@@ -92,8 +96,14 @@ $.fa.extend({
     field.datepicker(options);
   },
   autocomplete: function(field, plugin, options) {
-    plugin.remove();
-    field.autocomplete(options);
+    options['select'] = function(event, ui) {
+        field.val(ui.item.value);
+        return false;
+    }
+    var auto = $('<input autocomplete="off" value="" />');
+    auto.val(field.val());
+    auto.autocomplete(options);
+    plugin.append(auto);
   },
   selectable: function(field, plugin, options) {
     var ui = $('<ul class="fa_selectable"></ul>');
@@ -133,22 +143,10 @@ $.fa.extend({
   },
 
   buttonset: function(field, plugin, options) {
-    if (options.multiple)
-        var field_type = 'checkbox';
-    else
-        var field_type = 'radio';
-    var field_name = plugin.attr('id')+'_field';
-    var i = 0;
-    $('option', field).each(function(){
-        var opt = $(this);
-        plugin.append('<input type="'+field_type+'" name="'+field_name+'"  id="'+field_name+i+'"' +
-                              'value="'+opt.attr('value')+'" /><label for="'+field_name+i+'">'+opt.text()+'</label>');
-        i ++;
-    });
-    var plugin_field = $('input[name="'+field_name+'"]');
-    plugin_field.val(field.val());
-    plugin_field.click(function() { field.val(plugin_field.val()); });
-    plugin.buttonset();
+    plugin.remove();
+    div = field.parent('div');
+    $('br', div).remove();
+    div.show().buttonset();
   },
 
   sortable: function(field, plugin, options) {
