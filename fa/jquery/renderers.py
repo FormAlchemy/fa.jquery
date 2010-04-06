@@ -9,6 +9,7 @@ from formalchemy import config
 from postmarkup import render_bbcode
 from textile import textile as render_textile
 
+from utils import TemplateEngine
 from utils import templates
 from utils import url
 

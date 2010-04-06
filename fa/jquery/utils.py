@@ -28,6 +28,8 @@ class TemplateEngine(BaseTemplateEngine):
 
     def render(self, name, **kwargs):
         name = name.strip('/')
+        if 'template' in kwargs:
+            name = kwargs.pop('template')
         if not name.endswith('.mako'):
             name = '%s.mako' % name
         template = self.templates.get_template('/forms/%s' % name)
@@ -48,7 +50,8 @@ def url(*args, **kwargs):
         >>> print url('plugin.js', prefix='/my_js')
         /my_js/plugin.js
     """
-    if args and not args[0].startswith('/'):
+    arg = args and args[0] or ''
+    if arg and not arg.startswith('/') and not arg.startswith('http://'):
         args = list(args)
         if kwargs.get('prefix'):
             args.insert(0, kwargs['prefix'])
