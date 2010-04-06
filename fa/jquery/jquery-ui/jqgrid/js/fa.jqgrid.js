@@ -41,6 +41,7 @@ $.fa.extend({
             });
         }
         var settings = {
+           url: base_url,
            datatype: "json",
            height: $(document).height()-200,
            width: $(document).width()-30,
