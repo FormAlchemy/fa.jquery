@@ -2,6 +2,7 @@
 from formalchemy.fields import _pk
 from simplejson import dumps
 from utils import templates
+from random import random
 
 class Tabs(object):
     """Display FieldSet using http://jqueryui.com/demos/tabs/:
@@ -68,6 +69,13 @@ class Tabs(object):
     def model(self):
         if self._fs:
             return self._fs_dict.get(self._fs[0][0]).model
+
+    @property
+    def render_fields(self):
+        fields = {}
+        for fs in self._fs_dict.values():
+            fields.update(fs.render_fields)
+        return fields
 
     def __getattr__(self, attr):
         if attr in self._fs_dict:
@@ -153,6 +161,7 @@ class Tabs(object):
         kwargs = dict(footer='', header='')
         kwargs.update(self._options)
         return self.template.render(id=self._id,
+                                    rid=str(random())[2:],
                                     fieldsets=fieldsets,
                                     options=dumps(options),
                                     **kwargs)

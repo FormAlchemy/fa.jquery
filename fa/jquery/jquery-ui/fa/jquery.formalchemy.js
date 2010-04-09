@@ -208,7 +208,43 @@ $.fa.extend({
         if (!options.height)
             field.css('height','20em');
         field.tinymce(options);
+  },
+  relation: function(field, plugin, options) {
+    field = field.parent('div');
+    var button = $('button.new_relation_item', field);
+    if (!button.length) return;
+    button.button({icons: {primary: 'ui-icon-plus'}, text: false});
+    button.click(function() {
+        var self = $(this);  
+        var form = $('<form title="'+button.text()+'"></form>');
+        field.append(form);
+        var new_url = self.attr('href');
+        var edit_url = new_url.split('/new.xhr')[0]+'.xhr';
+        form.load(new_url, function() {
+            form.dialog({
+                modal: true,
+                buttons: {
+                    'Ok': function() {
+                        var data = form.formToArray();
+                        data = $.param(data).replace(/%5B%5D=/g, '=');
+                        $.post(edit_url, data, function(html) {
+                            if (/ui-state-error/.test(html)) {
+                                form.html(html);
+                            } else {
+                                field.empty();
+                                field.load(self.attr('alt'));
+                                form.dialog('close');
+                            }
+                        });
+                    },
+                    'Cancel': function() { form.dialog('close'); }
+                }
+            });
+        });
+        return false;
+    });
   }
+
 
 });
 
