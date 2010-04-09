@@ -226,6 +226,7 @@ $.fa.extend({
                 buttons: {
                     'Ok': function() {
                         var data = form.formToArray();
+                        // avoid PHP arrays
                         data = $.param(data).replace(/%5B%5D=/g, '=');
                         $.post(edit_url, data, function(html) {
                             if (/ui-state-error/.test(html)) {

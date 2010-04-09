@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from formalchemy.ext.pylons.controller import _ModelsController as Base
 from fa.jquery.wsgi import StaticApp
+from fa.jquery.utils import TemplateEngine
 from webhelpers.html import literal
 from formalchemy.ext.pylons.controller import model_url
 from formalchemy import fields
@@ -9,6 +10,11 @@ import renderers
 
 class _ModelsController(Base):
     _static_app=StaticApp()
+    engine = TemplateEngine()
+    template = 'restfieldset.mako'
+
+    def update_grid(self, *args, **kwargs):
+        pass
 
 def ModelsController(cls, prefix_name, member_name, collection_name):
     """wrap a controller with :class:~formalchemy.ext.pylons.controller._ModelsController"""
