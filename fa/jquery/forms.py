@@ -17,18 +17,18 @@ class Tabs(object):
         >>> tabs.tab1 = tabs.tab1.bind(obj1)
         >>> tabs.tab2.rebind(obj2)
         >>> print tabs.render(selected=2) #doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-        <div id="my_tabs">
+        <div id="my_tabs_...">
         <ul>
-            <li><a href="#tab1">My first tab</a></li>
-            <li><a href="#tab2">The second</a></li>
+            <li><a href="#tab1_...">My first tab</a></li>
+            <li><a href="#tab2_...">The second</a></li>
         </ul>
-        <div id="tab1">...
+        <div id="tab1_...">...
         </div>
-        <div id="tab2">...
+        <div id="tab2_...">...
         </div>
         </div>
         <script type="text/javascript">
-          jQuery.fa.tabs('my_tabs', {"selected": 2});
+          jQuery.fa.tabs('my_tabs_...', {"selected": 2});
         </script>
         <BLANKLINE>
             

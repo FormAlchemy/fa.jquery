@@ -81,8 +81,9 @@ def jQueryFieldRenderer(plugin, show_input=False, tag='div', renderer=fields.Tex
     template=templates.get_template('/renderers/%s.mako' % template_name)
     class Renderer(renderer):
         def render(self, **kwargs):
-            kwargs['autocomplete'] = 'off'
-            html = renderer.render(self, **kwargs)
+            if 'autocomplete' in kwargs:
+                kwargs.pop('autocomplete')
+            html = renderer.render(self, autocomplete='off', **kwargs)
             kwargs.update(self.jq_options)
             options = dict(
                 tag=tag,
@@ -155,9 +156,9 @@ def SortableTokenTextFieldRenderer(sep=';', show_input=False, **jq_options):
     class Renderer(fields.TextFieldRenderer):
         template=templates.get_template('/renderers/sortable.mako')
         def render_readonly(self):
-            return ', '.join(self._value.split(sep))
+            return ', '.join(self.raw_value.split(sep))
         def render(self, **kwargs):
-            value=self._value.strip(sep)
+            value=self.value.strip(sep)
             tokens = value and value.split(sep) or ''
             tokens = [(v, v) for v in tokens]
             kwargs.update(
@@ -221,7 +222,7 @@ class DateFieldRenderer(fields.DateFieldRenderer):
     template = templates.get_template('/renderers/date.mako')
     jq_options = dict(dateFormat='yy-mm-dd')
     def render(self, **kwargs):
-        value = self._value or ''
+        value = self.value or ''
         value = value and value.split()[0] or ''
         kwargs.update(
             name=self.name,
@@ -443,11 +444,11 @@ def RichTextFieldRenderer(use='tinymce', resources_prefix=None, **jq_options):
         markup = use
 
         def render_textile(self, **kwargs):
-            value = self._value
+            value = self.raw_value
             return value and render_textile(value) or ''
 
         def render_bbcode(self, **kwargs):
-            value = self._value
+            value = self.raw_value
             return value and render_bbcode(value) or ''
 
         def render_readonly(self, **kwargs):
