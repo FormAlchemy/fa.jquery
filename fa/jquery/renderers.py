@@ -81,7 +81,8 @@ def jQueryFieldRenderer(plugin, show_input=False, tag='div', renderer=fields.Tex
     template=templates.get_template('/renderers/%s.mako' % template_name)
     class Renderer(renderer):
         def render(self, **kwargs):
-            html = renderer.render(self, autocomplete='off', **kwargs)
+            kwargs['autocomplete'] = 'off'
+            html = renderer.render(self, **kwargs)
             kwargs.update(self.jq_options)
             options = dict(
                 tag=tag,
@@ -472,7 +473,7 @@ def bbcode(): pass
 default_renderers = {
     types.Date:date,
     types.DateTime:datetime,
-    types.HTML: tinymce(),
+    types.HTML: markdown(),
     types.Slider: slider,
     types.Color: ColorPickerFieldRenderer,
     types.Selectable: selectable(),

@@ -211,6 +211,8 @@ $.fa.extend({
   },
   relation: function(field, plugin, options) {
     field = field.parent('div');
+    if (field.hasClass('ui-buttonset'))
+        field = field.parent('div');
     var button = $('button.new_relation_item', field);
     if (!button.length) return;
     button.button({icons: {primary: 'ui-icon-plus'}, text: false});

@@ -15,7 +15,7 @@ jQuery.fa.add_resource(${repr(url('jqgrid/js/fa.jqgrid.js'))});
 </script>
 <script>
 jQuery.fa.jqgrid("${dom_id}", {
-    url: window.location.href+'.json?jqgrid=true',
+    url: window.location.href.split('?')[0]+'.json?jqgrid=true',
     colNames:['id'
       %for field in fields:
       ,"${field.label_text or field.key}"

@@ -3,41 +3,49 @@
 $.fa.extend({
     jqgrid: function(table, pager, options) {
         var current_id;
-        var base_url = window.location.href;
+        var base_url = window.location.href.split('?')[0];
         var editRow = function(id) {
             if (id) {
                 var edit_url = base_url+'/'+id+'.xhr?_method=PUT';
                 var item_url = base_url+'/'+id+'/edit.xhr';
+                var form = $('<form title="Edit record"></form>');
             } else {
                 id = 'new';
                 var edit_url = base_url+'.xhr';
                 var item_url = base_url+'/new.xhr';
+                var form = $('<form title="New record"></form>');
             }
-            table.jqGrid('editGridRow', id, {
-                url: edit_url,
-                beforeShowForm: function(form) {
-                    form.empty();
-                    $('.navButton', form.parents('.ui-jqdialog')).remove();
-                    form.load(item_url);
-                },
-                beforeSubmit: function(data, form) {
-                    data['form_data'] = form.formToArray();
-                    return [true, 'success'];
-                },
-                serializeEditData: function(data) {
-                    // avoid PHP arrays
-                    return $.param(data.form_data).replace(/%5B%5D=/g, '=');
-                },
-                afterComplete: function(response, postdata, form) {
-                    if (id!='new') {
-                        form.html(response.responseText);
-                    } else {
-                        if (/ui-state-error/.test(response.responseText))
-                            form.html(response.responseText);
-                        else
-                            form.parents('.ui-jqdialog').jqmHide();
+            pager.append(form);
+            $.get(item_url, function(html) {
+                form.append(html);
+                form.dialog({
+                    modal: true,
+                    buttons: {
+                        'Ok': function() {
+                            var data = form.formToArray();
+                            // avoid PHP arrays
+                            data = $.param(data).replace(/%5B%5D=/g, '=');
+                            $.post(edit_url, data, function(html) {
+                                if (/ui-state-error/.test(html)) {
+                                    form.empty();
+                                    form.append(html);
+                                } else {
+                                    form.append(html);
+                                    form.dialog('close');
+                                }
+                                table.trigger('reloadGrid')
+                            });
+                        },
+                        'Cancel': function() { form.dialog('close'); }
                     }
-                }
+                });
+                setTimeout(function() {
+                    var text = $('textarea', form);
+                    if (text.length) {
+                        form.dialog('option', 'width', ''+(parseInt(text.css('width'))+50));
+                        form.dialog('option', 'position', ['center','top']);
+                    }
+                }, 10);
             });
         }
         var settings = {
