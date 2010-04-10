@@ -2,10 +2,12 @@
 from formalchemy.ext.pylons.controller import _ModelsController as Base
 from fa.jquery.wsgi import StaticApp
 from fa.jquery.utils import TemplateEngine
+from fa.jquery.utils import Flash
 from webhelpers.html import literal
 from formalchemy.ext.pylons.controller import model_url
 from formalchemy.ext.pylons.controller import request
 from formalchemy import fields
+from formalchemy import fatypes
 from routes.util import GenerationException
 import renderers
 
@@ -35,8 +37,33 @@ class _ModelsController(Base):
         kwargs.update(items_per_page=int(request.GET.get('rows', 20)))
         return Base.get_page(self, **kwargs)
 
-    def update_grid(self, *args, **kwargs):
-        pass
+    def render_xhr_format(self, fs=None, **kwargs):
+        html = Base.render_xhr_format(self, fs=fs, **kwargs)
+        if fs and request.POST and 'field' not in request.GET:
+            flash = Flash()
+            if fs.errors:
+                errors = [f.label_text or fs.prettify(f.key) for f in fs.render_fields.values() if f.errors]
+                flash.error('Field(s) %s have errors' % ','.join(errors))
+            else:
+                flash.info('Record saved')
+            html += flash.render()
+        return html
+
+    def update_grid(self, grid, *args, **kwargs):
+        for field in grid.render_fields.values():
+            metadata = {}
+            if field.is_relation:
+                metadata.update(width=100)
+            elif isinstance(field.type, fatypes.Text):
+                field.set(renderer=renderers.ellipsys(field.renderer))
+            elif isinstance(field.type, (fatypes.Date, fatypes.Integer)):
+                metadata.update(width=70, align='center')
+            elif isinstance(field.type, fatypes.DateTime):
+                metadata.update(width=120, align='center')
+            elif isinstance(field.type, fatypes.Boolean):
+                metadata.update(width=30, align='center')
+            metadata.update(field.metadata)
+            field.set(metadata=metadata)
 
     def get_filtered_ordered_queryset(self):
         model = self.get_model()

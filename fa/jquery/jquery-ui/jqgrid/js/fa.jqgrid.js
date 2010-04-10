@@ -15,7 +15,7 @@ $.fa.extend({
                 var item_url = base_url+'/new.xhr';
                 var form = $('<form title="New record"></form>');
             }
-            pager.append(form);
+            pager.after(form);
             $.get(item_url, function(html) {
                 form.append(html);
                 form.dialog({

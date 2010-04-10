@@ -18,14 +18,20 @@ jQuery.fa.jqgrid("${dom_id}", {
     url: window.location.href.split('?')[0]+'.json?jqgrid=true',
     colNames:['id'
       %for field in fields:
-      ,"${field.label_text or field.key}"
+      ,"${field.label_text or collection.prettify(field.key)}"
       %endfor
     ],
     colModel:[
-      {name:"id",index:"id", width:30}
+      {name:"id",index:"id", width:30, align:"center"}
       %for field in fields:
       ,{name:"${field.key}",index:"${field.key}",
-        sortable:${field.is_relation and 'false' or 'true'}}
+        sortable:${field.metadata.get('sortable', field.is_relation and 'false' or 'true')}
+        %for k in ('width', 'align', 'fixed'):
+          %if k in field.metadata:
+            ,${k}: ${repr(field.metadata[k])}
+          %endif
+        %endfor
+       }
       %endfor
     ],
     callback: function(table, pager, options) {

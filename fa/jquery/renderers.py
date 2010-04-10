@@ -2,12 +2,15 @@
 import os
 from simplejson import dumps
 from webhelpers.html import literal
+from webhelpers.html.tools import strip_tags
+from webhelpers import text
 from formalchemy import helpers as h
 from formalchemy import types
 from formalchemy import fields
 from formalchemy import config
 from postmarkup import render_bbcode
 from textile import textile as render_textile
+from markdown import markdown as render_markdown
 
 from utils import TemplateEngine
 from utils import templates
@@ -451,11 +454,15 @@ def RichTextFieldRenderer(use='tinymce', resources_prefix=None, **jq_options):
             value = self.raw_value
             return value and render_bbcode(value) or ''
 
+        def render_markdown(self, **kwargs):
+            value = self.raw_value
+            return value and  render_markdown(value) or ''
+
         def render_readonly(self, **kwargs):
             meth = getattr(self, 'render_%s' % self.markup, None)
             if meth is not None:
                 return meth()
-            return fields.TextAreaFieldRenderer.render(self, **kwargs)
+            return fields.TextAreaFieldRenderer.render_readonly(self, **kwargs)
     return jQueryFieldRenderer(plugin_name, show_input=True, renderer=Renderer,
                                resources_prefix=resources_prefix, resources=resources, **jq_options)
 
@@ -470,6 +477,16 @@ def markdown(): pass
 
 @alias(RichTextFieldRenderer, use='bbcode')
 def bbcode(): pass
+
+def ellipsys(renderer):
+    """Update a renderer to remove tags and strip text"""
+    renderer = type(renderer)
+    class EllipsysFieldRenderer(renderer):
+        def render_readonly(self, **kwargs):
+            value = super(EllipsysFieldRenderer, self).render_readonly(**kwargs)
+            value = text.truncate(strip_tags(value), 30) if value else ''
+            return value
+    return EllipsysFieldRenderer
 
 default_renderers = {
     types.Date:date,

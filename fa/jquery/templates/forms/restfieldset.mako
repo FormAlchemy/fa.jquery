@@ -8,13 +8,13 @@ from fa.jquery.utils import url
     <h1 class="ui-widget-header ui-corner-all">
       %if breadcrumb:
         <div class="breadcrumb">
-         /${'/'.join([u and '<a href="%s">%s</a>' % (u,n.lower()) or n.lower() for u,n in breadcrumb])|n} 
+         <a>/</a>${'<a>/</a>'.join(['<a href="%s">%s</a>' % (u or '',n.lower()) for u,n in breadcrumb])|n} 
         </div>
       %endif
       %if href:
         <a href="${href}">${title.title()}</a>
       %else:
-        ${title.title()}
+        <a>${title.title()}</a>
       %endif
     </h1>
 </%def>
@@ -50,7 +50,6 @@ from fa.jquery.utils import url
     <script type="text/javascript" src="/jquery/fa/jquery.formalchemy.js"></script>
     %else:
     <link type="text/css" rel="stylesheet" href="${url('css/redmond/jquery-ui-1.8.custom.css')}" />
-    <script type="text/javascript" src="/jquery/fa/jquery.formalchemy.js"></script>
     <link type="text/css" rel="stylesheet" href="${url('fa.jquery.min.css')}" />
     <script type="text/javascript" src="${url('fa.jquery.min.js')}"></script>
     %endif
@@ -68,7 +67,7 @@ from fa.jquery.utils import url
   <body>
 <div class="ui-admin ui-widget">
   %if isinstance(models, dict):
-    <h1 class="ui-widget-header ui-corner-all">Models</h1>
+    <h1 class="ui-widget-header ui-corner-all"><a>Models</a></h1>
     %for name in sorted(models):
       <p>
         <a class="ui-state-default ui-corner-all" href="${models[name]}">${name}</a>
