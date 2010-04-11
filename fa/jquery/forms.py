@@ -71,6 +71,13 @@ class Tabs(object):
             return self._fs_dict.get(self._fs[0][0]).model
 
     @property
+    def errors(self):
+        errors = {}
+        for fs in self._fs_dict.values():
+            errors.update(fs.errors)
+        return errors
+
+    @property
     def render_fields(self):
         fields = {}
         for fs in self._fs_dict.values():

@@ -1,4 +1,8 @@
 from utils import TemplateEngine
+from utils import HTML
+from utils import Color
+from utils import Slider
+from utils import url
 
 from renderers import plugin
 from renderers import autocomplete
