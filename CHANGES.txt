@@ -1,3 +1,10 @@
+0.7
+---
+
+Improve ModelController using jqGrid
+
+Add relation(s) widgets for pylons
+
 0.6.2
 -----
 
