@@ -1,6 +1,7 @@
 from utils import TemplateEngine
 
 from renderers import plugin
+from renderers import autocomplete
 from renderers import colorpicker
 from renderers import date
 from renderers import datetime

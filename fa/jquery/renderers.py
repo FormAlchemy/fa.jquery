@@ -204,7 +204,13 @@ def ColorPickerFieldRenderer(colors=[], **jq_options):
             "#006E2E", "#C3D9FF", "#4096EE", "#356AA0", "#FF0096", "#B02B2C",
             "#000000"
             ]
-    return jQueryFieldRenderer('colorpicker', **jq_options)
+    class Renderer(fields.TextFieldRenderer):
+        def render_readonly(self, **kwargs):
+            v = self.raw_value
+            if not v:
+                return ''
+            return h.literal('<div style="background:%s;">%s</div>' % (v, v))
+    return jQueryFieldRenderer('colorpicker', renderer=Renderer, **jq_options)
 
 @alias(ColorPickerFieldRenderer)
 def colorpicker(): pass
