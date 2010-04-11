@@ -32,11 +32,17 @@ $.fa.extend({
                                 } else {
                                     form.append(html);
                                     form.dialog('close');
+                                    form.dialog('destroy');
+                                    form.remove();
                                 }
                                 table.trigger('reloadGrid')
                             });
                         },
-                        'Cancel': function() { form.dialog('close'); }
+                        'Cancel': function() {
+                                form.dialog('close');
+                                form.dialog('destroy');
+                                form.remove();
+                        }
                     }
                 });
                 setTimeout(function() {

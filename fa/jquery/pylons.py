@@ -45,7 +45,8 @@ class _ModelsController(Base):
                     filter = field==value
                 collection = collection.filter(filter)
             kwargs.update(collection=collection)
-        kwargs.update(items_per_page=int(request.GET.get('rows', 20)))
+        if 'items_per_page' not in kwargs:
+            kwargs.update(items_per_page=int(request.GET.get('rows', 20)))
         return Base.get_page(self, **kwargs)
 
     def render_xhr_format(self, fs=None, **kwargs):
@@ -69,7 +70,7 @@ class _ModelsController(Base):
             elif isinstance(field.type, fatypes.Text):
                 field.set(renderer=renderers.ellipsys(field.renderer))
                 metadata.update(search=1)
-            elif isinstance(field.type, (fatypes.Text, fatypes.Unicode)):
+            elif isinstance(field.type, (fatypes.String, fatypes.Unicode)):
                 metadata.update(search=1)
             elif isinstance(field.type, (fatypes.Date, fatypes.Integer)):
                 metadata.update(width=70, align='"center"')
