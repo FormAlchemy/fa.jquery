@@ -22,13 +22,13 @@ jQuery.fa.jqgrid("${dom_id}", {
       %endfor
     ],
     colModel:[
-      {name:"id",index:"id", width:30, align:"center"}
+      {name:"id",index:"id", width:30, align:"center", searchoptions:{sopt:["eq"]}}
       %for field in fields:
       ,{name:"${field.key}",index:"${field.key}",
         sortable:${field.metadata.get('sortable', field.is_relation and 'false' or 'true')}
-        %for k in ('width', 'align', 'fixed'):
+        %for k in ('width', 'align', 'fixed', 'search', 'stype', 'searchoptions'):
           %if k in field.metadata:
-            ,${k}: ${repr(field.metadata[k])}
+            ,${k}: ${field.metadata[k]}
           %endif
         %endfor
        }

@@ -9,6 +9,7 @@ from formalchemy.ext.pylons.controller import request
 from formalchemy import fields
 from formalchemy import fatypes
 from routes.util import GenerationException
+from simplejson import dumps
 import renderers
 
 class _ModelsController(Base):
@@ -33,6 +34,16 @@ class _ModelsController(Base):
                 sord = params.get('sord', 'asc').decode().lower()
                 if sord in ['asc', 'desc']:
                     collection = collection.order_by(getattr(sidx, sord)())
+            if 'searchField' in params:
+                field = getattr(fields, params['searchField'])
+                op = params['searchOper']
+                value = params['searchString']
+                if op == 'cn':
+                    value = '%%%s%%' % value
+                    filter = field.ilike(value)
+                else:
+                    filter = field==value
+                collection = collection.filter(filter)
             kwargs.update(collection=collection)
         kwargs.update(items_per_page=int(request.GET.get('rows', 20)))
         return Base.get_page(self, **kwargs)
@@ -51,33 +62,25 @@ class _ModelsController(Base):
 
     def update_grid(self, grid, *args, **kwargs):
         for field in grid.render_fields.values():
-            metadata = {}
+            metadata = dict(search=0)
+            searchoptions = dict(sopt=['eq', 'cn'])
             if field.is_relation:
                 metadata.update(width=100)
             elif isinstance(field.type, fatypes.Text):
                 field.set(renderer=renderers.ellipsys(field.renderer))
+                metadata.update(search=1)
+            elif isinstance(field.type, (fatypes.Text, fatypes.Unicode)):
+                metadata.update(search=1)
             elif isinstance(field.type, (fatypes.Date, fatypes.Integer)):
-                metadata.update(width=70, align='center')
+                metadata.update(width=70, align='"center"')
             elif isinstance(field.type, fatypes.DateTime):
-                metadata.update(width=120, align='center')
+                metadata.update(width=120, align='"center"')
             elif isinstance(field.type, fatypes.Boolean):
-                metadata.update(width=30, align='center')
+                metadata.update(width=30, align='"center"')
+            if metadata['search']:
+                metadata['searchoptions'] = dumps(searchoptions)
             metadata.update(field.metadata)
             field.set(metadata=metadata)
-
-    def get_filtered_ordered_queryset(self):
-        model = self.get_model()
-        params = request.params
-        session = self.model.Session
-        fields = model._descriptor._columns
-        result = session.query(model)
-        sidx = params.get('sidx', getattr(model._descriptor, 'order_by') or 'id').decode()
-        if sidx and hasattr(fields, sidx):
-            sidx = getattr(fields, sidx)
-            sord = params.get('sord', 'asc').decode().lower()
-            if sord in ['asc', 'desc']:
-                result = result.order_by(getattr(sidx, sord)())
-        return result
 
 def ModelsController(cls, prefix_name, member_name, collection_name):
     """wrap a controller with :class:~formalchemy.ext.pylons.controller._ModelsController"""
