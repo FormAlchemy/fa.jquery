@@ -11,6 +11,9 @@ from formalchemy import fatypes
 from routes.util import GenerationException
 from simplejson import dumps
 import renderers
+import logging
+
+log = logging.getLogger(__name__)
 
 class _ModelsController(Base):
     _static_app=StaticApp()
@@ -26,24 +29,26 @@ class _ModelsController(Base):
             model = self.get_model()
             params = request.params
             session = self.Session()
-            fields = model._descriptor._columns
+            fields = model._sa_class_manager
             collection = session.query(model)
-            sidx = params.get('sidx', getattr(model._descriptor, 'order_by') or 'id').decode()
-            if sidx and hasattr(fields, sidx):
-                sidx = getattr(fields, sidx)
+            # FIXME: use id by default but should use pk field
+            sidx = params.get('sidx', 'id').decode()
+            if sidx and fields.has_key(sidx):
+                sidx = fields[sidx]
                 sord = params.get('sord', 'asc').decode().lower()
                 if sord in ['asc', 'desc']:
                     collection = collection.order_by(getattr(sidx, sord)())
             if 'searchField' in params:
-                field = getattr(fields, params['searchField'])
-                op = params['searchOper']
-                value = params['searchString']
-                if op == 'cn':
-                    value = '%%%s%%' % value
-                    filter = field.ilike(value)
-                else:
-                    filter = field==value
-                collection = collection.filter(filter)
+                field = fields.get(params['searchField'], None)
+                if field:
+                    op = params['searchOper']
+                    value = params['searchString']
+                    if op == 'cn':
+                        value = '%%%s%%' % value
+                        filter = field.ilike(value)
+                    else:
+                        filter = field==value
+                    collection = collection.filter(filter)
             kwargs.update(collection=collection)
         if 'items_per_page' not in kwargs:
             kwargs.update(items_per_page=int(request.GET.get('rows', 20)))
