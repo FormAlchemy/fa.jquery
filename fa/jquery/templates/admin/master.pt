@@ -1,0 +1,50 @@
+<html metal:define-macro="master">
+    <head>
+      <title tal:content="request.model_name or 'root'"></title>
+      <link rel="stylesheet" tal:attributes="href request.static_url('fa.jquery:jquery-ui/css/redmond/jquery-ui-1.8.custom.css')" />
+      <link rel="stylesheet" tal:attributes="href request.static_url('fa.jquery:jquery-ui/fa.jquery.min.css')" />
+      <script type="text/javascript" tal:attributes="src request.static_url('fa.jquery:jquery-ui/fa.jquery.min.js')"></script>
+      <style type="text/css">
+        label {font-weight:bold;}
+        h1, h3 {padding:0.1 0.3em;}
+        h1 a, h3 a {text-decoration:none;}
+        a.ui-state-default {padding:0.1em 0.3em;}
+        a.fm-button {padding:0.4em 0.5em;}
+        a.fm-button-icon-left {padding-left:1.9em;}
+        div.breadcrumb {float:right; font-size:0.7em;}
+        div.breadcrumb a {text-decoration:underline}
+        #header { height: 2em; font-size:1.5em; }
+        #header div { font-size:1.5em; }
+      </style>
+    </head>
+    <body>
+      <div id="content" class="ui-admin ui-widget">
+        <h1 id="header" class="ui-widget-header ui-corner-all">
+          <div class="breadcrumb">
+            <tal:repeat tal:repeat="item breadcrumb">
+              <a tal:attributes="href python:item[0]"
+                tal:content="python:item[1]" />
+                <span tal:condition="not repeat.item.end">/</span>
+            </tal:repeat>
+          </div>
+          <div tal:content="request.model_name or 'root'"></div>
+        </h1>
+        <div metal:define-slot="main">
+        </div>
+      </div>
+    </body>
+</html>
+<div metal:define-macro="buttons">
+  <p class="fa_field">
+    <a class="ui-widget-header ui-widget-link ui-widget-button ui-corner-all" href="#" onclick="jQuery(this).parents('form').submit();">
+      <span class="ui-icon ui-icon-check"></span>
+      ${F_('Save')}
+      <input type="submit" />
+    </a>
+    <a class="ui-widget-header ui-widget-link ui-corner-all"
+       tal:attributes="href request.route_url('fa_admin', traverse=request.model_name)">
+      <span class="ui-icon ui-icon-circle-arrow-w"></span>
+      ${F_('Cancel')}
+    </a>
+  </p>
+</div>

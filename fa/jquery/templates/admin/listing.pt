@@ -1,0 +1,17 @@
+<html metal:use-macro="main.macros['master']">
+  <body>
+    <div metal:fill-slot="main">
+      <script language="javascript">
+        var USE_POPUP = ${request.registry.settings.get('fa.use_popup') and 'true' or 'false'};
+      </script>
+      <div tal:content="structure fs.render(template='jqgrid')" />
+      <p>
+        <a class="ui-widget-header ui-widget-link ui-corner-all"
+           tal:attributes="href request.route_url('fa_admin', traverse='%s/new' % request.model_name)">
+            <span class="ui-icon ui-icon-circle-plus"></span>
+            ${F_('New')} ${model_name}
+        </a>
+      </p>
+    </div>
+  </body>
+</html>

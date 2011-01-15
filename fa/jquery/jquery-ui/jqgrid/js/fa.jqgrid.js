@@ -5,16 +5,21 @@ $.fa.extend({
         var current_id;
         var base_url = window.location.href.split('?')[0];
         var editRow = function(id) {
+            var subpath = '/xhr/';
+            if (!USE_POPUP)
+                subpath = '/';
             if (id) {
-                var edit_url = base_url+'/'+id+'.xhr?_method=PUT';
-                var item_url = base_url+'/'+id+'/edit.xhr';
+                var edit_url = base_url+subpath+id+'?_method=PUT';
+                var item_url = base_url+subpath+id+'/edit';
                 var form = $('<form title="Edit record"></form>');
             } else {
                 id = 'new';
-                var edit_url = base_url+'.xhr';
-                var item_url = base_url+'/new.xhr';
+                var edit_url = base_url+subpath;
+                var item_url = base_url+subpath+'new';
                 var form = $('<form title="New record"></form>');
             }
+            if (!USE_POPUP)
+                window.location.href = item_url;
             pager.after(form);
             $.get(item_url, function(html) {
                 form.append(html);
@@ -58,7 +63,7 @@ $.fa.extend({
            url: base_url,
            datatype: "json",
            height: $(document).height()-200,
-           width: $(document).width()-30,
+           width: $('#content').width()-30,
            rowNum: parseInt(($(document).height()-200)/22),
            rowList:[10,20,50,100],
            pager: '#'+pager.attr('id'),
@@ -83,7 +88,7 @@ $.fa.extend({
             .unbind('click')
             .click(function() {
                 table.jqGrid('delGridRow', current_id,
-                             {url:base_url+'/'+current_id+'.json?_method=DELETE'});
+                             {url:base_url+'/json/'+current_id+'/delete'});
             });
     }
 });
