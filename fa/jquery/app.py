@@ -32,6 +32,7 @@ class Demo(object):
             resp.content_type='application/json'
             resp.body = simplejson.dumps([{'value':'Ajax'},{'value':'Borax'},{'value':'Corax'}, {'value':'Dorax'},{'value':'Manix'}])
         elif req.path.endswith('/fa.jquery/demo.html'):
+            req.remove_conditional_headers()
             script_name = req.environ.get('HTTP_X_FORWARDED_PATH', '')
             Form.ajax.set(renderer=AutoCompleteFieldRenderer(script_name+'/fa.jquery/ajax_values'))
             obj = Form.gen_model()
@@ -75,6 +76,7 @@ class Demo(object):
             else:
                 req.method = 'get'
                 resp = req.get_response(self.app)
+                resp.body = resp.body.replace('</head>', head+'</head>')
                 resp.body = resp.body.replace('<div id="demo"></div>', body)
         else:
             return self.app(environ, start_response)

@@ -11,7 +11,7 @@
 .ui-widget-odd {background-color: #FCFDFD;}
 
 .fa_selectable .ui-selecting { background: #DFEFFC; }
-.fa_selectable .ui-selected { background: #C3D9FF; color: #2E6E9E; }
+.fa_selectable .ui-selected { background: #E6E6E6;}
 .fa_selectable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
 .fa_selectable li { margin: 3px; padding: 0.4em; height: 18px; cursor:pointer;}
 

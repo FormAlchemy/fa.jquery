@@ -1,7 +1,7 @@
 <html metal:define-macro="master">
     <head>
       <title tal:content="request.model_name or 'root'"></title>
-      <link rel="stylesheet" tal:attributes="href request.static_url('fa.jquery:jquery-ui/css/redmond/jquery-ui-1.8.custom.css')" />
+      <link rel="stylesheet" tal:attributes="href request.static_url('fa.jquery:jquery-ui/css/smoothness/jquery-ui-1.8.8.custom.css')" />
       <link rel="stylesheet" tal:attributes="href request.static_url('fa.jquery:jquery-ui/fa.jquery.min.css')" />
       <script type="text/javascript" tal:attributes="src request.static_url('fa.jquery:jquery-ui/fa.jquery.min.js')"></script>
       <style type="text/css">

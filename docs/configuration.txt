@@ -12,7 +12,7 @@ If you want to include all features you need to add this to your html header:
 
 .. sourcecode:: html
 
-		<link type="text/css" href="/jquery/css/redmond/jquery-ui-1.8.custom.css" rel="stylesheet" />	
+		<link type="text/css" href="/jquery/css/smoothness/jquery-ui-1.8.8.custom.css" rel="stylesheet" />	
 		<link type="text/css" href="/jquery/fa.jquery.min.css" rel="stylesheet" />	
 		<script type="text/javascript" src="/jquery/fa.jquery.min.js"></script>
 
