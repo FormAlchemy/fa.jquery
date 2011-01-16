@@ -1,0 +1,29 @@
+<tal:define tal:define="dom_id string:grid_1;
+      colnames ','.join([repr(f.label_text or collection.prettify(f.key)) for f in collection.render_fields.values()]);
+      colmodels ','.join([f.metadata.get('json') for f in collection.render_fields.values()]);
+      ">
+<table tal:attributes="id dom_id"></table> <div tal:attributes="id string:${dom_id}_jqgrid"></div> 
+<script>
+jQuery.fa.add_resource("${request.static_url('fa.jquery:jquery-ui/jqgrid/css/ui.jqgrid.css')}");
+jQuery.fa.add_resource("${request.static_url('fa.jquery:jquery-ui/jqgrid/js/i18n/grid.locale-en.js')}");
+jQuery.fa.add_resource("${request.static_url('fa.jquery:jquery-ui/jqgrid/js/jquery.jqGrid.min.js')}");
+jQuery.fa.add_resource("${request.static_url('fa.jquery:jquery-ui/jqgrid/js/fa.jqgrid.js')}");
+</script>
+<script>
+var url = window.location.href.split('?')[0].split('/');
+var model = url.pop();
+url.push('json');
+url.push(model);
+url = url.join('/');
+jQuery.fa.jqgrid("${dom_id}", {
+    url: url+'?jqgrid=true',
+    colNames:['id' ${colnames and ', %s' % colnames or ''}],
+    colModel:[
+      {name:"id",index:"id", width:30, align:"center", searchoptions:{sopt:["eq"]}}
+      ${colmodels and ', %s' % colmodels or ''}
+    ],
+    callback: function(table, pager, options) {
+    }
+  });
+</script>
+</tal:define>

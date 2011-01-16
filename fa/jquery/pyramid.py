@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from pyramid_formalchemy.views import ModelView as Base
 from pyramid_formalchemy.utils import TemplateEngine
-from fa.jquery.utils import Flash
+from fa.jquery import utils
 from webhelpers.html import literal
 from formalchemy import fields
 from formalchemy import fatypes
@@ -51,7 +51,7 @@ class ModelView(Base):
     def render_xhr_format(self, fs=None, **kwargs):
         resp = Base.render_xhr_format(self, fs=fs, **kwargs)
         if fs and self.request.POST and 'field' not in self.request.GET:
-            flash = Flash()
+            flash = utils.Flash()
             if fs.errors:
                 errors = [f.label_text or fs.prettify(f.key) for f in fs.render_fields.values() if f.errors]
                 flash.error('Field(s) %s have errors' % ','.join(errors))
@@ -61,25 +61,28 @@ class ModelView(Base):
         return resp
 
     def update_grid(self, grid, *args, **kwargs):
+        metadatas = ('width', 'align', 'fixed', 'search', 'stype', 'searchoptions')
         for field in grid.render_fields.values():
-            metadata = dict(search=0)
+            metadata = dict(search=0, sortable=1, id=field.key, name=field.key)
             searchoptions = dict(sopt=['eq', 'cn'])
             if field.is_relation:
-                metadata.update(width=100)
+                metadata.update(width=100, sortable=0)
+            elif isinstance(field.type, (utils.Color, utils.Slider)):
+                metadata.update(width=50, align='center')
             elif isinstance(field.type, fatypes.Text):
                 field.set(renderer=renderers.ellipsys(field.renderer))
                 metadata.update(search=1)
             elif isinstance(field.type, (fatypes.String, fatypes.Unicode)):
                 metadata.update(search=1)
             elif isinstance(field.type, (fatypes.Date, fatypes.Integer)):
-                metadata.update(width=70, align='"center"')
+                metadata.update(width=70, align='center')
             elif isinstance(field.type, fatypes.DateTime):
-                metadata.update(width=120, align='"center"')
+                metadata.update(width=120, align='center')
             elif isinstance(field.type, fatypes.Boolean):
-                metadata.update(width=30, align='"center"')
+                metadata.update(width=30, align='center')
             if metadata['search']:
-                metadata['searchoptions'] = dumps(searchoptions)
-            metadata.update(field.metadata)
+                metadata['searchoptions'] = searchoptions
+            metadata = dict(json=dumps(metadata))
             field.set(metadata=metadata)
 
 def RelationRenderer(renderer=fields.SelectFieldRenderer, **jq_options):
