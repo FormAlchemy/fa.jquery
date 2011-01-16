@@ -22,7 +22,7 @@ import sys, os
 
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = ['sphinx.ext.autodoc']
+extensions = ['sphinx.ext.autodoc', 'sphinx.ext.doctest', 'sphinx.ext.intersphinx']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -195,17 +195,17 @@ latex_documents = [
 
 # Custom stuff
 
+html_theme = 'nature'
 rstctl_exclude = ['fa.jquery.app', 'fa.jquery.pylons']
 
 try:
     import rstctl
-    extensions = ['sphinx.ext.autodoc', 'rstctl.sphinx']
+    extensions.append('rstctl.sphinx')
 except ImportError:
     pass
 else:
     del rstctl
 
-html_theme = 'nature'
 from os import path
 pkg_dir = path.abspath(__file__).split('/docs')[0]
 setup = path.join(pkg_dir, 'setup.py')

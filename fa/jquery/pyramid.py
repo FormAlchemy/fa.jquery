@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from pyramid_formalchemy.views import ModelView as Base
-from fa.jquery.utils import TemplateEngine
+from pyramid_formalchemy.utils import TemplateEngine
 from fa.jquery.utils import Flash
 from webhelpers.html import literal
 from formalchemy import fields
