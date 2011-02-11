@@ -7,7 +7,7 @@
       <div tal:content="structure fs.render(renderer='fa.jquery:templates/forms/jqgrid.pt', request=request)" />
       <p>
         <a class="ui-widget-header ui-widget-link ui-corner-all"
-           tal:attributes="href request.route_url('fa_admin', traverse='%s/new' % request.model_name)">
+           tal:attributes="href request.route_url(request.route_name, traverse='%s/new' % request.model_name)">
             <span class="ui-icon ui-icon-circle-plus"></span>
             ${F_('New')} ${model_name}
         </a>
