@@ -8,13 +8,13 @@
         <div class="fa_field">
           <a class="ui-widget-header ui-widget-link ui-widget-button ui-corner-all" href="#" onclick="jQuery(this).parents('form').submit();">
             <span class="ui-icon ui-icon-check"></span>
-            <span tal:replace="Save" />
+            <span>Save</span>
             <input type="submit" />
           </a>
           <a class="ui-widget-header ui-widget-link ui-corner-all"
              tal:attributes="href request.route_url(request.route_name, traverse=request.model_name)">
             <span class="ui-icon ui-icon-circle-arrow-w"></span>
-            <span tal:replace="Cancel" />
+            <span>Cancel</span>
           </a>
         </div>
       </form>

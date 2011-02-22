@@ -12,7 +12,6 @@ import logging
 class ModelView(Base):
 
     engine = TemplateEngine()
-    template = 'restfieldset.mako'
 
     def index(self, *args, **kwargs):
         kwargs['pager'] = ''

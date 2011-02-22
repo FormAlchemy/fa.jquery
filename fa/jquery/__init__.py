@@ -32,9 +32,9 @@ except ImportError:
 def includeme(config):
     config.add_static_view('jquery', 'fa.jquery:jquery-ui')
     config.override_asset(
-        to_override="pyramid_formalchemy:templates/admin/master.pt",
-        override_with="fa.jquery:templates/admin/master.pt")
-    config.override_asset(
-        to_override="pyramid_formalchemy:templates/admin/listing.pt",
-        override_with="fa.jquery:templates/admin/listing.pt")
+        to_override="pyramid_formalchemy:templates/admin/",
+        override_with="fa.jquery:templates/admin/")
+    #config.override_asset(
+    #    to_override="pyramid_formalchemy:templates/admin/listing.pt",
+    #    override_with="fa.jquery:templates/admin/listing.pt")
 
