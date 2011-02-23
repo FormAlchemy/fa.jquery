@@ -6,6 +6,9 @@
 .fa_field {font-size:1em;}
 .fa_field {margin-left:0.2em;margin-bottom:0.3em;}
 .fa_field div.ui-state-error {margin:0.3em 0em; padding:0.2em; width:20em;}
+.fa_controls {margin-top: 1.5em;}
+.fa_model {display:block;text-align:center;margin:1.5em 20%;padding:1em 0px;}
+td.field_readonly {vertical-align:top;width:10%; text-align:right;}
 
 .ui-widget-even {background-color: #DFEFFC;}
 .ui-widget-odd {background-color: #FCFDFD;}

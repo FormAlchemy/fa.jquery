@@ -2,10 +2,9 @@
   <body>
     <div metal:fill-slot="main">
       <div tal:repeat="item models">
-        <div>
-          <a tal:attributes="href request.route_url(request.route_name, traverse=item)"
-             tal:content="item"></a>
-        </div>
+        <a tal:attributes="href request.route_url(request.route_name, traverse=item)"
+           class="fa_model ui-widget-header ui-corner-all"
+           tal:content="item"></a>
       </div>
     </div>
   </body>

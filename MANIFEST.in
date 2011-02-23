@@ -1,5 +1,6 @@
 include CHANGES.txt
 recursive-include fa *.mako
+recursive-include fa *.pt.py
 recursive-include fa *.pt
 recursive-include fa *.css
 recursive-include fa *.js

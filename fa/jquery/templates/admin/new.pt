@@ -5,21 +5,19 @@
             tal:attributes="action request.route_url(request.route_name, traverse=request.model_name)"
         >
         <div tal:content="structure fs.render()" />
-        <div class="fa_field">
+        <div class="fa_controls">
           <a class="ui-widget-header ui-widget-link ui-widget-button ui-corner-all" href="#" onclick="jQuery(this).parents('form').submit();">
             <span class="ui-icon ui-icon-check"></span>
-            <span>Save</span>
+            <span tal:replace="string:Save"></span>
             <input type="submit" />
           </a>
           <a class="ui-widget-header ui-widget-link ui-corner-all"
              tal:attributes="href request.route_url(request.route_name, traverse=request.model_name)">
             <span class="ui-icon ui-icon-circle-arrow-w"></span>
-            <span>Cancel</span>
+            <span tal:replace="string:Cancel"></span>
           </a>
         </div>
       </form>
     </div>
   </body>
 </html>
-
-
