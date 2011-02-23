@@ -115,5 +115,9 @@ def relations(): pass
 @renderers.alias(RelationRenderer, renderer=renderers.radioset())
 def relation(): pass
 
-renderers.default_renderers['dropdown'] = RelationRenderer()
+try:
+    import pyramid_formalchemy
+except ImportError:
+    # this only works with pylons 1.0
+    renderers.default_renderers['dropdown'] = RelationRenderer()
 

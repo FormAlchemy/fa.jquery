@@ -1,4 +1,5 @@
 include CHANGES.txt
+exclude compressor.py
 recursive-include fa *.mako
 recursive-include fa *.pt.py
 recursive-include fa *.pt

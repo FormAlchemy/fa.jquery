@@ -6,10 +6,10 @@
   </tr>
 </thead>
 <tbody>
-  <tal:row tal:repeat="row collection.rows"
-           tal:define="dummy collection._set_active(row);
-                       row_errors collection.get_errors(row);">
-    <tr tal:attributes="class string:ui-widget-${repeat.row.even and 'even' or 'odd'}">
+  <tal:row tal:repeat="row collection.rows">
+  <tr tal:define="dummy collection._set_active(row);
+                  row_errors collection.get_errors(row);"
+      tal:attributes="class string:ui-widget-${repeat.row.even and 'even' or 'odd'}">
       <td tal:repeat="field collection.render_fields.itervalues()">
         <div tal:content="structure field.render()" />
         <span tal:repeat="error row_errors.get(field, [])" class="grid_error">${error}</span>

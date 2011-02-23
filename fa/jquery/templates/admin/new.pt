@@ -2,17 +2,18 @@
   <body>
     <div metal:fill-slot="main">
       <form method="POST" enctype="multipart/form-data"
-            tal:attributes="action request.route_url(request.route_name, traverse=request.model_name)"
+            tal:attributes="action request.fa_url(request.model_name)"
         >
         <div tal:content="structure fs.render()" />
         <div class="fa_controls">
-          <a class="ui-widget-header ui-widget-link ui-widget-button ui-corner-all" href="#" onclick="jQuery(this).parents('form').submit();">
+          <a class="ui-widget-header ui-widget-link ui-widget-button ui-corner-all"
+             href="#" onclick="jQuery(this).parents('form').submit();">
             <span class="ui-icon ui-icon-check"></span>
             <span tal:replace="string:Save"></span>
             <input type="submit" />
           </a>
           <a class="ui-widget-header ui-widget-link ui-corner-all"
-             tal:attributes="href request.route_url(request.route_name, traverse=request.model_name)">
+             tal:attributes="href request.fa_url(request.model_name)">
             <span class="ui-icon ui-icon-circle-arrow-w"></span>
             <span tal:replace="string:Cancel"></span>
           </a>

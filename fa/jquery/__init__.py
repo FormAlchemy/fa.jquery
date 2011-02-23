@@ -34,7 +34,7 @@ def includeme(config):
     config.override_asset(
         to_override="pyramid_formalchemy:templates/admin/",
         override_with="fa.jquery:templates/admin/")
-    #config.override_asset(
-    #    to_override="pyramid_formalchemy:templates/admin/listing.pt",
-    #    override_with="fa.jquery:templates/admin/listing.pt")
+    config.override_asset(
+        to_override="pyramid_formalchemy:templates/forms/",
+        override_with="fa.jquery:templates/forms/")
 

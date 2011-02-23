@@ -5,7 +5,7 @@
         <label tal:content="[field.label_text, fieldset.prettify(field.key)][int(field.label_text is None)]"
                />
       </td>
-      <td><div tal:content="structure field.render_readonly()" /></td>
+      <td tal:content="structure field.render_readonly()" />
     </tr>
   </tal:field>
   <tr style="display:none"><td>&nbsp;</td><td>
