@@ -1,3 +1,10 @@
+0.8
+---
+
+Add pyramid view and templates
+
+Switch to latest jQuery.ui
+
 0.7
 ---
 
