@@ -1,18 +1,18 @@
 registry = dict(version=0)
 def bind():
     from cPickle import loads as _loads
-    _attrs_4354427536 = _loads('(dp1\nVclass\np2\nVfa_controls\np3\ns.')
+    _attrs_4363504080 = _loads('(dp1\nVclass\np2\nVui-icon ui-icon-check\np3\ns.')
     _lookup_attr = _loads('cchameleon.core.codegen\nlookup_attr\np1\n.')
     _init_scope = _loads('cchameleon.core.utils\necontext\np1\n.')
-    _attrs_4354427920 = _loads('(dp1\n.')
-    _attrs_4354428304 = _loads('(dp1\nVclass\np2\nVui-widget-header ui-widget-link ui-corner-all\np3\ns.')
-    _attrs_4354428112 = _loads('(dp1\n.')
-    _init_stream = _loads('cchameleon.core.generation\ninitialize_stream\np1\n.')
-    _attrs_4354428048 = _loads('(dp1\nVclass\np2\nVui-widget-header ui-widget-link ui-widget-button ui-corner-all\np3\ns.')
-    _attrs_4354427344 = _loads('(dp1\nVclass\np2\nVui-icon ui-icon-circle-arrow-w\np3\ns.')
-    _init_default = _loads('cchameleon.core.generation\ninitialize_default\np1\n.')
-    _attrs_4354427024 = _loads('(dp1\nVclass\np2\nVui-icon ui-icon-check\np3\ns.')
     _re_amp = _loads("cre\n_compile\np1\n(S'&(?!([A-Za-z]+|#[0-9]+);)'\np2\nI0\ntRp3\n.")
+    _attrs_4363504464 = _loads('(dp1\nVclass\np2\nVui-icon ui-icon-circle-arrow-w\np3\ns.')
+    _attrs_4363504272 = _loads('(dp1\nVclass\np2\nVui-widget-header ui-widget-link ui-corner-all\np3\ns.')
+    _attrs_4363503696 = _loads('(dp1\n.')
+    _attrs_4363503888 = _loads('(dp1\n.')
+    _init_stream = _loads('cchameleon.core.generation\ninitialize_stream\np1\n.')
+    _attrs_4362328912 = _loads('(dp1\nVclass\np2\nVfa_controls\np3\ns.')
+    _init_default = _loads('cchameleon.core.generation\ninitialize_default\np1\n.')
+    _attrs_4362328720 = _loads('(dp1\nVclass\np2\nVui-widget-header ui-widget-link ui-widget-button ui-corner-all\np3\ns.')
     _init_tal = _loads('cchameleon.core.generation\ninitialize_tal\np1\n.')
     def render(econtext, rcontext=None):
         macros = econtext.get('macros')
@@ -34,13 +34,13 @@ def bind():
         def _callback_main(econtext, _repeat, _out=_out, _write=_write, _domain=_domain, **_ignored):
             if _repeat:
                 repeat.update(_repeat)
-            attrs = _attrs_4354428112
+            attrs = _attrs_4363503696
             u"''"
             _write(u'<div>\n      ')
             _default.value = default = ''
             u'fs.render()'
             _content = _lookup_attr(econtext['fs'], 'render')()
-            attrs = _attrs_4354427920
+            attrs = _attrs_4363503888
             u'_content'
             _write(u'<table>')
             _tmp1 = _content
@@ -59,12 +59,12 @@ def bind():
                     _tmp = str(_tmp)
                 _write(_tmp)
             _write(u'</table>\n      ')
-            attrs = _attrs_4354427536
+            attrs = _attrs_4362328912
             _write(u'<div class="fa_controls">\n        ')
-            attrs = _attrs_4354428048
-            u'request.fa_url(request.model_name, request.model_id)'
+            attrs = _attrs_4362328720
+            u"request.fa_url(request.model_name, request.model_id, 'edit')"
             _write(u'<a class="ui-widget-header ui-widget-link ui-widget-button ui-corner-all"')
-            _tmp1 = _lookup_attr(econtext['request'], 'fa_url')(_lookup_attr(econtext['request'], 'model_name'), _lookup_attr(econtext['request'], 'model_id'))
+            _tmp1 = _lookup_attr(econtext['request'], 'fa_url')(_lookup_attr(econtext['request'], 'model_name'), _lookup_attr(econtext['request'], 'model_id'), 'edit')
             if (_tmp1 is _default):
                 _tmp1 = None
             if ((_tmp1 is not None) and (_tmp1 is not False)):
@@ -86,7 +86,7 @@ def bind():
                     _tmp1 = _tmp1.replace('"', '&quot;')
                 _write(((' href="' + _tmp1) + '"'))
             _write(u'>\n          ')
-            attrs = _attrs_4354427024
+            attrs = _attrs_4363504080
             u"''"
             _write(u'<span class="ui-icon ui-icon-check"></span>\n          ')
             _default.value = default = ''
@@ -118,7 +118,7 @@ def bind():
                     _tmp = _tmp.replace('>', '&gt;')
                 _write(_tmp)
             _write(u'\n        </a>\n        ')
-            attrs = _attrs_4354428304
+            attrs = _attrs_4363504272
             u'request.fa_url(request.model_name)'
             _write(u'<a class="ui-widget-header ui-widget-link ui-corner-all"')
             _tmp1 = _lookup_attr(econtext['request'], 'fa_url')(_lookup_attr(econtext['request'], 'model_name'))
@@ -143,7 +143,7 @@ def bind():
                     _tmp1 = _tmp1.replace('"', '&quot;')
                 _write(((' href="' + _tmp1) + '"'))
             _write(u'>\n          ')
-            attrs = _attrs_4354427344
+            attrs = _attrs_4363504464
             u"''"
             _write(u'<span class="ui-icon ui-icon-circle-arrow-w"></span>\n          ')
             _default.value = default = ''
