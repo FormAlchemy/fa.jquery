@@ -34,7 +34,7 @@ class TemplateEngine(BaseTemplateEngine):
         if not name.endswith('.mako'):
             name = '%s.mako' % name
         template = self.templates.get_template('/forms/%s' % name)
-        return literal(template.render(**kwargs))
+        return literal(template.render_unicode(**kwargs))
 
 def load_datas(filename):
     dirname = os.path.join(os.path.dirname(__file__), 'datas')
