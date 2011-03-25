@@ -1,15 +1,15 @@
 registry = dict(version=0)
 def bind():
     from cPickle import loads as _loads
-    _attrs_4356464016 = _loads('(dp1\n.')
     _lookup_attr = _loads('cchameleon.core.codegen\nlookup_attr\np1\n.')
     _init_scope = _loads('cchameleon.core.utils\necontext\np1\n.')
     _re_amp = _loads("cre\n_compile\np1\n(S'&(?!([A-Za-z]+|#[0-9]+);)'\np2\nI0\ntRp3\n.")
-    _attrs_4356463632 = _loads('(dp1\n.')
+    _attrs_4354607760 = _loads('(dp1\n.')
+    _attrs_4354607888 = _loads('(dp1\n.')
+    _attrs_4354607632 = _loads('(dp1\n.')
     _init_stream = _loads('cchameleon.core.generation\ninitialize_stream\np1\n.')
-    _attrs_4356463952 = _loads('(dp1\n.')
+    _attrs_4354608016 = _loads('(dp1\n.')
     _init_default = _loads('cchameleon.core.generation\ninitialize_default\np1\n.')
-    _attrs_4356463568 = _loads('(dp1\n.')
     _init_tal = _loads('cchameleon.core.generation\ninitialize_tal\np1\n.')
     def render(econtext, rcontext=None):
         macros = econtext.get('macros')
@@ -28,12 +28,12 @@ def bind():
         _domain = None
         u'grid_1'
         dom_id = u'grid_1'
-        u"','.join([repr(f.label_text or collection.prettify(f.key)) for f in collection.render_fields.values()])"
-        colnames = _lookup_attr(',', 'join')([repr((_lookup_attr(f, 'label_text') or _lookup_attr(econtext['collection'], 'prettify')(_lookup_attr(f, 'key')))) for f in _lookup_attr(_lookup_attr(econtext['collection'], 'render_fields'), 'values')()])
+        u"','.join([repr(str(f.label())) for f in collection.render_fields.values()])"
+        colnames = _lookup_attr(',', 'join')([repr(str(_lookup_attr(f, 'label')())) for f in _lookup_attr(_lookup_attr(econtext['collection'], 'render_fields'), 'values')()])
         u"','.join([f.metadata.get('json') for f in collection.render_fields.values()])"
         colmodels = _lookup_attr(',', 'join')([_lookup_attr(_lookup_attr(f, 'metadata'), 'get')('json') for f in _lookup_attr(_lookup_attr(econtext['collection'], 'render_fields'), 'values')()])
         _write(u'\n')
-        attrs = _attrs_4356463952
+        attrs = _attrs_4354607632
         u'dom_id'
         _write(u'<table')
         _tmp1 = dom_id
@@ -58,7 +58,7 @@ def bind():
                 _tmp1 = _tmp1.replace('"', '&quot;')
             _write(((' id="' + _tmp1) + '"'))
         _write(u'></table> ')
-        attrs = _attrs_4356464016
+        attrs = _attrs_4354607760
         u'${dom_id}_jqgrid'
         _write(u'<div')
         _tmp1 = ('%s%s' % (dom_id, u'_jqgrid', ))
@@ -83,7 +83,7 @@ def bind():
                 _tmp1 = _tmp1.replace('"', '&quot;')
             _write(((' id="' + _tmp1) + '"'))
         _write(u'></div> \n')
-        attrs = _attrs_4356463568
+        attrs = _attrs_4354607888
         u"request.static_url('fa.jquery:jquery-ui/jqgrid/css/ui.jqgrid.css')"
         _write(u'<script>\njQuery.fa.add_resource("')
         _tmp1 = _lookup_attr(econtext['request'], 'static_url')('fa.jquery:jquery-ui/jqgrid/css/ui.jqgrid.css')
@@ -189,7 +189,7 @@ def bind():
                 _tmp = _tmp.replace('>', '&gt;')
             _write(_tmp)
         _write(u'");\n</script>\n')
-        attrs = _attrs_4356463632
+        attrs = _attrs_4354608016
         u'dom_id'
         _write(u'<script>\nvar url = window.location.href.split(\'?\')[0].split(\'/\');\nvar model = url.pop();\nurl.push(\'json\');\nurl.push(model);\nurl = url.join(\'/\');\njQuery.fa.jqgrid("')
         _tmp1 = dom_id

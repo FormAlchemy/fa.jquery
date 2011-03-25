@@ -3,19 +3,19 @@ def bind():
     from cPickle import loads as _loads
     _lookup_attr = _loads('cchameleon.core.codegen\nlookup_attr\np1\n.')
     _init_scope = _loads('cchameleon.core.utils\necontext\np1\n.')
-    _attrs_4360359696 = _loads('(dp1\nVclass\np2\nVui-widget-header\np3\ns.')
-    _attrs_4360359568 = _loads('(dp1\nVclass\np2\nVlayout-grid\np3\ns.')
-    _attrs_4354360656 = _loads('(dp1\n.')
-    _attrs_4360358800 = _loads('(dp1\n.')
-    _init_stream = _loads('cchameleon.core.generation\ninitialize_stream\np1\n.')
-    _attrs_4354347280 = _loads('(dp1\n.')
-    _attrs_4354350352 = _loads('(dp1\nVclass\np2\nVgrid_error\np3\ns.')
-    _init_default = _loads('cchameleon.core.generation\ninitialize_default\np1\n.')
-    _attrs_4360359888 = _loads('(dp1\n.')
     _re_amp = _loads("cre\n_compile\np1\n(S'&(?!([A-Za-z]+|#[0-9]+);)'\np2\nI0\ntRp3\n.")
-    _attrs_4354348880 = _loads('(dp1\n.')
-    _attrs_4360358544 = _loads('(dp1\n.')
+    _attrs_4355504080 = _loads('(dp1\n.')
+    _attrs_4355531408 = _loads('(dp1\n.')
+    _attrs_4355533904 = _loads('(dp1\n.')
+    _attrs_4355533264 = _loads('(dp1\nVclass\np2\nVlayout-grid\np3\ns.')
+    _attrs_4355533520 = _loads('(dp1\n.')
+    _init_stream = _loads('cchameleon.core.generation\ninitialize_stream\np1\n.')
+    _attrs_4355533648 = _loads('(dp1\nVclass\np2\nVui-widget-header\np3\ns.')
+    _attrs_4355504144 = _loads('(dp1\n.')
+    _init_default = _loads('cchameleon.core.generation\ninitialize_default\np1\n.')
+    _attrs_4355503824 = _loads('(dp1\n.')
     _init_tal = _loads('cchameleon.core.generation\ninitialize_tal\np1\n.')
+    _attrs_4355534032 = _loads('(dp1\nVclass\np2\nVgrid_error\np3\ns.')
     def render(econtext, rcontext=None):
         macros = econtext.get('macros')
         _translate = econtext.get('_translate')
@@ -31,11 +31,11 @@ def bind():
         default = None
         u'None'
         _domain = None
-        attrs = _attrs_4360359568
+        attrs = _attrs_4355533264
         _write(u'<table class="layout-grid">\n')
-        attrs = _attrs_4360359888
+        attrs = _attrs_4355533520
         _write(u'<thead>\n  ')
-        attrs = _attrs_4360359696
+        attrs = _attrs_4355533648
         u"''"
         _write(u'<tr class="ui-widget-header">\n    ')
         _default.value = default = ''
@@ -45,9 +45,9 @@ def bind():
         (_tmp1, _tmp2, ) = repeat.insert('field', _tmp1)
         for field in _tmp1:
             _tmp2 = (_tmp2 - 1)
-            u'field.label_text or collection.prettify(field.key)'
-            _content = (_lookup_attr(field, 'label_text') or _lookup_attr(econtext['collection'], 'prettify')(_lookup_attr(field, 'key')))
-            attrs = _attrs_4360358800
+            u'field.label()'
+            _content = _lookup_attr(field, 'label')()
+            attrs = _attrs_4355503824
             u'_content'
             _write(u'<th>')
             _tmp3 = _content
@@ -79,7 +79,7 @@ def bind():
                 break
             _write(' ')
         _write(u'\n  </tr>\n</thead>\n')
-        attrs = _attrs_4360358544
+        attrs = _attrs_4355504080
         u'collection.rows'
         _write(u'<tbody>\n  ')
         _tmp1 = _lookup_attr(econtext['collection'], 'rows')
@@ -92,7 +92,7 @@ def bind():
             dummy = _lookup_attr(econtext['collection'], '_set_active')(row)
             u'collection.get_errors(row)'
             row_errors = _lookup_attr(econtext['collection'], 'get_errors')(row)
-            attrs = _attrs_4354360656
+            attrs = _attrs_4355504144
             u"ui-widget-${repeat.row.even and 'even' or 'odd'}"
             _write(u'<tr')
             _tmp3 = ('%s%s' % (u'ui-widget-', ((_lookup_attr(repeat.row, 'even') and 'even') or 'odd'), ))
@@ -123,13 +123,13 @@ def bind():
             (_tmp3, _tmp4, ) = repeat.insert('field', _tmp3)
             for field in _tmp3:
                 _tmp4 = (_tmp4 - 1)
-                attrs = _attrs_4354347280
+                attrs = _attrs_4355531408
                 u"''"
                 _write(u'<td>\n        ')
                 _default.value = default = ''
                 u'field.render()'
                 _content = _lookup_attr(field, 'render')()
-                attrs = _attrs_4354348880
+                attrs = _attrs_4355533904
                 u'_content'
                 _write(u'<div>')
                 _tmp5 = _content
@@ -154,7 +154,7 @@ def bind():
                 (_tmp5, _tmp6, ) = repeat.insert('error', _tmp5)
                 for error in _tmp5:
                     _tmp6 = (_tmp6 - 1)
-                    attrs = _attrs_4354350352
+                    attrs = _attrs_4355534032
                     u'error'
                     _write(u'<span class="grid_error">')
                     _tmp7 = error

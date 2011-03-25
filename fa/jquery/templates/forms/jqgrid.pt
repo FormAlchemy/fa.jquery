@@ -1,5 +1,5 @@
 <tal:define tal:define="dom_id string:grid_1;
-      colnames ','.join([repr(f.label_text or collection.prettify(f.key)) for f in collection.render_fields.values()]);
+      colnames ','.join([repr(str(f.label())) for f in collection.render_fields.values()]);
       colmodels ','.join([f.metadata.get('json') for f in collection.render_fields.values()]);
       ">
 <table tal:attributes="id dom_id"></table> <div tal:attributes="id string:${dom_id}_jqgrid"></div> 
