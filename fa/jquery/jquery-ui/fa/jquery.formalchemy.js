@@ -32,18 +32,26 @@ var pluginGen = function(plugin_id, func) {
     return function(name, options) {
         // assume plugin is launch onload
         $(function(){
-            try {
-                var field = document.getElementById(name);
-                if (field)
-                    field = $(field);
-                else
-                    field = $('input[name="'+name+'"]');
-                var plugin = document.getElementById(name+'_'+plugin_id);
-                if (plugin)
-                    plugin = $(plugin);
-                $.fa_plugins[plugin_id](field, plugin, options);
-            } catch (e) {
-                log('Error while loading '+plugin_id+' for '+name+' - '+options+': '+e);
+            var field = document.getElementById(name);
+            if (field)
+                field = $(field);
+            else
+                field = $('input[name="'+name+'"]');
+            var plugin = document.getElementById(name+'_'+plugin_id);
+            if (plugin)
+                plugin = $(plugin);
+            var load = function() {
+                try {
+                    $.fa_plugins[plugin_id](field, plugin, options);
+                    return true;
+                } catch (e) {
+                    log('Error while loading '+plugin_id+' for '+name+' - '+options+': '+e);
+                    return false;
+                }
+            }
+            if (!load()) {
+                log('Retrying in 0.5s...');
+                setTimeout(load, 500);
             }
         });
     }

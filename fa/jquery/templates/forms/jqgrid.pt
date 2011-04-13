@@ -10,6 +10,11 @@ jQuery.fa.add_resource("${request.static_url('fa.jquery:jquery-ui/jqgrid/js/jque
 jQuery.fa.add_resource("${request.static_url('fa.jquery:jquery-ui/jqgrid/js/fa.jqgrid.js')}");
 </script>
 <script>
+var init_grid = function() {
+if (!jQuery.fa.jqgrid) {
+  setTimeout(init_grid, 100);
+  return;
+}
 var url = window.location.href.split('?')[0].split('/');
 var model = url.pop();
 url.push('json');
@@ -25,5 +30,7 @@ jQuery.fa.jqgrid("${dom_id}", {
     callback: function(table, pager, options) {
     }
   });
+}
+setTimeout(init_grid, 200);
 </script>
 </tal:define>

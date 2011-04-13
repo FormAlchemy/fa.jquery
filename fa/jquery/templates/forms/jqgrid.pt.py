@@ -4,12 +4,12 @@ def bind():
     _lookup_attr = _loads('cchameleon.core.codegen\nlookup_attr\np1\n.')
     _init_scope = _loads('cchameleon.core.utils\necontext\np1\n.')
     _re_amp = _loads("cre\n_compile\np1\n(S'&(?!([A-Za-z]+|#[0-9]+);)'\np2\nI0\ntRp3\n.")
-    _attrs_4354607760 = _loads('(dp1\n.')
-    _attrs_4354607888 = _loads('(dp1\n.')
-    _attrs_4354607632 = _loads('(dp1\n.')
+    _attrs_4322313424 = _loads('(dp1\n.')
+    _attrs_4322313296 = _loads('(dp1\n.')
     _init_stream = _loads('cchameleon.core.generation\ninitialize_stream\np1\n.')
-    _attrs_4354608016 = _loads('(dp1\n.')
+    _attrs_4322313552 = _loads('(dp1\n.')
     _init_default = _loads('cchameleon.core.generation\ninitialize_default\np1\n.')
+    _attrs_4322313680 = _loads('(dp1\n.')
     _init_tal = _loads('cchameleon.core.generation\ninitialize_tal\np1\n.')
     def render(econtext, rcontext=None):
         macros = econtext.get('macros')
@@ -33,7 +33,7 @@ def bind():
         u"','.join([f.metadata.get('json') for f in collection.render_fields.values()])"
         colmodels = _lookup_attr(',', 'join')([_lookup_attr(_lookup_attr(f, 'metadata'), 'get')('json') for f in _lookup_attr(_lookup_attr(econtext['collection'], 'render_fields'), 'values')()])
         _write(u'\n')
-        attrs = _attrs_4354607632
+        attrs = _attrs_4322313296
         u'dom_id'
         _write(u'<table')
         _tmp1 = dom_id
@@ -58,7 +58,7 @@ def bind():
                 _tmp1 = _tmp1.replace('"', '&quot;')
             _write(((' id="' + _tmp1) + '"'))
         _write(u'></table> ')
-        attrs = _attrs_4354607760
+        attrs = _attrs_4322313424
         u'${dom_id}_jqgrid'
         _write(u'<div')
         _tmp1 = ('%s%s' % (dom_id, u'_jqgrid', ))
@@ -83,7 +83,7 @@ def bind():
                 _tmp1 = _tmp1.replace('"', '&quot;')
             _write(((' id="' + _tmp1) + '"'))
         _write(u'></div> \n')
-        attrs = _attrs_4354607888
+        attrs = _attrs_4322313552
         u"request.static_url('fa.jquery:jquery-ui/jqgrid/css/ui.jqgrid.css')"
         _write(u'<script>\njQuery.fa.add_resource("')
         _tmp1 = _lookup_attr(econtext['request'], 'static_url')('fa.jquery:jquery-ui/jqgrid/css/ui.jqgrid.css')
@@ -189,9 +189,9 @@ def bind():
                 _tmp = _tmp.replace('>', '&gt;')
             _write(_tmp)
         _write(u'");\n</script>\n')
-        attrs = _attrs_4354608016
+        attrs = _attrs_4322313680
         u'dom_id'
-        _write(u'<script>\nvar url = window.location.href.split(\'?\')[0].split(\'/\');\nvar model = url.pop();\nurl.push(\'json\');\nurl.push(model);\nurl = url.join(\'/\');\njQuery.fa.jqgrid("')
+        _write(u'<script>\nvar init_grid = function() {\nif (!jQuery.fa.jqgrid) {\n  setTimeout(init_grid, 100);\n  return;\n}\nvar url = window.location.href.split(\'?\')[0].split(\'/\');\nvar model = url.pop();\nurl.push(\'json\');\nurl.push(model);\nurl = url.join(\'/\');\njQuery.fa.jqgrid("')
         _tmp1 = dom_id
         _tmp = _tmp1
         if (_tmp.__class__ not in (str, unicode, int, float, )):
@@ -268,7 +268,7 @@ def bind():
             if ('>' in _tmp):
                 _tmp = _tmp.replace('>', '&gt;')
             _write(_tmp)
-        _write(u'\n    ],\n    callback: function(table, pager, options) {\n    }\n  });\n</script>\n')
+        _write(u'\n    ],\n    callback: function(table, pager, options) {\n    }\n  });\n}\nsetTimeout(init_grid, 200);\n</script>\n')
         return _out.getvalue()
     return render
 
