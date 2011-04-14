@@ -19,7 +19,7 @@ class ModelView(Base):
 
     def get_page(self, **kwargs):
         if 'collection' not in kwargs:
-            model = self.get_model()
+            model = self.context.get_model()
             params = self.request.params
             session = self.Session()
             fields = model._sa_class_manager
