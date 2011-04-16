@@ -1,22 +1,26 @@
 registry = dict(version=0)
 def bind():
     from cPickle import loads as _loads
-    _attrs_4354311312 = _loads('(dp1\n.')
     _lookup_attr = _loads('cchameleon.core.codegen\nlookup_attr\np1\n.')
+    _attrs_4362945488 = _loads('(dp1\nVclass\np2\nVui-icon ui-icon-circle-arrow-w\np3\ns.')
     _init_scope = _loads('cchameleon.core.utils\necontext\np1\n.')
     _re_amp = _loads("cre\n_compile\np1\n(S'&(?!([A-Za-z]+|#[0-9]+);)'\np2\nI0\ntRp3\n.")
-    _attrs_4354359952 = _loads('(dp1\nVclass\np2\nVfa_controls\np3\ns.')
-    _attrs_4354361552 = _loads('(dp1\nVclass\np2\nVfa_controls ui-widget-header ui-widget-link ui-corner-all\np3\ns.')
-    _attrs_4354361616 = _loads('(dp1\n.')
-    _attrs_4354359824 = _loads("(dp1\nVhref\np2\nV#\nsVonclick\np3\nVjQuery(this).parents('form').submit();\np4\nsVclass\np5\nVui-widget-header ui-widget-link ui-widget-button ui-corner-all\np6\ns.")
-    _attrs_4354362000 = _loads('(dp1\nVclass\np2\nVui-icon ui-icon-check\np3\ns.')
-    _attrs_4354360528 = _loads('(dp1\nVtype\np2\nVsubmit\np3\ns.')
+    _attrs_4362944592 = _loads('(dp1\nVname\np2\nV_method\np3\nsVtype\np4\nVhidden\np5\nsVvalue\np6\nVPUT\np7\ns.')
+    _attrs_4362944656 = _loads('(dp1\nVclass\np2\nVfa_controls\np3\ns.')
+    _attrs_4362923984 = _loads('(dp1\n.')
+    _attrs_4362923856 = _loads('(dp1\nVaction\np2\nV\nsVmethod\np3\nVPOST\np4\nsVenctype\np5\nVmultipart/form-data\np6\ns.')
+    _attrs_4362944784 = _loads('(dp1\nVname\np2\nVnext\np3\nsVvalue\np4\nV\nsVtype\np5\nVhidden\np6\nsVid\np7\nVnext\np8\ns.')
+    _attrs_4362944976 = _loads('(dp1\nVclass\np2\nVui-icon ui-icon-check\np3\ns.')
     _init_stream = _loads('cchameleon.core.generation\ninitialize_stream\np1\n.')
-    _attrs_4354360080 = _loads('(dp1\nVclass\np2\nVui-icon ui-icon-circle-arrow-w\np3\ns.')
+    _attrs_4362923728 = _loads('(dp1\n.')
     _init_default = _loads('cchameleon.core.generation\ninitialize_default\np1\n.')
-    _attrs_4354360848 = _loads('(dp1\nVname\np2\nV_method\np3\nsVtype\np4\nVhidden\np5\nsVvalue\np6\nVPUT\np7\ns.')
+    _attrs_4362945104 = _loads('(dp1\nVtype\np2\nVsubmit\np3\ns.')
+    _attrs_4362945360 = _loads('(dp1\nVtype\np2\nVsubmit\np3\ns.')
+    _attrs_4362944912 = _loads("(dp1\nVhref\np2\nV#\nsVonclick\np3\nVvar f = jQuery(this).parents('form'); f.attr('action', window.location.href.replace('/edit', '/delete'));f.submit();\np4\nsVclass\np5\nVui-widget-header ui-widget-link ui-widget-button ui-state-error ui-corner-all\np6\ns.")
+    _attrs_4362944848 = _loads("(dp1\nVhref\np2\nV#\nsVonclick\np3\nVjQuery(this).parents('form').submit();\np4\nsVclass\np5\nVui-widget-header ui-widget-link ui-widget-button ui-corner-all\np6\ns.")
+    _attrs_4362945168 = _loads('(dp1\nVclass\np2\nVfa_controls ui-widget-header ui-widget-link ui-corner-all\np3\ns.')
     _init_tal = _loads('cchameleon.core.generation\ninitialize_tal\np1\n.')
-    _attrs_4354360144 = _loads('(dp1\nVaction\np2\nV\nsVmethod\np3\nVPOST\np4\nsVenctype\np5\nVmultipart/form-data\np6\ns.')
+    _attrs_4362945232 = _loads('(dp1\nVclass\np2\nVui-icon ui-icon-trash\np3\ns.')
     def render(econtext, rcontext=None):
         macros = econtext.get('macros')
         _translate = econtext.get('_translate')
@@ -37,15 +41,15 @@ def bind():
         def _callback_main(econtext, _repeat, _out=_out, _write=_write, _domain=_domain, **_ignored):
             if _repeat:
                 repeat.update(_repeat)
-            attrs = _attrs_4354311312
+            attrs = _attrs_4362923728
             _write(u'<div>\n      ')
-            attrs = _attrs_4354360144
+            attrs = _attrs_4362923856
             u"''"
             _write(u'<form action="" method="POST" enctype="multipart/form-data">\n        ')
             _default.value = default = ''
             u'fs.render()'
             _content = _lookup_attr(econtext['fs'], 'render')()
-            attrs = _attrs_4354361616
+            attrs = _attrs_4362923984
             u'_content'
             _write(u'<div>')
             _tmp1 = _content
@@ -64,13 +68,15 @@ def bind():
                     _tmp = str(_tmp)
                 _write(_tmp)
             _write(u'</div>\n        ')
-            attrs = _attrs_4354360848
+            attrs = _attrs_4362944592
             _write(u'<input type="hidden" name="_method" value="PUT" />\n        ')
-            attrs = _attrs_4354359952
+            attrs = _attrs_4362944656
             _write(u'<div class="fa_controls">\n          ')
-            attrs = _attrs_4354359824
+            attrs = _attrs_4362944784
+            _write(u'<input type="hidden" id="next" name="next" value="" />\n          ')
+            attrs = _attrs_4362944848
             _write(u'<a class="ui-widget-header ui-widget-link ui-widget-button ui-corner-all" href="#" onclick="jQuery(this).parents(\'form\').submit();">\n            ')
-            attrs = _attrs_4354362000
+            attrs = _attrs_4362944976
             u"''"
             _write(u'<span class="ui-icon ui-icon-check"></span>\n            ')
             _default.value = default = ''
@@ -102,9 +108,45 @@ def bind():
                     _tmp = _tmp.replace('>', '&gt;')
                 _write(_tmp)
             _write(u'\n            ')
-            attrs = _attrs_4354360528
+            attrs = _attrs_4362945104
             _write(u'<input type="submit" />\n          </a>\n          ')
-            attrs = _attrs_4354361552
+            attrs = _attrs_4362944912
+            _write(u'<a class="ui-widget-header ui-widget-link ui-widget-button ui-state-error ui-corner-all" href="#" onclick="var f = jQuery(this).parents(\'form\'); f.attr(\'action\', window.location.href.replace(\'/edit\', \'/delete\'));f.submit();">\n            ')
+            attrs = _attrs_4362945232
+            u"''"
+            _write(u'<span class="ui-icon ui-icon-trash"></span>\n            ')
+            _default.value = default = ''
+            u'Delete'
+            _content = u'Delete'
+            u'_content'
+            _tmp1 = _content
+            _tmp = _tmp1
+            if (_tmp.__class__ not in (str, unicode, int, float, )):
+                try:
+                    _tmp = _tmp.__html__
+                except:
+                    _tmp = _translate(_tmp, domain=_domain, mapping=None, target_language=target_language, default=None)
+                else:
+                    _tmp = _tmp()
+                    _write(_tmp)
+                    _tmp = None
+            if (_tmp is not None):
+                if not isinstance(_tmp, unicode):
+                    _tmp = str(_tmp)
+                if ('&' in _tmp):
+                    if (';' in _tmp):
+                        _tmp = _re_amp.sub('&amp;', _tmp)
+                    else:
+                        _tmp = _tmp.replace('&', '&amp;')
+                if ('<' in _tmp):
+                    _tmp = _tmp.replace('<', '&lt;')
+                if ('>' in _tmp):
+                    _tmp = _tmp.replace('>', '&gt;')
+                _write(_tmp)
+            _write(u'\n            ')
+            attrs = _attrs_4362945360
+            _write(u'<input type="submit" />\n          </a>\n          ')
+            attrs = _attrs_4362945168
             u'request.fa_url(request.model_name)'
             _write(u'<a class="fa_controls ui-widget-header ui-widget-link ui-corner-all"')
             _tmp1 = _lookup_attr(econtext['request'], 'fa_url')(_lookup_attr(econtext['request'], 'model_name'))
@@ -129,7 +171,7 @@ def bind():
                     _tmp1 = _tmp1.replace('"', '&quot;')
                 _write(((' href="' + _tmp1) + '"'))
             _write(u'>\n            ')
-            attrs = _attrs_4354360080
+            attrs = _attrs_4362945488
             u"''"
             _write(u'<span class="ui-icon ui-icon-circle-arrow-w"></span>\n            ')
             _default.value = default = ''
