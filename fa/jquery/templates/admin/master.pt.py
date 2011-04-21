@@ -1,27 +1,27 @@
 registry = dict(version=0)
 def bind():
     from cPickle import loads as _loads
-    _attrs_4356773776 = _loads('(dp1\n.')
+    _attrs_4368020176 = _loads('(dp1\nVtype\np2\nVtext/javascript\np3\ns.')
     _lookup_attr = _loads('cchameleon.core.codegen\nlookup_attr\np1\n.')
+    _attrs_4368020112 = _loads('(dp1\nVrel\np2\nVstylesheet\np3\ns.')
     _init_scope = _loads('cchameleon.core.utils\necontext\np1\n.')
     _re_amp = _loads("cre\n_compile\np1\n(S'&(?!([A-Za-z]+|#[0-9]+);)'\np2\nI0\ntRp3\n.")
-    _attrs_4356773712 = _loads('(dp1\nVclass\np2\nVbreadcrumb\np3\ns.')
-    _attrs_4356773584 = _loads('(dp1\nVid\np2\nVheader\np3\nsVclass\np4\nVui-widget-header ui-corner-all\np5\ns.')
-    _attrs_4356773840 = _loads('(dp1\nVtype\np2\nVtext/css\np3\ns.')
-    _attrs_4356772944 = _loads('(dp1\n.')
-    _attrs_4356774096 = _loads('(dp1\n.')
-    _attrs_4356773648 = _loads('(dp1\n.')
-    _attrs_4356772624 = _loads('(dp1\n.')
+    _attrs_4368020880 = _loads('(dp1\n.')
+    _attrs_4368019856 = _loads('(dp1\n.')
+    _attrs_4368020240 = _loads('(dp1\nVtype\np2\nVtext/css\np3\ns.')
+    _attrs_4368020560 = _loads('(dp1\n.')
+    _attrs_4368020944 = _loads('(dp1\n.')
+    _attrs_4368020688 = _loads('(dp1\n.')
+    _attrs_4368020624 = _loads('(dp1\nVclass\np2\nVbreadcrumb\np3\ns.')
+    _attrs_4368019920 = _loads('(dp1\n.')
     _init_stream = _loads('cchameleon.core.generation\ninitialize_stream\np1\n.')
-    _attrs_4356774544 = _loads('(dp1\n.')
-    _attrs_4356773200 = _loads('(dp1\nVrel\np2\nVstylesheet\np3\ns.')
+    _attrs_4368020048 = _loads('(dp1\nVrel\np2\nVstylesheet\np3\ns.')
+    _attrs_4367988432 = _loads('(dp1\n.')
+    _attrs_4368020496 = _loads('(dp1\nVid\np2\nVheader\np3\nsVclass\np4\nVui-widget-header ui-corner-all\np5\ns.')
     _init_default = _loads('cchameleon.core.generation\ninitialize_default\np1\n.')
-    _attrs_4356773328 = _loads('(dp1\nVrel\np2\nVstylesheet\np3\ns.')
-    _attrs_4356772816 = _loads('(dp1\n.')
-    _attrs_4356773072 = _loads('(dp1\n.')
-    _attrs_4356773968 = _loads('(dp1\nVid\np2\nVcontent\np3\nsVclass\np4\nVui-admin ui-widget\np5\ns.')
+    _attrs_4368019984 = _loads('(dp1\n.')
     _init_tal = _loads('cchameleon.core.generation\ninitialize_tal\np1\n.')
-    _attrs_4356773456 = _loads('(dp1\nVtype\np2\nVtext/javascript\np3\ns.')
+    _attrs_4368020368 = _loads('(dp1\nVid\np2\nVcontent\np3\nsVclass\np4\nVui-admin ui-widget\np5\ns.')
     def render(econtext, rcontext=None):
         macros = econtext.get('macros')
         _translate = econtext.get('_translate')
@@ -37,15 +37,15 @@ def bind():
         default = None
         u'None'
         _domain = None
-        attrs = _attrs_4356772624
+        attrs = _attrs_4367988432
         _write(u'<html>\n    ')
-        attrs = _attrs_4356772816
+        attrs = _attrs_4368019856
         u"''"
         _write(u'<head>\n      ')
         _default.value = default = ''
         u"request.model_name or 'root'"
         _content = (_lookup_attr(econtext['request'], 'model_name') or 'root')
-        attrs = _attrs_4356773072
+        attrs = _attrs_4368019984
         u'_content'
         _write(u'<title>')
         _tmp1 = _content
@@ -73,7 +73,7 @@ def bind():
                 _tmp = _tmp.replace('>', '&gt;')
             _write(_tmp)
         _write(u'</title>\n      ')
-        attrs = _attrs_4356773200
+        attrs = _attrs_4368020048
         u"request.static_url('fa.jquery:jquery-ui/css/smoothness/jquery-ui-1.8.8.custom.css')"
         _write(u'<link rel="stylesheet"')
         _tmp1 = _lookup_attr(econtext['request'], 'static_url')('fa.jquery:jquery-ui/css/smoothness/jquery-ui-1.8.8.custom.css')
@@ -98,7 +98,7 @@ def bind():
                 _tmp1 = _tmp1.replace('"', '&quot;')
             _write(((' href="' + _tmp1) + '"'))
         _write(u' />\n      ')
-        attrs = _attrs_4356773328
+        attrs = _attrs_4368020112
         u"request.static_url('fa.jquery:jquery-ui/fa.jquery.min.css')"
         _write(u'<link rel="stylesheet"')
         _tmp1 = _lookup_attr(econtext['request'], 'static_url')('fa.jquery:jquery-ui/fa.jquery.min.css')
@@ -123,7 +123,7 @@ def bind():
                 _tmp1 = _tmp1.replace('"', '&quot;')
             _write(((' href="' + _tmp1) + '"'))
         _write(u' />\n      ')
-        attrs = _attrs_4356773456
+        attrs = _attrs_4368020176
         u"request.static_url('fa.jquery:jquery-ui/fa.jquery.min.js')"
         _write(u'<script type="text/javascript"')
         _tmp1 = _lookup_attr(econtext['request'], 'static_url')('fa.jquery:jquery-ui/fa.jquery.min.js')
@@ -148,15 +148,15 @@ def bind():
                 _tmp1 = _tmp1.replace('"', '&quot;')
             _write(((' src="' + _tmp1) + '"'))
         _write(u'></script>\n      ')
-        attrs = _attrs_4356773840
+        attrs = _attrs_4368020240
         _write(u'<style type="text/css">\n        label {font-weight:bold;}\n        h1, h3 {padding:0.1 0.3em;}\n        h1 a, h3 a {text-decoration:none;}\n        a.ui-state-default {padding:0.1em 0.3em;}\n        a.fm-button {padding:0.4em 0.5em;}\n        a.fm-button-icon-left {padding-left:1.9em;}\n        div.breadcrumb {float:right; font-size:0.7em;}\n        div.breadcrumb a {text-decoration:underline}\n        #header { height: 2em; font-size:1.5em; }\n        #header div { font-size:1.5em; }\n      </style>\n    </head>\n    ')
-        attrs = _attrs_4356772944
+        attrs = _attrs_4368019920
         _write(u'<body>\n      ')
-        attrs = _attrs_4356773968
+        attrs = _attrs_4368020368
         _write(u'<div id="content" class="ui-admin ui-widget">\n        ')
-        attrs = _attrs_4356773584
+        attrs = _attrs_4368020496
         _write(u'<h1 id="header" class="ui-widget-header ui-corner-all">\n          ')
-        attrs = _attrs_4356773712
+        attrs = _attrs_4368020624
         u'breadcrumb'
         _write(u'<div class="breadcrumb">\n            ')
         _tmp1 = econtext['breadcrumb']
@@ -169,7 +169,7 @@ def bind():
             _default.value = default = ''
             u'item[1]'
             _content = item[1]
-            attrs = _attrs_4356774096
+            attrs = _attrs_4368020880
             u'item[0]'
             _write(u'<a')
             _tmp3 = item[0]
@@ -193,6 +193,28 @@ def bind():
                 if ('"' in _tmp3):
                     _tmp3 = _tmp3.replace('"', '&quot;')
                 _write(((' href="' + _tmp3) + '"'))
+            u' item[2]'
+            _tmp3 = item[2]
+            if (_tmp3 is _default):
+                _tmp3 = None
+            if ((_tmp3 is not None) and (_tmp3 is not False)):
+                if (_tmp3.__class__ not in (str, unicode, int, float, )):
+                    _tmp3 = unicode(_translate(_tmp3, domain=_domain, mapping=None, target_language=target_language, default=None))
+                else:
+                    if not isinstance(_tmp3, unicode):
+                        _tmp3 = str(_tmp3)
+                if ('&' in _tmp3):
+                    if (';' in _tmp3):
+                        _tmp3 = _re_amp.sub('&amp;', _tmp3)
+                    else:
+                        _tmp3 = _tmp3.replace('&', '&amp;')
+                if ('<' in _tmp3):
+                    _tmp3 = _tmp3.replace('<', '&lt;')
+                if ('>' in _tmp3):
+                    _tmp3 = _tmp3.replace('>', '&gt;')
+                if ('"' in _tmp3):
+                    _tmp3 = _tmp3.replace('"', '&quot;')
+                _write(((' class="' + _tmp3) + '"'))
             u'_content'
             _write('>')
             _tmp3 = _content
@@ -224,7 +246,7 @@ def bind():
             _tmp3 = not _lookup_attr(repeat.item, 'end')
             if _tmp3:
                 pass
-                attrs = _attrs_4356774544
+                attrs = _attrs_4368020944
                 _write(u'<span>/</span>')
             _write(u'\n            ')
             if (_tmp2 == 0):
@@ -235,7 +257,7 @@ def bind():
         _default.value = default = ''
         u"request.model_name or 'root'"
         _content = (_lookup_attr(econtext['request'], 'model_name') or 'root')
-        attrs = _attrs_4356773776
+        attrs = _attrs_4368020688
         u'_content'
         _write(u'<div>')
         _tmp1 = _content
@@ -295,7 +317,7 @@ def bind():
                     _write(_tmp)
         else:
             pass
-            attrs = _attrs_4356773648
+            attrs = _attrs_4368020560
             _write(u'<div>\n        </div>')
         _write(u'\n      </div>\n    </body>\n</html>')
         return

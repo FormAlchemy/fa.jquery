@@ -22,7 +22,7 @@
         <h1 id="header" class="ui-widget-header ui-corner-all">
           <div class="breadcrumb">
             <tal:repeat tal:repeat="item breadcrumb">
-              <a tal:attributes="href python:item[0]"
+              <a tal:attributes="href python:item[0];class python: item[2]"
                 tal:content="python:item[1]" />
                 <span tal:condition="not repeat.item.end">/</span>
             </tal:repeat>

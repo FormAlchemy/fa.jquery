@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from pyramid_formalchemy.views import ModelView as Base
-from pyramid_formalchemy.views import RelationView as BaseRelation
 from pyramid_formalchemy.utils import TemplateEngine
 from fa.jquery import utils
 from webhelpers.html import literal
@@ -85,41 +84,29 @@ class ModelView(Base):
             metadata = dict(json=dumps(metadata))
             field.set(metadata=metadata)
 
-#def RelationRenderer(renderer=fields.SelectFieldRenderer, **jq_options):
-#    class Renderer(renderer):
-#        def render(self, *args, **kwargs):
-#            html = super(Renderer, self).render(*args, **kwargs)
-#            fk_class = self.field.relation_type()
-#            model_name = fk_class.__name__
-#            try:
-#                field_url = '%s.xhr?field=%s' % (model_url('model', id=fields._pk(self.field.model)), self.field.key)
-#            except GenerationException:
-#                field_url = '%s.xhr?field=%s' % (model_url('new_model'), self.field.key)
-#            new_url = '%s.xhr' % model_url('new_model', model_name=model_name)
-#            html += literal('<button class="new_relation_item" alt="%s" href="%s">New %s</button>' % (
-#                                                field_url, new_url, model_name))
-#            return html
-#    return renderers.jQueryFieldRenderer('relation', show_input=True, renderer=Renderer, **jq_options)
+def RelationRenderer(renderer=fields.SelectFieldRenderer, **jq_options):
+    class Renderer(renderer):
+        def render(self, *args, **kwargs):
+            html = super(Renderer, self).render(*args, **kwargs)
+            pk = fields._pk(self.field.model)
+            model_name = self.field.parent.model.__class__.__name__
+            if pk:
+                field_url = '#root_url/%s/xhr/%s?field=%s' % (model_name, pk, self.field.key)
+            else:
+                field_url = '#root_url/%s/xhr?field=%s' % (model_name, self.field.key)
+            fk_class = self.field.relation_type()
+            model_name = fk_class.__name__
+            new_url = '#root_url/%s/xhr/new' % model_name
+            html += literal('<button class="new_relation_item" alt="%s" href="%s">New %s</button>' % (
+                                                field_url, new_url, model_name))
+            return html
+    return renderers.jQueryFieldRenderer('relation', show_input=True, renderer=Renderer, **jq_options)
 
-#@renderers.alias(RelationRenderer, renderer=renderers.checkboxset())
-#def relations(): pass
+@renderers.alias(RelationRenderer, renderer=renderers.checkboxset())
+def relations(): pass
 
-#@renderers.alias(RelationRenderer, renderer=renderers.radioset())
-#def relation(): pass
+@renderers.alias(RelationRenderer, renderer=renderers.radioset())
+def relation(): pass
 
-#renderers.default_renderers['dropdown'] = RelationRenderer()
-
-class RelationView(ModelView):
-
-    def get_grid(self, model_name=None):
-        relation = getattr(self.request.model_class, self.request.relation)
-        model_name = relation.property.mapper.class_.__name__
-        return ModelView.get_grid(self, model_name=model_name)
-
-    def get_page(self, **kwargs):
-        id = self.request.model_id
-        record = self.get(id)
-        kwargs['collection'] = getattr(record, self.request.relation)
-        return ModelView.get_page(self, **kwargs)
-
+renderers.default_renderers['dropdown'] = RelationRenderer()
 

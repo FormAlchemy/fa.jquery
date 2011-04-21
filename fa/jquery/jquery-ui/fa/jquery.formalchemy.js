@@ -228,8 +228,20 @@ $.fa.extend({
         var self = $(this);  
         var form = $('<form title="'+button.text()+'"></form>');
         field.append(form);
+        var field_url = self.attr('alt');
         var new_url = self.attr('href');
-        var edit_url = new_url.split('/new.xhr')[0]+'.xhr';
+        var root_url = $('.root_url');
+        if (root_url.length) {
+            root_url = root_url.attr('href');
+            root_url = root_url.strip('/);
+            new_url = new_url.replace('#root_url', root_url);
+            field_url = field_url.replace('#root_url', root_url);
+        }
+        if (/\.xhr/.exec(new_url)) {
+            var edit_url = new_url.split('/new.xhr')[0]+'.xhr';
+        } else {
+            var edit_url = new_url.split('/new')[0];
+        }
         form.load(new_url, function() {
             form.dialog({
                 modal: true,
@@ -243,7 +255,7 @@ $.fa.extend({
                                 form.html(html);
                             } else {
                                 field.empty();
-                                field.load(self.attr('alt'));
+                                field.load(field_url);
                                 form.dialog('close');
                             }
                         });
