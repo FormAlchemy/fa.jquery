@@ -233,7 +233,7 @@ $.fa.extend({
         var root_url = $('.root_url');
         if (root_url.length) {
             root_url = root_url.attr('href');
-            root_url = root_url.strip('/);
+            root_url = root_url.strip('/');
             new_url = new_url.replace('#root_url', root_url);
             field_url = field_url.replace('#root_url', root_url);
         }
