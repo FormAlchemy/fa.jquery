@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from pyramid_formalchemy.views import ModelView as Base
+from pyramid_formalchemy.views import RelationView as BaseRelation
 from pyramid_formalchemy.utils import TemplateEngine
 from fa.jquery import utils
 from webhelpers.html import literal
@@ -107,4 +108,18 @@ class ModelView(Base):
 #def relation(): pass
 
 #renderers.default_renderers['dropdown'] = RelationRenderer()
+
+class RelationView(ModelView):
+
+    def get_grid(self, model_name=None):
+        relation = getattr(self.request.model_class, self.request.relation)
+        model_name = relation.property.mapper.class_.__name__
+        return ModelView.get_grid(self, model_name=model_name)
+
+    def get_page(self, **kwargs):
+        id = self.request.model_id
+        record = self.get(id)
+        kwargs['collection'] = getattr(record, self.request.relation)
+        return ModelView.get_page(self, **kwargs)
+
 
