@@ -101,7 +101,7 @@ def jQueryFieldRenderer(plugin, show_input=False, tag='div', renderer=fields.Tex
             except TypeError:
                 options.update(options={})
             try:
-                return literal(self.template.render(**options))
+                return literal(self.template.render_unicode(**options))
             except:
                 raise ValueError('Invalid options: %s' % options)
     return type('%sPluginRenderer' % plugin.title(), (Renderer,),
