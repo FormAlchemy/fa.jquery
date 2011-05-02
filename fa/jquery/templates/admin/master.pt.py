@@ -1,27 +1,28 @@
 registry = dict(version=0)
 def bind():
     from cPickle import loads as _loads
-    _attrs_4368020176 = _loads('(dp1\nVtype\np2\nVtext/javascript\np3\ns.')
+    _attrs_4359375184 = _loads('(dp1\nVtype\np2\nVtext/javascript\np3\ns.')
     _lookup_attr = _loads('cchameleon.core.codegen\nlookup_attr\np1\n.')
-    _attrs_4368020112 = _loads('(dp1\nVrel\np2\nVstylesheet\np3\ns.')
-    _init_scope = _loads('cchameleon.core.utils\necontext\np1\n.')
     _re_amp = _loads("cre\n_compile\np1\n(S'&(?!([A-Za-z]+|#[0-9]+);)'\np2\nI0\ntRp3\n.")
-    _attrs_4368020880 = _loads('(dp1\n.')
-    _attrs_4368019856 = _loads('(dp1\n.')
-    _attrs_4368020240 = _loads('(dp1\nVtype\np2\nVtext/css\np3\ns.')
-    _attrs_4368020560 = _loads('(dp1\n.')
-    _attrs_4368020944 = _loads('(dp1\n.')
-    _attrs_4368020688 = _loads('(dp1\n.')
-    _attrs_4368020624 = _loads('(dp1\nVclass\np2\nVbreadcrumb\np3\ns.')
-    _attrs_4368019920 = _loads('(dp1\n.')
+    _attrs_4359375376 = _loads('(dp1\nVtype\np2\nVtext/css\np3\ns.')
+    _attrs_4359374160 = _loads('(dp1\n.')
+    _attrs_4359374416 = _loads('(dp1\n.')
     _init_stream = _loads('cchameleon.core.generation\ninitialize_stream\np1\n.')
-    _attrs_4368020048 = _loads('(dp1\nVrel\np2\nVstylesheet\np3\ns.')
-    _attrs_4367988432 = _loads('(dp1\n.')
-    _attrs_4368020496 = _loads('(dp1\nVid\np2\nVheader\np3\nsVclass\np4\nVui-widget-header ui-corner-all\np5\ns.')
+    _attrs_4359375120 = _loads('(dp1\n.')
+    _attrs_4359374992 = _loads('(dp1\nVrel\np2\nVstylesheet\np3\ns.')
+    _attrs_4359375760 = _loads('(dp1\nVid\np2\nVheader\np3\nsVclass\np4\nVui-widget-header ui-corner-all\np5\ns.')
     _init_default = _loads('cchameleon.core.generation\ninitialize_default\np1\n.')
-    _attrs_4368019984 = _loads('(dp1\n.')
+    _attrs_4359374736 = _loads('(dp1\nVrel\np2\nVstylesheet\np3\ns.')
+    _attrs_4359374672 = _loads('(dp1\n.')
+    _attrs_4359375568 = _loads('(dp1\nVid\np2\nVcontent\np3\nsVclass\np4\nVui-admin ui-widget\np5\ns.')
+    _attrs_4359375952 = _loads('(dp1\n.')
+    _init_scope = _loads('cchameleon.core.utils\necontext\np1\n.')
+    _attrs_4359375824 = _loads('(dp1\n.')
+    _attrs_4359376336 = _loads('(dp1\n.')
+    _attrs_4359374608 = _loads('(dp1\n.')
+    _attrs_4359374544 = _loads('(dp1\n.')
     _init_tal = _loads('cchameleon.core.generation\ninitialize_tal\np1\n.')
-    _attrs_4368020368 = _loads('(dp1\nVid\np2\nVcontent\np3\nsVclass\np4\nVui-admin ui-widget\np5\ns.')
+    _attrs_4359375888 = _loads('(dp1\nVclass\np2\nVbreadcrumb\np3\ns.')
     def render(econtext, rcontext=None):
         macros = econtext.get('macros')
         _translate = econtext.get('_translate')
@@ -37,15 +38,15 @@ def bind():
         default = None
         u'None'
         _domain = None
-        attrs = _attrs_4367988432
+        attrs = _attrs_4359374160
         _write(u'<html>\n    ')
-        attrs = _attrs_4368019856
+        attrs = _attrs_4359374416
         u"''"
         _write(u'<head>\n      ')
         _default.value = default = ''
         u"request.model_name or 'root'"
         _content = (_lookup_attr(econtext['request'], 'model_name') or 'root')
-        attrs = _attrs_4368019984
+        attrs = _attrs_4359374672
         u'_content'
         _write(u'<title>')
         _tmp1 = _content
@@ -73,7 +74,7 @@ def bind():
                 _tmp = _tmp.replace('>', '&gt;')
             _write(_tmp)
         _write(u'</title>\n      ')
-        attrs = _attrs_4368020048
+        attrs = _attrs_4359374736
         u"request.static_url('fa.jquery:jquery-ui/css/smoothness/jquery-ui-1.8.8.custom.css')"
         _write(u'<link rel="stylesheet"')
         _tmp1 = _lookup_attr(econtext['request'], 'static_url')('fa.jquery:jquery-ui/css/smoothness/jquery-ui-1.8.8.custom.css')
@@ -98,7 +99,7 @@ def bind():
                 _tmp1 = _tmp1.replace('"', '&quot;')
             _write(((' href="' + _tmp1) + '"'))
         _write(u' />\n      ')
-        attrs = _attrs_4368020112
+        attrs = _attrs_4359374992
         u"request.static_url('fa.jquery:jquery-ui/fa.jquery.min.css')"
         _write(u'<link rel="stylesheet"')
         _tmp1 = _lookup_attr(econtext['request'], 'static_url')('fa.jquery:jquery-ui/fa.jquery.min.css')
@@ -123,7 +124,7 @@ def bind():
                 _tmp1 = _tmp1.replace('"', '&quot;')
             _write(((' href="' + _tmp1) + '"'))
         _write(u' />\n      ')
-        attrs = _attrs_4368020176
+        attrs = _attrs_4359375184
         u"request.static_url('fa.jquery:jquery-ui/fa.jquery.min.js')"
         _write(u'<script type="text/javascript"')
         _tmp1 = _lookup_attr(econtext['request'], 'static_url')('fa.jquery:jquery-ui/fa.jquery.min.js')
@@ -147,16 +148,51 @@ def bind():
             if ('"' in _tmp1):
                 _tmp1 = _tmp1.replace('"', '&quot;')
             _write(((' src="' + _tmp1) + '"'))
+        u"%(slots)s.get(u'javascript')"
         _write(u'></script>\n      ')
-        attrs = _attrs_4368020240
+        _tmp = _slots.get(u'javascript')
+        u'%(tmp)s is not None'
+        _tmp1 = (_tmp is not None)
+        if _tmp1:
+            pass
+            u'isinstance(%(tmp)s, basestring)'
+            _tmp2 = isinstance(_tmp, basestring)
+            if not _tmp2:
+                pass
+                econtext.update(dict(rcontext=rcontext, _domain=_domain))
+                _tmp(econtext, repeat)
+            else:
+                pass
+                u'%(tmp)s'
+                _tmp2 = _tmp
+                _tmp = _tmp2
+                if (_tmp.__class__ not in (str, unicode, int, float, )):
+                    try:
+                        _tmp = _tmp.__html__
+                    except:
+                        _tmp = _translate(_tmp, domain=_domain, mapping=None, target_language=target_language, default=None)
+                    else:
+                        _tmp = _tmp()
+                        _write(_tmp)
+                        _tmp = None
+                if (_tmp is not None):
+                    if not isinstance(_tmp, unicode):
+                        _tmp = str(_tmp)
+                    _write(_tmp)
+        else:
+            pass
+            attrs = _attrs_4359375120
+            _write(u'<script></script>')
+        _write(u'\n      ')
+        attrs = _attrs_4359375376
         _write(u'<style type="text/css">\n        label {font-weight:bold;}\n        h1, h3 {padding:0.1 0.3em;}\n        h1 a, h3 a {text-decoration:none;}\n        a.ui-state-default {padding:0.1em 0.3em;}\n        a.fm-button {padding:0.4em 0.5em;}\n        a.fm-button-icon-left {padding-left:1.9em;}\n        div.breadcrumb {float:right; font-size:0.7em;}\n        div.breadcrumb a {text-decoration:underline}\n        #header { height: 2em; font-size:1.5em; }\n        #header div { font-size:1.5em; }\n      </style>\n    </head>\n    ')
-        attrs = _attrs_4368019920
+        attrs = _attrs_4359374544
         _write(u'<body>\n      ')
-        attrs = _attrs_4368020368
+        attrs = _attrs_4359375568
         _write(u'<div id="content" class="ui-admin ui-widget">\n        ')
-        attrs = _attrs_4368020496
+        attrs = _attrs_4359375760
         _write(u'<h1 id="header" class="ui-widget-header ui-corner-all">\n          ')
-        attrs = _attrs_4368020624
+        attrs = _attrs_4359375888
         u'breadcrumb'
         _write(u'<div class="breadcrumb">\n            ')
         _tmp1 = econtext['breadcrumb']
@@ -169,7 +205,7 @@ def bind():
             _default.value = default = ''
             u'item[1]'
             _content = item[1]
-            attrs = _attrs_4368020880
+            attrs = _attrs_4359374608
             u'item[0]'
             _write(u'<a')
             _tmp3 = item[0]
@@ -246,7 +282,7 @@ def bind():
             _tmp3 = not _lookup_attr(repeat.item, 'end')
             if _tmp3:
                 pass
-                attrs = _attrs_4368020944
+                attrs = _attrs_4359376336
                 _write(u'<span>/</span>')
             _write(u'\n            ')
             if (_tmp2 == 0):
@@ -257,7 +293,7 @@ def bind():
         _default.value = default = ''
         u"request.model_name or 'root'"
         _content = (_lookup_attr(econtext['request'], 'model_name') or 'root')
-        attrs = _attrs_4368020688
+        attrs = _attrs_4359375824
         u'_content'
         _write(u'<div>')
         _tmp1 = _content
@@ -317,7 +353,7 @@ def bind():
                     _write(_tmp)
         else:
             pass
-            attrs = _attrs_4368020560
+            attrs = _attrs_4359375952
             _write(u'<div>\n        </div>')
         _write(u'\n      </div>\n    </body>\n</html>')
         return
