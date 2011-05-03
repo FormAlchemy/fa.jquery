@@ -24,7 +24,7 @@ class ModelView(Base):
 
         items = [
             ('', 'Jump to ...', ''),
-            ('', 'Models index', request.fa_url()),
+            (request.fa_url(), 'Models index', ''),
           ]
 
         models = sorted([v for v in models.items()])
@@ -126,6 +126,4 @@ def relations(): pass
 
 @renderers.alias(RelationRenderer, renderer=renderers.radioset())
 def relation(): pass
-
-renderers.default_renderers['dropdown'] = RelationRenderer()
 

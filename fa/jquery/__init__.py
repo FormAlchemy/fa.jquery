@@ -22,6 +22,7 @@ from renderers import default_renderers
 
 from forms import Tabs
 from forms import Accordion
+from forms import MultiFieldSet
 
 try:
     from fa.jquery.pylons import relation

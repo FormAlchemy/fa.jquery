@@ -1,6 +1,6 @@
 <html metal:define-macro="master">
     <head>
-      <title tal:content="request.model_name or 'root'"></title>
+      <title tal:content="request.model_name or 'Models index'"></title>
       <link rel="stylesheet" tal:attributes="href request.static_url('fa.jquery:jquery-ui/css/smoothness/jquery-ui-1.8.8.custom.css')" />
       <link rel="stylesheet" tal:attributes="href request.static_url('fa.jquery:jquery-ui/fa.jquery.min.css')" />
       <script type="text/javascript" tal:attributes="src request.static_url('fa.jquery:jquery-ui/fa.jquery.min.js')"></script>
@@ -18,6 +18,7 @@
         h1 a, h3 a {text-decoration:none;}
         #header { height: 2em; font-size:1.5em; }
         #header div { font-size:1.5em; }
+        #header a { font-size:1em; }
         div.breadcrumb {float:right;width:20%;margin-right:20px;}
         div.breadcrumb a {text-decoration:none;}
         h1 a.ui-selectmenu {height:1em;}
@@ -38,16 +39,17 @@
             </select>
           </div>
           <div tal:condition="request.model_name">
-            <span tal:replace="request.model_name" />
+            <a tal:attributes="href request.fa_url(request.model_name)" tal:content="request.model_name" />
             <span tal:condition="request.model_id and hasattr(request.model_class, '__unicode__')"
-                  tal:replace="unicode(request.model_instance)"/>
+                  tal:replace="request.model_instance"/>
             <span tal:condition="request.model_id and not hasattr(request.model_class, '__unicode__')"
                   tal:replace="request.model_id"/>
           </div>
-          <div tal:condition="not request.model_name">Root</div>
+          <div tal:condition="not request.model_name">Models index</div>
         </h1>
         <div metal:define-slot="main">
         </div>
+        <a style="display:none" class="root_url" tal:attributes="href request.fa_url()"></a>
       </div>
     </body>
 </html>

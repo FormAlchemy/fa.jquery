@@ -4,6 +4,21 @@ from simplejson import dumps
 from utils import templates
 from random import random
 
+class MultiFieldSetProperty(property):
+
+    def __init__(self, name):
+        self.__name__ = '_' + name
+
+    def __get__(self, instance, klass):
+        if instance is None:
+            return klass
+        return getattr(instance, self.__name__)
+
+    def __set__(self, instance, value):
+        setattr(instance, self.__name__, value)
+        for fs in instance._fs_dict.values():
+            setattr(fs, self.__name__[1:], value)
+
 class MultiFieldSet(object):
     """Display more than one FieldSet:
 
@@ -28,7 +43,6 @@ class MultiFieldSet(object):
         ...
 
     """
-    engine = None
     template = templates.get_template('/forms/multifieldset.mako')
     def __init__(self, id, *fieldsets, **options):
         if not isinstance(id, basestring):
@@ -38,6 +52,10 @@ class MultiFieldSet(object):
         self._fs_dict = {}
         self._bound_pk = None
         self._options = options
+        self._readonly = False
+        self._engine = None
+        self._focus = False
+        self._original_cls = None
         for fs in fieldsets:
             if not isinstance(fs, (tuple, list)) or len(fs) != 3:
                 raise ValueError('A form is defined by (id, title, form) got %r' % (fs,))
@@ -50,15 +68,18 @@ class MultiFieldSet(object):
                 fields.append((f.key, f.model_value))
         return dict(fields)
 
-    def _get_bound_pk(self):
-        for fs in self._fs:
-            return fs._bound_pk
+    #def _get_bound_pk(self):
+    #    for fs in self._fs:
+    #        return fs._bound_pk
 
-    def _set_bound_pk(self, value):
-        for fs in self._fs:
-            fs._bound_pk = value
+    #def _set_bound_pk(self, value):
+    #    for fs in self._fs:
+    #        fs._bound_pk = value
 
-    _bound_pk = property(_get_bound_pk, _set_bound_pk)
+    _bound_pk = MultiFieldSetProperty('_bound_pk')
+    focus = MultiFieldSetProperty('focus')
+    engine = MultiFieldSetProperty('engine')
+    readonly = MultiFieldSetProperty('readonly')
 
     @property
     def model(self):
@@ -84,13 +105,6 @@ class MultiFieldSet(object):
             return self._fs_dict.get(attr)
         else:
             raise AttributeError(attr)
-
-    def __setattr__(self, attr, fs):
-        if attr.startswith('_') or attr in ('engine', 'readonly'):
-            object.__setattr__(self, attr, fs)
-        else:
-            fs.__name__ = attr
-            self._fs_dict[attr] = fs
 
     def append(self, id, title, fs):
         """add a fieldset to tabs"""
@@ -162,7 +176,7 @@ class MultiFieldSet(object):
                 fieldsets.append(dict(id=id, title=title, fs=fs))
         kwargs = dict(footer='', header='')
         kwargs.update(self._options)
-        return self.template.render(id=self._id,
+        return self.template.render_unicode(id=self._id,
                                     rid=str(random())[2:],
                                     fieldsets=fieldsets,
                                     options=dumps(options),

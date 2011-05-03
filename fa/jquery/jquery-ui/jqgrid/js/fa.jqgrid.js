@@ -5,59 +5,13 @@ $.fa.extend({
         var current_id;
         var base_url = window.location.href.split('?')[0];
         var editRow = function(id) {
-            var subpath = '/xhr/';
-            if (!USE_POPUP)
-                subpath = '/';
+            var subpath = '/';
             if (id) {
-                var edit_url = base_url+subpath+id+'?_method=PUT';
                 var item_url = base_url+subpath+id+'/edit';
-                var form = $('<form title="Edit record"></form>');
             } else {
-                id = 'new';
-                var edit_url = base_url+subpath;
                 var item_url = base_url+subpath+'new';
-                var form = $('<form title="New record"></form>');
             }
-            if (!USE_POPUP)
-                window.location.href = item_url;
-            pager.after(form);
-            $.get(item_url, function(html) {
-                form.append(html);
-                form.dialog({
-                    modal: true,
-                    buttons: {
-                        'Ok': function() {
-                            var data = form.formToArray();
-                            // avoid PHP arrays
-                            data = $.param(data).replace(/%5B%5D=/g, '=');
-                            $.post(edit_url, data, function(html) {
-                                if (/ui-state-error/.test(html)) {
-                                    form.empty();
-                                    form.append(html);
-                                } else {
-                                    form.append(html);
-                                    form.dialog('close');
-                                    form.dialog('destroy');
-                                    form.remove();
-                                }
-                                table.trigger('reloadGrid')
-                            });
-                        },
-                        'Cancel': function() {
-                                form.dialog('close');
-                                form.dialog('destroy');
-                                form.remove();
-                        }
-                    }
-                });
-                setTimeout(function() {
-                    var text = $('textarea', form);
-                    if (text.length) {
-                        form.dialog('option', 'width', ''+(parseInt(text.css('width'))+50));
-                        form.dialog('option', 'position', ['center','top']);
-                    }
-                }, 10);
-            });
+            window.location.href = item_url;
         }
         var settings = {
            url: base_url,
