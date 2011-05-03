@@ -13,17 +13,36 @@ class ModelView(Base):
 
     engine = TemplateEngine()
 
+    def breadcrumb(self, fs=None, **kwargs):
+        """return items to build the breadcrumb"""
+        request = self.request
+        model_name = request.model_name
+        models = self.models(json=True)
+
+        if len(models) == 1:
+            return []
+
+        items = [
+            ('', 'Jump to ...', ''),
+            ('', 'Models index', request.fa_url()),
+          ]
+
+        models = sorted([v for v in models.items()])
+        for name, url in models:
+            items.append((request.fa_url(name), name, 'model_url'))
+        return items
+
     def index(self, *args, **kwargs):
         kwargs['pager'] = ''
         return Base.index(self, *args, **kwargs)
 
     def get_page(self, **kwargs):
         if 'collection' not in kwargs:
-            model = self.context.get_model()
-            params = self.request.params
-            session = self.Session()
-            fields = model._sa_class_manager
-            collection = session.query(model)
+            request = self.request
+            params = request.params
+            query = request.session_factory.query(request.model_class)
+            collection = request.query_factory(request, query, id=None)
+            fields = request.model_class._sa_class_manager
             # FIXME: use id by default but should use pk field
             sidx = params.get('sidx', 'id').decode()
             if sidx and fields.has_key(sidx):

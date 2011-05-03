@@ -49,10 +49,12 @@ var pluginGen = function(plugin_id, func) {
                     return false;
                 }
             }
-            if (!load()) {
-                log('Retrying in 0.5s...');
-                setTimeout(load, 500);
-            }
+            setTimeout(function() {
+                if (!load()) {
+                    log('Retrying in 0.7s...');
+                    setTimeout(load, 700);
+                }
+            }, 300);
         });
     }
 }
