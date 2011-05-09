@@ -29,8 +29,12 @@ try:
     from fa.jquery.pylons import relations
 except ImportError:
     pass
-from fa.jquery.pyramid import relation
-from fa.jquery.pyramid import relations
+
+try:
+    from fa.jquery.pyramid import relation
+    from fa.jquery.pyramid import relations
+except ImportError:
+    pass
 
 def includeme(config):
     config.add_static_view('jquery', 'fa.jquery:jquery-ui')
