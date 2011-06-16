@@ -108,7 +108,6 @@ $.fa.extend({
   autocomplete: function(field, plugin, options) {
     options['select'] = function(event, ui) {
         field.val(ui.item.value);
-        return false;
     }
     var auto = $('<input autocomplete="off" value="" />');
     auto.val(field.val());
