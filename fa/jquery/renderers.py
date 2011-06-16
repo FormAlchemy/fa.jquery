@@ -86,6 +86,7 @@ def jQueryFieldRenderer(plugin, show_input=False, tag='div', renderer=fields.Tex
         def render(self, **kwargs):
             if 'autocomplete' in kwargs:
                 kwargs.pop('autocomplete')
+            request = self.request
             html = renderer.render(self, autocomplete='off', **kwargs)
             kwargs.update(self.jq_options)
             options = dict(
@@ -94,7 +95,7 @@ def jQueryFieldRenderer(plugin, show_input=False, tag='div', renderer=fields.Tex
                 plugin=plugin,
                 name=self.name,
                 show_input=show_input,
-                resources=[url(r, prefix=self.resources_prefix) for r in resources],
+                resources=[url(r, prefix=self.resources_prefix, request=request) for r in resources],
             )
             try:
                 options.update(options=dumps(kwargs))

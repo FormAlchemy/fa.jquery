@@ -57,7 +57,10 @@ def url(*args, **kwargs):
         /my_js/plugin.js
     """
     arg = args and args[0] or ''
-    if arg and not arg.startswith('/') and not arg.startswith('http://'):
+    if arg and not arg.startswith('/') and not arg.startswith('http'):
+        request = kwargs.get('request', None)
+        if request is not None and hasattr(request, 'static_url'):
+            return request.static_url(arg)
         args = list(args)
         if kwargs.get('prefix'):
             args.insert(0, kwargs['prefix'])
