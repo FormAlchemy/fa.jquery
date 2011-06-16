@@ -109,13 +109,14 @@ def RelationRenderer(renderer=fields.SelectFieldRenderer, **jq_options):
             html = super(Renderer, self).render(*args, **kwargs)
             pk = fields._pk(self.field.model)
             model_name = self.field.parent.model.__class__.__name__
+            request = self.request
             if pk:
-                field_url = '#root_url/%s/xhr/%s?field=%s' % (model_name, pk, self.field.key)
+                field_url = request.fa_url(model_name, 'xhr', pk, field=self.field.key)
             else:
-                field_url = '#root_url/%s/xhr?field=%s' % (model_name, self.field.key)
+                field_url = request.fa_url(model_name, 'xhr', field=self.field.key)
             fk_class = self.field.relation_type()
             model_name = fk_class.__name__
-            new_url = '#root_url/%s/xhr/new' % model_name
+            new_url = request.fa_url(model_name, 'xhr', 'new')
             html += literal('<button class="new_relation_item" alt="%s" href="%s">New %s</button>' % (
                                                 field_url, new_url, model_name))
             return html

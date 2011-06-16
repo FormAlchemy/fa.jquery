@@ -232,13 +232,6 @@ $.fa.extend({
         field.append(form);
         var field_url = self.attr('alt');
         var new_url = self.attr('href');
-        var root_url = $('a.root_url');
-        if (root_url.length > 0) {
-            root_url = root_url.attr('href');
-            root_url = root_url.replace(/\/$/, '');
-            new_url = new_url.replace('#root_url', root_url);
-            field_url = field_url.replace('#root_url', root_url);
-        }
         if (/\.xhr/.exec(new_url)) {
             var edit_url = new_url.split('/new.xhr')[0]+'.xhr';
         } else {
