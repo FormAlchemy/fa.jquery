@@ -79,6 +79,8 @@ def jQueryFieldRenderer(plugin, show_input=False, tag='div', renderer=fields.Tex
 
     Where field is the input, plugin the empty div and options the jq_options passed to the renderer.
 
+    If you are using pyramid, resources should be a list of static url like ``yourpackage:path/to/resource.js``
+
     """
     template_name = jq_options.get('_template', 'jquery')
     template=templates.get_template('/renderers/%s.mako' % template_name)
