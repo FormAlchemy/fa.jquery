@@ -89,7 +89,7 @@ def jQueryFieldRenderer(plugin, show_input=False, tag='div', renderer=fields.Tex
             if 'autocomplete' in kwargs:
                 kwargs.pop('autocomplete')
             request = self.request
-            html = renderer.render(self, autocomplete='off', jq_options=jq_options, **kwargs)
+            html = renderer.render(self, autocomplete='off', **kwargs)
             kwargs.update(self.jq_options)
             options = dict(
                 tag=tag,
@@ -99,6 +99,10 @@ def jQueryFieldRenderer(plugin, show_input=False, tag='div', renderer=fields.Tex
                 show_input=show_input,
                 resources=[url(r, prefix=self.resources_prefix, request=request) for r in resources],
             )
+            try:
+                self.update_options(options)
+            except AttributeError:
+                pass
             try:
                 options.update(options=dumps(kwargs))
             except TypeError:
@@ -455,12 +459,10 @@ def RichTextFieldRenderer(use='tinymce', resources_prefix=None, **jq_options):
     class Renderer(fields.TextAreaFieldRenderer):
         markup = use
 
-        def render(self, **kwargs):
+        def update_options(self, options):
             request = self.request
-            opts = kwargs.pop('jq_options')
-            if request is not None and hasattr(request, 'route_url'):
-                opts['previewParserPath'] = '%s?markup=%s' % (request.route_url('markup_parser'), use)
-            return fields.TextAreaFieldRenderer.render(self, **kwargs)
+            if request and hasattr(request, 'route_url'):
+                options['previewParserPath'] = '%s?markup=%s' % (request.route_url('markup_parser'), use)
 
         def render_textile(self, **kwargs):
             value = self.raw_value
