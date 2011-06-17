@@ -45,3 +45,7 @@ def includeme(config):
         to_override="pyramid_formalchemy:templates/forms/",
         override_with="fa.jquery:templates/forms/")
 
+    config.add_route('markup_parser', '/markup_parser.html',
+                      view='fa.jquery.pyramid.markup_parser',
+                    )
+

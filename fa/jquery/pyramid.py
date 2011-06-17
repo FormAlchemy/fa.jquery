@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 from pyramid_formalchemy.views import ModelView as Base
 from pyramid_formalchemy.utils import TemplateEngine
+import markdown
+from textile import textile
+from postmarkup import render_bbcode
+from webob import Response
 from fa.jquery import utils
 from webhelpers.html import literal
 from formalchemy import fields
@@ -102,6 +106,23 @@ class ModelView(Base):
                 metadata['searchoptions'] = searchoptions
             metadata = dict(json=dumps(metadata))
             field.set(metadata=metadata)
+
+def markup_parser(request):
+    resp = Response()
+    # markup preview helper
+    resp.charset = 'utf-8'
+    markup = request.GET.get('markup', 'textile')
+    value = request.POST.get('data', '')
+    if markup == 'textile':
+        value = textile(value)
+    elif markup == 'markdown':
+        value = markdown.markdown(value)
+    elif markup == 'bbcode':
+        value = render_bbcode(value)
+    if isinstance(value, unicode):
+        value = value.encode('utf-8')
+    resp.body = value
+    return resp
 
 def RelationRenderer(renderer=fields.SelectFieldRenderer, **jq_options):
     class Renderer(renderer):

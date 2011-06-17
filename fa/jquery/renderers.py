@@ -89,7 +89,7 @@ def jQueryFieldRenderer(plugin, show_input=False, tag='div', renderer=fields.Tex
             if 'autocomplete' in kwargs:
                 kwargs.pop('autocomplete')
             request = self.request
-            html = renderer.render(self, autocomplete='off', **kwargs)
+            html = renderer.render(self, autocomplete='off', jq_options=jq_options, **kwargs)
             kwargs.update(self.jq_options)
             options = dict(
                 tag=tag,
@@ -454,6 +454,13 @@ def RichTextFieldRenderer(use='tinymce', resources_prefix=None, **jq_options):
 
     class Renderer(fields.TextAreaFieldRenderer):
         markup = use
+
+        def render(self, **kwargs):
+            request = self.request
+            opts = kwargs.pop('jq_options')
+            if request is not None and hasattr(request, 'route_url'):
+                opts['previewParserPath'] = '%s?markup=%s' % (request.route_url('markup_parser'), use)
+            return fields.TextAreaFieldRenderer.render(self, **kwargs)
 
         def render_textile(self, **kwargs):
             value = self.raw_value
