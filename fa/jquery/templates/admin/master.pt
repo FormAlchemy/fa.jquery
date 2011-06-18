@@ -1,4 +1,4 @@
-<html metal:define-macro="master">
+<html metal:define-macro="master" xmlns:i18n="http://xml.zope.org/namespaces/i18n">
     <head>
       <title tal:content="request.model_name or 'Models index'"></title>
       <link rel="stylesheet" tal:attributes="href request.static_url('fa.jquery:jquery-ui/css/smoothness/jquery-ui-1.8.8.custom.css')" />
@@ -39,16 +39,17 @@
             </select>
           </div>
           <div tal:condition="request.model_name">
-            <a tal:attributes="href request.fa_url(request.model_name)" tal:content="request.model_name" />
+            <a tal:attributes="href request.fa_url(model_name)" tal:content="model_name" />
             <span tal:condition="request.model_id and hasattr(request.model_class, '__unicode__')"
                   tal:replace="request.model_instance"/>
             <span tal:condition="request.model_id and not hasattr(request.model_class, '__unicode__')"
                   tal:replace="request.model_id"/>
           </div>
-          <div tal:condition="not request.model_name">Models index</div>
+          <div tal:condition="not request.model_name" i18n:domain="fa_jquery" i18n:translate="" tal:content="string:Models index">Models index</div>
         </h1>
         <div metal:define-slot="main">
         </div>
+        <ul tal:condition="request" tal:content="structure request.language_actions.render(request)" />
         <a style="display:none" class="root_url" tal:attributes="href request.fa_url()"></a>
       </div>
     </body>

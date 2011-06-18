@@ -2,7 +2,7 @@
   <body>
     <div metal:fill-slot="main">
       <table tal:content="structure fs.render()" />
-      <div class="fa_controls" tal:content="structure actions.render(request)">
+      <div class="fa_controls" tal:content="structure request.buttons.render(request)">
       </div>
     </div>
   </body>

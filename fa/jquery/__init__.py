@@ -37,6 +37,7 @@ except ImportError:
     pass
 
 def includeme(config):
+    config.add_translation_dirs('fa.jquery:locale/')
     config.add_static_view('jquery', 'fa.jquery:jquery-ui')
     config.override_asset(
         to_override="pyramid_formalchemy:templates/admin/",
