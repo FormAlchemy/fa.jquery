@@ -22,6 +22,7 @@ from renderers import default_renderers
 
 from forms import Tabs
 from forms import Accordion
+from forms import MultiFieldSet
 
 try:
     from fa.jquery.pylons import relation
@@ -29,7 +30,14 @@ try:
 except ImportError:
     pass
 
+try:
+    from fa.jquery.pyramid import relation
+    from fa.jquery.pyramid import relations
+except ImportError:
+    pass
+
 def includeme(config):
+    config.add_translation_dirs('fa.jquery:locale/')
     config.add_static_view('jquery', 'fa.jquery:jquery-ui')
     config.override_asset(
         to_override="pyramid_formalchemy:templates/admin/",
@@ -37,4 +45,8 @@ def includeme(config):
     config.override_asset(
         to_override="pyramid_formalchemy:templates/forms/",
         override_with="fa.jquery:templates/forms/")
+
+    config.add_route('markup_parser', '/markup_parser.html',
+                      view='fa.jquery.pyramid.markup_parser',
+                    )
 

@@ -4,37 +4,46 @@ from simplejson import dumps
 from utils import templates
 from random import random
 
-class Tabs(object):
-    """Display FieldSet using http://jqueryui.com/demos/tabs/:
+class MultiFieldSetProperty(property):
+
+    def __init__(self, name):
+        self.__name__ = '_' + name
+
+    def __get__(self, instance, klass):
+        if instance is None:
+            return klass
+        return getattr(instance, self.__name__)
+
+    def __set__(self, instance, value):
+        setattr(instance, self.__name__, value)
+        for fs in instance._fs_dict.values():
+            setattr(fs, self.__name__[1:], value)
+
+class MultiFieldSet(object):
+    """Display more than one FieldSet:
 
     .. sourcecode:: python
 
         >>> from testing import *
-        >>> tabs = Tabs('my_tabs',
-        ...             ('tab1', 'My first tab', fs1),
-        ...             footer='<input type="submit" name="%(id)s" />')
-        >>> tabs.append('tab2', 'The second', fs2)
-        >>> tabs.tab1 = tabs.tab1.bind(obj1)
-        >>> tabs.tab2.rebind(obj2)
-        >>> print tabs.render(selected=2) #doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-        <div id="my_tabs_...">
-        <ul>
-            <li><a href="#tab1_...">My first tab</a></li>
-            <li><a href="#tab2_...">The second</a></li>
-        </ul>
-        <div id="tab1_...">...
+        >>> fs = MultiFieldSet('my_fieldsets',
+        ...             ('fs1', '', fs1))
+        >>> fs.append('fs2', 'Second fieldset', fs2)
+        >>> fs.fs1 = fs.fs1.bind(obj1)
+        >>> fs.fs2.rebind(obj2)
+        >>> print fs.render() #doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+        <div id="my_fieldsets_...">
+        <fieldset id="fs1_...">
+        <div>
+        ...
         </div>
-        <div id="tab2_...">...
-        </div>
-        </div>
-        <script type="text/javascript">
-          jQuery.fa.tabs('my_tabs_...', {"selected": 2});
-        </script>
-        <BLANKLINE>
-            
+        </fieldset>
+        <fieldset id="fs2_...">
+        <legend><a href="#fs2_...">Second fieldset</a></legend>
+        <div>
+        ...
+
     """
-    engine = None
-    template = templates.get_template('/forms/tabs.mako')
+    template = templates.get_template('/forms/multifieldset.mako')
     def __init__(self, id, *fieldsets, **options):
         if not isinstance(id, basestring):
             raise TypeError('id must be a string. got %r' % (id,))
@@ -43,6 +52,10 @@ class Tabs(object):
         self._fs_dict = {}
         self._bound_pk = None
         self._options = options
+        self._readonly = False
+        self._engine = None
+        self._focus = False
+        self._original_cls = None
         for fs in fieldsets:
             if not isinstance(fs, (tuple, list)) or len(fs) != 3:
                 raise ValueError('A form is defined by (id, title, form) got %r' % (fs,))
@@ -55,15 +68,11 @@ class Tabs(object):
                 fields.append((f.key, f.model_value))
         return dict(fields)
 
-    def _get_bound_pk(self):
-        for fs in self._fs:
-            return fs._bound_pk
-
-    def _set_bound_pk(self, value):
-        for fs in self._fs:
-            fs._bound_pk = value
-
-    _bound_pk = property(_get_bound_pk, _set_bound_pk)
+    _bound_pk = MultiFieldSetProperty('_bound_pk')
+    _request = MultiFieldSetProperty('_request')
+    focus = MultiFieldSetProperty('focus')
+    engine = MultiFieldSetProperty('engine')
+    readonly = MultiFieldSetProperty('readonly')
 
     @property
     def model(self):
@@ -89,13 +98,6 @@ class Tabs(object):
             return self._fs_dict.get(attr)
         else:
             raise AttributeError(attr)
-
-    def __setattr__(self, attr, fs):
-        if attr.startswith('_') or attr in ('engine', 'readonly'):
-            object.__setattr__(self, attr, fs)
-        else:
-            fs.__name__ = attr
-            self._fs_dict[attr] = fs
 
     def append(self, id, title, fs):
         """add a fieldset to tabs"""
@@ -167,14 +169,47 @@ class Tabs(object):
                 fieldsets.append(dict(id=id, title=title, fs=fs))
         kwargs = dict(footer='', header='')
         kwargs.update(self._options)
-        return self.template.render(id=self._id,
+        return self.template.render_unicode(id=self._id,
                                     rid=str(random())[2:],
                                     fieldsets=fieldsets,
                                     options=dumps(options),
                                     **kwargs)
 
-class Accordion(Tabs):
+
+class Tabs(MultiFieldSet):
+    """Display FieldSet using http://jqueryui.com/demos/tabs/:
+
+    .. sourcecode:: python
+
+        >>> from testing import *
+        >>> tabs = Tabs('my_tabs',
+        ...             ('tab1', 'My first tab', fs1),
+        ...             footer='<input type="submit" name="%(id)s" />')
+        >>> tabs.append('tab2', 'The second', fs2)
+        >>> tabs.tab1 = tabs.tab1.bind(obj1)
+        >>> tabs.tab2.rebind(obj2)
+        >>> print tabs.render(selected=2) #doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+        <div id="my_tabs_...">
+        <ul>
+            <li><a href="#tab1_...">My first tab</a></li>
+            <li><a href="#tab2_...">The second</a></li>
+        </ul>
+        <div id="tab1_...">...
+        </div>
+        <div id="tab2_...">...
+        </div>
+        </div>
+        <script type="text/javascript">
+          jQuery.fa.tabs('my_tabs_...', {"selected": 2});
+        </script>
+        <BLANKLINE>
+            
+    """
+    template = templates.get_template('/forms/tabs.mako')
+
+class Accordion(MultiFieldSet):
     """Work like :class:`~fa.jquery.forms.Tabs` but use
     http://jqueryui.com/demos/accordion/
     """
     template = templates.get_template('/forms/accordion.mako')
+

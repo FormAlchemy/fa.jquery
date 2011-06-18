@@ -2,17 +2,7 @@
   <body>
     <div metal:fill-slot="main">
       <table tal:content="structure fs.render()" />
-      <div class="fa_controls">
-        <a class="ui-widget-header ui-widget-link ui-widget-button ui-corner-all"
-           tal:attributes="href request.fa_url(request.model_name, request.model_id, 'edit')">
-          <span class="ui-icon ui-icon-check"></span>
-          <span tal:replace="string:Edit"></span>
-        </a>
-        <a class="ui-widget-header ui-widget-link ui-corner-all"
-           tal:attributes="href request.fa_url(request.model_name)">
-          <span class="ui-icon ui-icon-circle-arrow-w"></span>
-          <span tal:replace="string:Back"></span>
-        </a>
+      <div class="fa_controls" tal:content="structure request.buttons.render(request)">
       </div>
     </div>
   </body>

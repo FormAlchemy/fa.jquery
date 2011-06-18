@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-version = '0.9.1'
+version = '0.9.3'
 
 long_description = open("README.txt").read()
 long_description += """
@@ -25,6 +25,10 @@ setup(name='fa.jquery',
       license='MIT',
       packages=find_packages(exclude=['ez_setup']),
       namespace_packages=['fa'],
+      message_extractors = { 'fa/jquery': [
+             ('*.py', 'lingua_python', None ),
+             ('templates/**.pt', 'chameleon_xml', None ),
+             ]},
       include_package_data=True,
       zip_safe=False,
       install_requires=[
@@ -36,6 +40,7 @@ setup(name='fa.jquery',
           'postmarkup',
           'markdown',
           'mako',
+          'Babel',
       ],
       entry_points="""
       [paste.app_factory]

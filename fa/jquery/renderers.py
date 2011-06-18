@@ -79,6 +79,8 @@ def jQueryFieldRenderer(plugin, show_input=False, tag='div', renderer=fields.Tex
 
     Where field is the input, plugin the empty div and options the jq_options passed to the renderer.
 
+    If you are using pyramid, resources should be a list of static url like ``yourpackage:path/to/resource.js``
+
     """
     template_name = jq_options.get('_template', 'jquery')
     template=templates.get_template('/renderers/%s.mako' % template_name)
@@ -86,6 +88,7 @@ def jQueryFieldRenderer(plugin, show_input=False, tag='div', renderer=fields.Tex
         def render(self, **kwargs):
             if 'autocomplete' in kwargs:
                 kwargs.pop('autocomplete')
+            request = self.request
             html = renderer.render(self, autocomplete='off', **kwargs)
             kwargs.update(self.jq_options)
             options = dict(
@@ -94,14 +97,18 @@ def jQueryFieldRenderer(plugin, show_input=False, tag='div', renderer=fields.Tex
                 plugin=plugin,
                 name=self.name,
                 show_input=show_input,
-                resources=[url(r, prefix=self.resources_prefix) for r in resources],
+                resources=[url(r, prefix=self.resources_prefix, request=request) for r in resources],
             )
+            try:
+                self.update_options(options)
+            except AttributeError:
+                pass
             try:
                 options.update(options=dumps(kwargs))
             except TypeError:
                 options.update(options={})
             try:
-                return literal(self.template.render(**options))
+                return literal(self.template.render_unicode(**options))
             except:
                 raise ValueError('Invalid options: %s' % options)
     return type('%sPluginRenderer' % plugin.title(), (Renderer,),
@@ -451,6 +458,11 @@ def RichTextFieldRenderer(use='tinymce', resources_prefix=None, **jq_options):
 
     class Renderer(fields.TextAreaFieldRenderer):
         markup = use
+
+        def update_options(self, options):
+            request = self.request
+            if request and hasattr(request, 'route_url'):
+                options['previewParserPath'] = '%s?markup=%s' % (request.route_url('markup_parser'), use)
 
         def render_textile(self, **kwargs):
             value = self.raw_value

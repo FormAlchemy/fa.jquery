@@ -32,19 +32,29 @@ var pluginGen = function(plugin_id, func) {
     return function(name, options) {
         // assume plugin is launch onload
         $(function(){
-            try {
-                var field = document.getElementById(name);
-                if (field)
-                    field = $(field);
-                else
-                    field = $('input[name="'+name+'"]');
-                var plugin = document.getElementById(name+'_'+plugin_id);
-                if (plugin)
-                    plugin = $(plugin);
-                $.fa_plugins[plugin_id](field, plugin, options);
-            } catch (e) {
-                log('Error while loading '+plugin_id+' for '+name+' - '+options+': '+e);
+            var field = document.getElementById(name);
+            if (field)
+                field = $(field);
+            else
+                field = $('input[name="'+name+'"]');
+            var plugin = document.getElementById(name+'_'+plugin_id);
+            if (plugin)
+                plugin = $(plugin);
+            var load = function() {
+                try {
+                    $.fa_plugins[plugin_id](field, plugin, options);
+                    return true;
+                } catch (e) {
+                    log('Error while loading '+plugin_id+' for '+name+' - '+options+': '+e);
+                    return false;
+                }
             }
+            setTimeout(function() {
+                if (!load()) {
+                    log('Retrying in 0.7s...');
+                    setTimeout(load, 700);
+                }
+            }, 300);
         });
     }
 }
@@ -65,15 +75,9 @@ $.extend({
         $.fa_resources.push(url);
         var head = document.getElementsByTagName("head")[0] || document.documentElement;
         if (/\.js$/.test(url)) {
-            if ($.browser.safari || $.browser.msie) {
-                document.write(unescape('%3Cscr'+'ipt type="text/javascr'+'ipt" src="'+url+'"%3E%3C/scr'+'ipt%3E'));
-            } else {
-                var obj = document.createElement("script");
-                obj.type= 'text/javascript';
-                obj.src = url;
-                head.insertBefore(obj, head.firstChild);
-            }
+            document.write('\u003Cscript src="'+url+'">\u003C/script>');
         } else if (/\.css$/.test(url)) {
+            // document.write('\u003Clink style="text/css" rel="stylesheet" src="'+url+'">\u003C/link>');
             var obj = document.createElement("link");
             obj.type = 'text/css';
             obj.rel = 'stylesheet';
@@ -98,7 +102,6 @@ $.fa.extend({
   autocomplete: function(field, plugin, options) {
     options['select'] = function(event, ui) {
         field.val(ui.item.value);
-        return false;
     }
     var auto = $('<input autocomplete="off" value="" />');
     auto.val(field.val());
@@ -220,8 +223,13 @@ $.fa.extend({
         var self = $(this);  
         var form = $('<form title="'+button.text()+'"></form>');
         field.append(form);
+        var field_url = self.attr('alt');
         var new_url = self.attr('href');
-        var edit_url = new_url.split('/new.xhr')[0]+'.xhr';
+        if (/\.xhr/.exec(new_url)) {
+            var edit_url = new_url.split('/new.xhr')[0]+'.xhr';
+        } else {
+            var edit_url = new_url.split('/new')[0];
+        }
         form.load(new_url, function() {
             form.dialog({
                 modal: true,
@@ -235,7 +243,7 @@ $.fa.extend({
                                 form.html(html);
                             } else {
                                 field.empty();
-                                field.load(self.attr('alt'));
+                                field.load(field_url);
                                 form.dialog('close');
                             }
                         });

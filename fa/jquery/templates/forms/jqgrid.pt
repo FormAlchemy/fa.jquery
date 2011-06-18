@@ -4,12 +4,17 @@
       ">
 <table tal:attributes="id dom_id"></table> <div tal:attributes="id string:${dom_id}_jqgrid"></div> 
 <script>
-jQuery.fa.add_resource("${request.static_url('fa.jquery:jquery-ui/jqgrid/css/ui.jqgrid.css')}");
 jQuery.fa.add_resource("${request.static_url('fa.jquery:jquery-ui/jqgrid/js/i18n/grid.locale-en.js')}");
 jQuery.fa.add_resource("${request.static_url('fa.jquery:jquery-ui/jqgrid/js/jquery.jqGrid.min.js')}");
 jQuery.fa.add_resource("${request.static_url('fa.jquery:jquery-ui/jqgrid/js/fa.jqgrid.js')}");
+jQuery.fa.add_resource("${request.static_url('fa.jquery:jquery-ui/jqgrid/css/ui.jqgrid.css')}");
 </script>
 <script>
+var init_grid = function() {
+if (!jQuery.fa.jqgrid) {
+  setTimeout(init_grid, 100);
+  return;
+}
 var url = window.location.href.split('?')[0].split('/');
 var model = url.pop();
 url.push('json');
@@ -25,5 +30,7 @@ jQuery.fa.jqgrid("${dom_id}", {
     callback: function(table, pager, options) {
     }
   });
+}
+setTimeout(init_grid, 200);
 </script>
 </tal:define>

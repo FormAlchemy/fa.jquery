@@ -7,7 +7,7 @@ from forms import Tabs, Accordion
 import simplejson
 from testing import *
 
-config.engine = TemplateEngine()
+engine = config.engine = TemplateEngine()
 
 class Demo(object):
 
@@ -43,6 +43,12 @@ class Demo(object):
             obj.context['selectable'] = 'f'
             obj.context['selectables'] = ['b', 'c']
             fs = Form.bind(obj, data=req.POST or None)
+            fs.engine = engine
+
+            fs1.engine = engine
+            fs2.engine = engine
+            fs3.engine = engine
+            fs4.engine = engine
 
             tabs = Tabs('my_tabs',
                         ('tab1', 'My first tab', fs1),

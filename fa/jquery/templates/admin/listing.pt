@@ -1,17 +1,18 @@
 <html metal:use-macro="main.macros['master']">
+  <head>
+    <script metal:fill-slot="javascript">
+      var USE_POPUP = ${request.registry.settings.get('fa.use_popup') and 'true' or 'false'};
+      jQuery.fa.add_resource("${request.static_url('fa.jquery:jquery-ui/jqgrid/js/i18n/grid.locale-en.js')}");
+      jQuery.fa.add_resource("${request.static_url('fa.jquery:jquery-ui/jqgrid/js/jquery.jqGrid.min.js')}");
+      jQuery.fa.add_resource("${request.static_url('fa.jquery:jquery-ui/jqgrid/js/fa.jqgrid.js')}");
+      jQuery.fa.add_resource("${request.static_url('fa.jquery:jquery-ui/jqgrid/css/ui.jqgrid.css')}");
+    </script>
+  </head>
   <body>
     <div metal:fill-slot="main">
-      <script language="javascript">
-        var USE_POPUP = ${request.registry.settings.get('fa.use_popup') and 'true' or 'false'};
-      </script>
       <div tal:content="structure fs.render(renderer='fa.jquery:templates/forms/jqgrid.pt', request=request)" />
-      <p>
-        <a class="ui-widget-header ui-widget-link ui-corner-all"
-           tal:attributes="href request.route_url(request.route_name, traverse='%s/new' % request.model_name)">
-            <span class="ui-icon ui-icon-circle-plus"></span>
-            ${F_('New')} ${model_name}
-        </a>
-      </p>
+      <div class="fa_controls" tal:content="structure request.buttons.render(request)">
+      </div>
     </div>
   </body>
 </html>

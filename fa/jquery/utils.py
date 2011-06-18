@@ -34,7 +34,7 @@ class TemplateEngine(BaseTemplateEngine):
         if not name.endswith('.mako'):
             name = '%s.mako' % name
         template = self.templates.get_template('/forms/%s' % name)
-        return literal(template.render(**kwargs))
+        return literal(template.render_unicode(**kwargs))
 
 def load_datas(filename):
     dirname = os.path.join(os.path.dirname(__file__), 'datas')
@@ -56,12 +56,18 @@ def url(*args, **kwargs):
         >>> print url('plugin.js', prefix='/my_js')
         /my_js/plugin.js
     """
+    request = kwargs.get('request', None)
     arg = args and args[0] or ''
-    if arg and not arg.startswith('/') and not arg.startswith('http://'):
+    if arg and not arg.startswith('/') and not arg.startswith('http'):
+        if request is not None and hasattr(request, 'static_url') and ':' in arg:
+            return request.static_url(arg)
         args = list(args)
         if kwargs.get('prefix'):
             args.insert(0, kwargs['prefix'])
         else:
+            root_url = url.root_url
+            if root_url.startswith('/') and hasattr(request, 'application_root'):
+                root_url = request.application_root + root_url.strip('/')
             args.insert(0, url.root_url)
     return '/'.join([args[0].rstrip('/')]+[a.strip('/') for a in args[1:]])
 url.root_url = '/jquery'

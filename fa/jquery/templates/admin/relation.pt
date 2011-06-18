@@ -1,0 +1,22 @@
+<html>
+  <head>
+      <link rel="stylesheet" tal:attributes="href request.static_url('fa.jquery:jquery-ui/css/smoothness/jquery-ui-1.8.8.custom.css')" />
+      <link rel="stylesheet" tal:attributes="href request.static_url('fa.jquery:jquery-ui/fa.jquery.min.css')" />
+      <script type="text/javascript" tal:attributes="src request.static_url('fa.jquery:jquery-ui/fa.jquery.min.js')"></script>
+  </head>
+  <body>
+    <div>
+      <script language="javascript">
+        var USE_POPUP = false;
+      </script>
+      <div tal:content="structure fs.render(renderer='fa.jquery:templates/forms/jqgrid.pt', request=request)" />
+      <p>
+        <a class="ui-widget-header ui-widget-link ui-corner-all"
+           tal:attributes="href request.route_url(request.route_name, traverse='%s/new' % request.model_name)">
+            <span class="ui-icon ui-icon-circle-plus"></span>
+            ${F_('New')} ${model_name}
+        </a>
+      </p>
+    </div>
+  </body>
+</html>

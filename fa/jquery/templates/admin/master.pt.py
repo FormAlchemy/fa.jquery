@@ -1,27 +1,33 @@
 registry = dict(version=0)
 def bind():
     from cPickle import loads as _loads
-    _attrs_4356773776 = _loads('(dp1\n.')
     _lookup_attr = _loads('cchameleon.core.codegen\nlookup_attr\np1\n.')
-    _init_scope = _loads('cchameleon.core.utils\necontext\np1\n.')
     _re_amp = _loads("cre\n_compile\np1\n(S'&(?!([A-Za-z]+|#[0-9]+);)'\np2\nI0\ntRp3\n.")
-    _attrs_4356773712 = _loads('(dp1\nVclass\np2\nVbreadcrumb\np3\ns.')
-    _attrs_4356773584 = _loads('(dp1\nVid\np2\nVheader\np3\nsVclass\np4\nVui-widget-header ui-corner-all\np5\ns.')
-    _attrs_4356773840 = _loads('(dp1\nVtype\np2\nVtext/css\np3\ns.')
-    _attrs_4356772944 = _loads('(dp1\n.')
-    _attrs_4356774096 = _loads('(dp1\n.')
-    _attrs_4356773648 = _loads('(dp1\n.')
-    _attrs_4356772624 = _loads('(dp1\n.')
+    _attrs_4302160592 = _loads('(dp1\nVtype\np2\nVtext/javascript\np3\ns.')
+    _attrs_4366799824 = _loads('(dp1\nVid\np2\nVlanguages\np3\ns.')
+    _attrs_4366801744 = _loads('(dp1\n.')
     _init_stream = _loads('cchameleon.core.generation\ninitialize_stream\np1\n.')
-    _attrs_4356774544 = _loads('(dp1\n.')
-    _attrs_4356773200 = _loads('(dp1\nVrel\np2\nVstylesheet\np3\ns.')
+    _attrs_4302161552 = _loads('(dp1\nVtype\np2\nVtext/css\np3\ns.')
+    _attrs_4302161808 = _loads('(dp1\n.')
     _init_default = _loads('cchameleon.core.generation\ninitialize_default\np1\n.')
-    _attrs_4356773328 = _loads('(dp1\nVrel\np2\nVstylesheet\np3\ns.')
-    _attrs_4356772816 = _loads('(dp1\n.')
-    _attrs_4356773072 = _loads('(dp1\n.')
-    _attrs_4356773968 = _loads('(dp1\nVid\np2\nVcontent\np3\nsVclass\np4\nVui-admin ui-widget\np5\ns.')
+    _attrs_4366799760 = _loads('(dp1\nVclass\np2\nVbreadcrumb\np3\ns.')
+    _attrs_4366799888 = _loads('(dp1\n.')
+    _attrs_4366800144 = _loads('(dp1\n.')
     _init_tal = _loads('cchameleon.core.generation\ninitialize_tal\np1\n.')
-    _attrs_4356773456 = _loads('(dp1\nVtype\np2\nVtext/javascript\np3\ns.')
+    _attrs_4302160144 = _loads('(dp1\nVrel\np2\nVstylesheet\np3\ns.')
+    _attrs_4366800720 = _loads('(dp1\nVstyle\np2\nVdisplay:none;\np3\nsVid\np4\nVmodels\np5\ns.')
+    _attrs_4302163728 = _loads('(dp1\n.')
+    _attrs_4302161296 = _loads('(dp1\nVrel\np2\nVstylesheet\np3\ns.')
+    _attrs_4366799312 = _loads('(dp1\n.')
+    _attrs_4302163472 = _loads('(dp1\nVid\np2\nVcontent\np3\nsVclass\np4\nVui-admin ui-widget\np5\ns.')
+    _attrs_4302162320 = _loads('(dp1\nVtype\np2\nVtext/javascript\np3\ns.')
+    _attrs_4366801808 = _loads('(dp1\n.')
+    _attrs_4302152720 = _loads('(dp1\n.')
+    _init_scope = _loads('cchameleon.core.utils\necontext\np1\n.')
+    _attrs_4366802000 = _loads('(dp1\nVstyle\np2\nVdisplay:none\np3\nsVclass\np4\nVroot_url\np5\ns.')
+    _attrs_4302161232 = _loads('(dp1\nVtype\np2\nVtext/javascript\np3\ns.')
+    _attrs_4302163664 = _loads('(dp1\nVid\np2\nVheader\np3\nsVclass\np4\nVui-widget-header ui-corner-all\np5\ns.')
+    _attrs_4302163600 = _loads('(dp1\n.')
     def render(econtext, rcontext=None):
         macros = econtext.get('macros')
         _translate = econtext.get('_translate')
@@ -37,15 +43,15 @@ def bind():
         default = None
         u'None'
         _domain = None
-        attrs = _attrs_4356772624
+        attrs = _attrs_4302152720
         _write(u'<html>\n    ')
-        attrs = _attrs_4356772816
+        attrs = _attrs_4302163728
         u"''"
         _write(u'<head>\n      ')
         _default.value = default = ''
-        u"request.model_name or 'root'"
-        _content = (_lookup_attr(econtext['request'], 'model_name') or 'root')
-        attrs = _attrs_4356773072
+        u"request.model_name or 'Models index'"
+        _content = (_lookup_attr(econtext['request'], 'model_name') or 'Models index')
+        attrs = _attrs_4302163600
         u'_content'
         _write(u'<title>')
         _tmp1 = _content
@@ -73,7 +79,7 @@ def bind():
                 _tmp = _tmp.replace('>', '&gt;')
             _write(_tmp)
         _write(u'</title>\n      ')
-        attrs = _attrs_4356773200
+        attrs = _attrs_4302161296
         u"request.static_url('fa.jquery:jquery-ui/css/smoothness/jquery-ui-1.8.8.custom.css')"
         _write(u'<link rel="stylesheet"')
         _tmp1 = _lookup_attr(econtext['request'], 'static_url')('fa.jquery:jquery-ui/css/smoothness/jquery-ui-1.8.8.custom.css')
@@ -98,7 +104,7 @@ def bind():
                 _tmp1 = _tmp1.replace('"', '&quot;')
             _write(((' href="' + _tmp1) + '"'))
         _write(u' />\n      ')
-        attrs = _attrs_4356773328
+        attrs = _attrs_4302160144
         u"request.static_url('fa.jquery:jquery-ui/fa.jquery.min.css')"
         _write(u'<link rel="stylesheet"')
         _tmp1 = _lookup_attr(econtext['request'], 'static_url')('fa.jquery:jquery-ui/fa.jquery.min.css')
@@ -123,7 +129,7 @@ def bind():
                 _tmp1 = _tmp1.replace('"', '&quot;')
             _write(((' href="' + _tmp1) + '"'))
         _write(u' />\n      ')
-        attrs = _attrs_4356773456
+        attrs = _attrs_4302162320
         u"request.static_url('fa.jquery:jquery-ui/fa.jquery.min.js')"
         _write(u'<script type="text/javascript"')
         _tmp1 = _lookup_attr(econtext['request'], 'static_url')('fa.jquery:jquery-ui/fa.jquery.min.js')
@@ -148,55 +154,186 @@ def bind():
                 _tmp1 = _tmp1.replace('"', '&quot;')
             _write(((' src="' + _tmp1) + '"'))
         _write(u'></script>\n      ')
-        attrs = _attrs_4356773840
-        _write(u'<style type="text/css">\n        label {font-weight:bold;}\n        h1, h3 {padding:0.1 0.3em;}\n        h1 a, h3 a {text-decoration:none;}\n        a.ui-state-default {padding:0.1em 0.3em;}\n        a.fm-button {padding:0.4em 0.5em;}\n        a.fm-button-icon-left {padding-left:1.9em;}\n        div.breadcrumb {float:right; font-size:0.7em;}\n        div.breadcrumb a {text-decoration:underline}\n        #header { height: 2em; font-size:1.5em; }\n        #header div { font-size:1.5em; }\n      </style>\n    </head>\n    ')
-        attrs = _attrs_4356772944
-        _write(u'<body>\n      ')
-        attrs = _attrs_4356773968
-        _write(u'<div id="content" class="ui-admin ui-widget">\n        ')
-        attrs = _attrs_4356773584
-        _write(u'<h1 id="header" class="ui-widget-header ui-corner-all">\n          ')
-        attrs = _attrs_4356773712
-        u'breadcrumb'
-        _write(u'<div class="breadcrumb">\n            ')
-        _tmp1 = econtext['breadcrumb']
-        item = None
-        (_tmp1, _tmp2, ) = repeat.insert('item', _tmp1)
-        for item in _tmp1:
-            _tmp2 = (_tmp2 - 1)
-            u"''"
-            _write(u'')
-            _default.value = default = ''
-            u'item[1]'
-            _content = item[1]
-            attrs = _attrs_4356774096
-            u'item[0]'
-            _write(u'<a')
-            _tmp3 = item[0]
-            if (_tmp3 is _default):
-                _tmp3 = None
-            if ((_tmp3 is not None) and (_tmp3 is not False)):
-                if (_tmp3.__class__ not in (str, unicode, int, float, )):
-                    _tmp3 = unicode(_translate(_tmp3, domain=_domain, mapping=None, target_language=target_language, default=None))
-                else:
-                    if not isinstance(_tmp3, unicode):
-                        _tmp3 = str(_tmp3)
-                if ('&' in _tmp3):
-                    if (';' in _tmp3):
-                        _tmp3 = _re_amp.sub('&amp;', _tmp3)
+        attrs = _attrs_4302160592
+        u"%(slots)s.get(u'javascript')"
+        _write(u'<script type="text/javascript">\n        jQuery(document).ready(function() {\n          $(\'select#models\')\n            .change(function() { window.location.href = $(this).val(); })\n            .selectmenu({\'style\':\'dropdown\', \'menuWidth\':\'20%\', \'width\':\'100%\'});\n        });\n      </script>\n      ')
+        _tmp = _slots.get(u'javascript')
+        u'%(tmp)s is not None'
+        _tmp1 = (_tmp is not None)
+        if _tmp1:
+            pass
+            u'isinstance(%(tmp)s, basestring)'
+            _tmp2 = isinstance(_tmp, basestring)
+            if not _tmp2:
+                pass
+                econtext.update(dict(rcontext=rcontext, _domain=_domain))
+                _tmp(econtext, repeat)
+            else:
+                pass
+                u'%(tmp)s'
+                _tmp2 = _tmp
+                _tmp = _tmp2
+                if (_tmp.__class__ not in (str, unicode, int, float, )):
+                    try:
+                        _tmp = _tmp.__html__
+                    except:
+                        _tmp = _translate(_tmp, domain=_domain, mapping=None, target_language=target_language, default=None)
                     else:
-                        _tmp3 = _tmp3.replace('&', '&amp;')
-                if ('<' in _tmp3):
-                    _tmp3 = _tmp3.replace('<', '&lt;')
-                if ('>' in _tmp3):
-                    _tmp3 = _tmp3.replace('>', '&gt;')
-                if ('"' in _tmp3):
-                    _tmp3 = _tmp3.replace('"', '&quot;')
-                _write(((' href="' + _tmp3) + '"'))
+                        _tmp = _tmp()
+                        _write(_tmp)
+                        _tmp = None
+                if (_tmp is not None):
+                    if not isinstance(_tmp, unicode):
+                        _tmp = str(_tmp)
+                    _write(_tmp)
+        else:
+            pass
+            attrs = _attrs_4302161232
+            _write(u'<script type="text/javascript"></script>')
+        _write(u'\n      ')
+        attrs = _attrs_4302161552
+        _write(u'<style type="text/css">\n        label {font-weight:bold;}\n        h1, h3 {padding:0.1 0.3em;}\n        h1 a, h3 a {text-decoration:none;}\n        #header { height: 2em; font-size:1.5em; }\n        #header div { font-size:1.5em; }\n        #header a { font-size:1em; }\n        ul#languages {float:right;}\n        ul#languages li {display: inline;}\n        ul#languages a {text-decoration:none; color: grey;}\n        ul#languages a.lang_active {text-decoration:underline;}\n        div.breadcrumb {float:right;width:20%;margin-right:20px;}\n        div.breadcrumb a {text-decoration:none;}\n        h1 a.ui-selectmenu {height:1em;}\n        a.ui-state-default {padding:0.1em 0.3em;}\n        a.fm-button {padding:0.4em 0.5em;}\n        a.fm-button-icon-left {padding-left:1.9em;}\n      </style>\n    </head>\n    ')
+        attrs = _attrs_4302161808
+        _write(u'<body>\n      ')
+        attrs = _attrs_4302163472
+        _write(u'<div id="content" class="ui-admin ui-widget">\n        ')
+        attrs = _attrs_4302163664
+        u'request.model_name and breadcrumb'
+        _write(u'<h1 id="header" class="ui-widget-header ui-corner-all">\n          ')
+        _tmp1 = (_lookup_attr(econtext['request'], 'model_name') and econtext['breadcrumb'])
+        if _tmp1:
+            pass
+            attrs = _attrs_4366799760
+            _write(u'<div class="breadcrumb">\n            ')
+            attrs = _attrs_4366800720
+            u'breadcrumb'
+            _write(u'<select id="models" style="display:none;">\n            ')
+            _tmp1 = econtext['breadcrumb']
+            item = None
+            (_tmp1, _tmp2, ) = repeat.insert('item', _tmp1)
+            for item in _tmp1:
+                _tmp2 = (_tmp2 - 1)
+                u"''"
+                _write(u'')
+                _default.value = default = ''
+                u'item[1]'
+                _content = item[1]
+                attrs = _attrs_4366799312
+                u'item[0]'
+                _write(u'<option')
+                _tmp3 = item[0]
+                if (_tmp3 is _default):
+                    _tmp3 = None
+                if ((_tmp3 is not None) and (_tmp3 is not False)):
+                    if (_tmp3.__class__ not in (str, unicode, int, float, )):
+                        _tmp3 = unicode(_translate(_tmp3, domain=_domain, mapping=None, target_language=target_language, default=None))
+                    else:
+                        if not isinstance(_tmp3, unicode):
+                            _tmp3 = str(_tmp3)
+                    if ('&' in _tmp3):
+                        if (';' in _tmp3):
+                            _tmp3 = _re_amp.sub('&amp;', _tmp3)
+                        else:
+                            _tmp3 = _tmp3.replace('&', '&amp;')
+                    if ('<' in _tmp3):
+                        _tmp3 = _tmp3.replace('<', '&lt;')
+                    if ('>' in _tmp3):
+                        _tmp3 = _tmp3.replace('>', '&gt;')
+                    if ('"' in _tmp3):
+                        _tmp3 = _tmp3.replace('"', '&quot;')
+                    _write(((' value="' + _tmp3) + '"'))
+                u' item[2]'
+                _tmp3 = item[2]
+                if (_tmp3 is _default):
+                    _tmp3 = None
+                if ((_tmp3 is not None) and (_tmp3 is not False)):
+                    if (_tmp3.__class__ not in (str, unicode, int, float, )):
+                        _tmp3 = unicode(_translate(_tmp3, domain=_domain, mapping=None, target_language=target_language, default=None))
+                    else:
+                        if not isinstance(_tmp3, unicode):
+                            _tmp3 = str(_tmp3)
+                    if ('&' in _tmp3):
+                        if (';' in _tmp3):
+                            _tmp3 = _re_amp.sub('&amp;', _tmp3)
+                        else:
+                            _tmp3 = _tmp3.replace('&', '&amp;')
+                    if ('<' in _tmp3):
+                        _tmp3 = _tmp3.replace('<', '&lt;')
+                    if ('>' in _tmp3):
+                        _tmp3 = _tmp3.replace('>', '&gt;')
+                    if ('"' in _tmp3):
+                        _tmp3 = _tmp3.replace('"', '&quot;')
+                    _write(((' class="' + _tmp3) + '"'))
+                u'_content'
+                _write('>')
+                _tmp3 = _content
+                _tmp = _tmp3
+                if (_tmp.__class__ not in (str, unicode, int, float, )):
+                    try:
+                        _tmp = _tmp.__html__
+                    except:
+                        _tmp = _translate(_tmp, domain=_domain, mapping=None, target_language=target_language, default=None)
+                    else:
+                        _tmp = _tmp()
+                        _write(_tmp)
+                        _tmp = None
+                if (_tmp is not None):
+                    if not isinstance(_tmp, unicode):
+                        _tmp = str(_tmp)
+                    if ('&' in _tmp):
+                        if (';' in _tmp):
+                            _tmp = _re_amp.sub('&amp;', _tmp)
+                        else:
+                            _tmp = _tmp.replace('&', '&amp;')
+                    if ('<' in _tmp):
+                        _tmp = _tmp.replace('<', '&lt;')
+                    if ('>' in _tmp):
+                        _tmp = _tmp.replace('>', '&gt;')
+                    _write(_tmp)
+                _write(u'</option>\n            ')
+                if (_tmp2 == 0):
+                    break
+                _write(' ')
+            _write(u'\n            </select>\n          </div>')
+        u'request.model_name'
+        _write(u'\n          ')
+        _tmp1 = _lookup_attr(econtext['request'], 'model_name')
+        if _tmp1:
+            pass
+            attrs = _attrs_4366800144
+            u"''"
+            _write(u'<div>\n            ')
+            _default.value = default = ''
+            u'model_name'
+            _content = econtext['model_name']
+            attrs = _attrs_4366801744
+            u'request.fa_url(model_name)'
+            _write(u'<a')
+            _tmp1 = _lookup_attr(econtext['request'], 'fa_url')(econtext['model_name'])
+            if (_tmp1 is _default):
+                _tmp1 = None
+            if ((_tmp1 is not None) and (_tmp1 is not False)):
+                if (_tmp1.__class__ not in (str, unicode, int, float, )):
+                    _tmp1 = unicode(_translate(_tmp1, domain=_domain, mapping=None, target_language=target_language, default=None))
+                else:
+                    if not isinstance(_tmp1, unicode):
+                        _tmp1 = str(_tmp1)
+                if ('&' in _tmp1):
+                    if (';' in _tmp1):
+                        _tmp1 = _re_amp.sub('&amp;', _tmp1)
+                    else:
+                        _tmp1 = _tmp1.replace('&', '&amp;')
+                if ('<' in _tmp1):
+                    _tmp1 = _tmp1.replace('<', '&lt;')
+                if ('>' in _tmp1):
+                    _tmp1 = _tmp1.replace('>', '&gt;')
+                if ('"' in _tmp1):
+                    _tmp1 = _tmp1.replace('"', '&quot;')
+                _write(((' href="' + _tmp1) + '"'))
             u'_content'
             _write('>')
-            _tmp3 = _content
-            _tmp = _tmp3
+            _tmp1 = _content
+            _tmp = _tmp1
             if (_tmp.__class__ not in (str, unicode, int, float, )):
                 try:
                     _tmp = _tmp.__html__
@@ -219,51 +356,110 @@ def bind():
                 if ('>' in _tmp):
                     _tmp = _tmp.replace('>', '&gt;')
                 _write(_tmp)
-            u'not repeat.item.end'
-            _write(u'</a>\n                ')
-            _tmp3 = not _lookup_attr(repeat.item, 'end')
-            if _tmp3:
+            u"''"
+            _write(u'</a>\n            ')
+            _default.value = default = ''
+            u"request.model_id and hasattr(request.model_class, '__unicode__')"
+            _tmp1 = (_lookup_attr(econtext['request'], 'model_id') and hasattr(_lookup_attr(econtext['request'], 'model_class'), '__unicode__'))
+            if _tmp1:
                 pass
-                attrs = _attrs_4356774544
-                _write(u'<span>/</span>')
+                u'unicode(request.model_instance)'
+                _content = unicode(_lookup_attr(econtext['request'], 'model_instance'))
+                u'_content'
+                _tmp1 = _content
+                _tmp = _tmp1
+                if (_tmp.__class__ not in (str, unicode, int, float, )):
+                    try:
+                        _tmp = _tmp.__html__
+                    except:
+                        _tmp = _translate(_tmp, domain=_domain, mapping=None, target_language=target_language, default=None)
+                    else:
+                        _tmp = _tmp()
+                        _write(_tmp)
+                        _tmp = None
+                if (_tmp is not None):
+                    if not isinstance(_tmp, unicode):
+                        _tmp = str(_tmp)
+                    if ('&' in _tmp):
+                        if (';' in _tmp):
+                            _tmp = _re_amp.sub('&amp;', _tmp)
+                        else:
+                            _tmp = _tmp.replace('&', '&amp;')
+                    if ('<' in _tmp):
+                        _tmp = _tmp.replace('<', '&lt;')
+                    if ('>' in _tmp):
+                        _tmp = _tmp.replace('>', '&gt;')
+                    _write(_tmp)
+            u"''"
             _write(u'\n            ')
-            if (_tmp2 == 0):
-                break
-            _write(' ')
-        u"''"
-        _write(u'\n          </div>\n          ')
-        _default.value = default = ''
-        u"request.model_name or 'root'"
-        _content = (_lookup_attr(econtext['request'], 'model_name') or 'root')
-        attrs = _attrs_4356773776
-        u'_content'
-        _write(u'<div>')
-        _tmp1 = _content
-        _tmp = _tmp1
-        if (_tmp.__class__ not in (str, unicode, int, float, )):
-            try:
-                _tmp = _tmp.__html__
-            except:
-                _tmp = _translate(_tmp, domain=_domain, mapping=None, target_language=target_language, default=None)
-            else:
-                _tmp = _tmp()
-                _write(_tmp)
-                _tmp = None
-        if (_tmp is not None):
-            if not isinstance(_tmp, unicode):
-                _tmp = str(_tmp)
-            if ('&' in _tmp):
-                if (';' in _tmp):
-                    _tmp = _re_amp.sub('&amp;', _tmp)
+            _default.value = default = ''
+            u"request.model_id and not hasattr(request.model_class, '__unicode__')"
+            _tmp1 = (_lookup_attr(econtext['request'], 'model_id') and not hasattr(_lookup_attr(econtext['request'], 'model_class'), '__unicode__'))
+            if _tmp1:
+                pass
+                u'request.model_id'
+                _content = _lookup_attr(econtext['request'], 'model_id')
+                u'_content'
+                _tmp1 = _content
+                _tmp = _tmp1
+                if (_tmp.__class__ not in (str, unicode, int, float, )):
+                    try:
+                        _tmp = _tmp.__html__
+                    except:
+                        _tmp = _translate(_tmp, domain=_domain, mapping=None, target_language=target_language, default=None)
+                    else:
+                        _tmp = _tmp()
+                        _write(_tmp)
+                        _tmp = None
+                if (_tmp is not None):
+                    if not isinstance(_tmp, unicode):
+                        _tmp = str(_tmp)
+                    if ('&' in _tmp):
+                        if (';' in _tmp):
+                            _tmp = _re_amp.sub('&amp;', _tmp)
+                        else:
+                            _tmp = _tmp.replace('&', '&amp;')
+                    if ('<' in _tmp):
+                        _tmp = _tmp.replace('<', '&lt;')
+                    if ('>' in _tmp):
+                        _tmp = _tmp.replace('>', '&gt;')
+                    _write(_tmp)
+            _write(u'\n          </div>')
+        _write(u'\n          ')
+        _tmp_domain0 = _domain
+        u"u'fa_jquery'"
+        _domain = u'fa_jquery'
+        u'not request.model_name'
+        _tmp1 = not _lookup_attr(econtext['request'], 'model_name')
+        if _tmp1:
+            pass
+            u'Models index'
+            _content = u'Models index'
+            attrs = _attrs_4366799888
+            u'_content'
+            _write(u'<div>')
+            _tmp = _content
+            u'%(translate)s(_tmp, domain=%(domain)s, mapping=None, target_language=%(language)s, default=None)'
+            _tmp1 = _translate(_tmp, domain=_domain, mapping=None, target_language=target_language, default=None)
+            _tmp = _tmp1
+            if (_tmp.__class__ not in (str, unicode, int, float, )):
+                try:
+                    _tmp = _tmp.__html__
+                except:
+                    _tmp = _translate(_tmp, domain=_domain, mapping=None, target_language=target_language, default=None)
                 else:
-                    _tmp = _tmp.replace('&', '&amp;')
-            if ('<' in _tmp):
-                _tmp = _tmp.replace('<', '&lt;')
-            if ('>' in _tmp):
-                _tmp = _tmp.replace('>', '&gt;')
-            _write(_tmp)
+                    _tmp = _tmp()
+                    _write(_tmp)
+                    _tmp = None
+            if (_tmp is not None):
+                if not isinstance(_tmp, unicode):
+                    _tmp = str(_tmp)
+                _write(_tmp)
+            _write(u'</div>')
+        _write(u'\n        ')
+        _domain = _tmp_domain0
         u"%(slots)s.get(u'main')"
-        _write(u'</div>\n        </h1>\n        ')
+        _write(u'</h1>\n        ')
         _tmp = _slots.get(u'main')
         u'%(tmp)s is not None'
         _tmp1 = (_tmp is not None)
@@ -295,9 +491,62 @@ def bind():
                     _write(_tmp)
         else:
             pass
-            attrs = _attrs_4356773648
+            attrs = _attrs_4366801808
             _write(u'<div>\n        </div>')
-        _write(u'\n      </div>\n    </body>\n</html>')
+        u"''"
+        _write(u'\n        ')
+        _default.value = default = ''
+        u'request'
+        _tmp1 = econtext['request']
+        if _tmp1:
+            pass
+            u'request.language_actions.render(request)'
+            _content = _lookup_attr(_lookup_attr(econtext['request'], 'language_actions'), 'render')(econtext['request'])
+            attrs = _attrs_4366799824
+            u'_content'
+            _write(u'<ul id="languages">')
+            _tmp1 = _content
+            _tmp = _tmp1
+            if (_tmp.__class__ not in (str, unicode, int, float, )):
+                try:
+                    _tmp = _tmp.__html__
+                except:
+                    _tmp = _translate(_tmp, domain=_domain, mapping=None, target_language=target_language, default=None)
+                else:
+                    _tmp = _tmp()
+                    _write(_tmp)
+                    _tmp = None
+            if (_tmp is not None):
+                if not isinstance(_tmp, unicode):
+                    _tmp = str(_tmp)
+                _write(_tmp)
+            _write(u'</ul>')
+        _write(u'\n        ')
+        attrs = _attrs_4366802000
+        u'request.fa_url()'
+        _write(u'<a style="display:none" class="root_url"')
+        _tmp1 = _lookup_attr(econtext['request'], 'fa_url')()
+        if (_tmp1 is _default):
+            _tmp1 = None
+        if ((_tmp1 is not None) and (_tmp1 is not False)):
+            if (_tmp1.__class__ not in (str, unicode, int, float, )):
+                _tmp1 = unicode(_translate(_tmp1, domain=_domain, mapping=None, target_language=target_language, default=None))
+            else:
+                if not isinstance(_tmp1, unicode):
+                    _tmp1 = str(_tmp1)
+            if ('&' in _tmp1):
+                if (';' in _tmp1):
+                    _tmp1 = _re_amp.sub('&amp;', _tmp1)
+                else:
+                    _tmp1 = _tmp1.replace('&', '&amp;')
+            if ('<' in _tmp1):
+                _tmp1 = _tmp1.replace('<', '&lt;')
+            if ('>' in _tmp1):
+                _tmp1 = _tmp1.replace('>', '&gt;')
+            if ('"' in _tmp1):
+                _tmp1 = _tmp1.replace('"', '&quot;')
+            _write(((' href="' + _tmp1) + '"'))
+        _write(u'></a>\n      </div>\n    </body>\n</html>')
         return
     return render
 

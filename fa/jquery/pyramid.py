@@ -1,6 +1,11 @@
 # -*- coding: utf-8 -*-
 from pyramid_formalchemy.views import ModelView as Base
 from pyramid_formalchemy.utils import TemplateEngine
+from pyramid_formalchemy.i18n import TranslationStringFactory
+import markdown
+from textile import textile
+from postmarkup import render_bbcode
+from webob import Response
 from fa.jquery import utils
 from webhelpers.html import literal
 from formalchemy import fields
@@ -9,9 +14,30 @@ from simplejson import dumps
 import renderers
 import logging
 
+_ = TranslationStringFactory('fa_jquery')
+
 class ModelView(Base):
 
     engine = TemplateEngine()
+
+    def breadcrumb(self, fs=None, **kwargs):
+        """return items to build the breadcrumb"""
+        request = self.request
+        model_name = request.model_name
+        models = self.models(json=True)
+
+        if len(models) == 1:
+            return []
+
+        items = [
+            ('', _('Jump to ...'), ''),
+            (request.fa_url(), _('Models index'), ''),
+          ]
+
+        models = sorted([v for v in models.items()])
+        for name, url in models:
+            items.append((request.fa_url(name), _(name), 'model_url'))
+        return items
 
     def index(self, *args, **kwargs):
         kwargs['pager'] = ''
@@ -19,11 +45,11 @@ class ModelView(Base):
 
     def get_page(self, **kwargs):
         if 'collection' not in kwargs:
-            model = self.get_model()
-            params = self.request.params
-            session = self.Session()
-            fields = model._sa_class_manager
-            collection = session.query(model)
+            request = self.request
+            params = request.params
+            query = request.session_factory.query(request.model_class)
+            collection = request.query_factory(request, query, id=None)
+            fields = request.model_class._sa_class_manager
             # FIXME: use id by default but should use pk field
             sidx = params.get('sidx', 'id').decode()
             if sidx and fields.has_key(sidx):
@@ -84,27 +110,45 @@ class ModelView(Base):
             metadata = dict(json=dumps(metadata))
             field.set(metadata=metadata)
 
-#def RelationRenderer(renderer=fields.SelectFieldRenderer, **jq_options):
-#    class Renderer(renderer):
-#        def render(self, *args, **kwargs):
-#            html = super(Renderer, self).render(*args, **kwargs)
-#            fk_class = self.field.relation_type()
-#            model_name = fk_class.__name__
-#            try:
-#                field_url = '%s.xhr?field=%s' % (model_url('model', id=fields._pk(self.field.model)), self.field.key)
-#            except GenerationException:
-#                field_url = '%s.xhr?field=%s' % (model_url('new_model'), self.field.key)
-#            new_url = '%s.xhr' % model_url('new_model', model_name=model_name)
-#            html += literal('<button class="new_relation_item" alt="%s" href="%s">New %s</button>' % (
-#                                                field_url, new_url, model_name))
-#            return html
-#    return renderers.jQueryFieldRenderer('relation', show_input=True, renderer=Renderer, **jq_options)
+def markup_parser(request):
+    resp = Response()
+    # markup preview helper
+    resp.charset = 'utf-8'
+    markup = request.GET.get('markup', 'textile')
+    value = request.POST.get('data', '')
+    if markup == 'textile':
+        value = textile(value)
+    elif markup == 'markdown':
+        value = markdown.markdown(value)
+    elif markup == 'bbcode':
+        value = render_bbcode(value)
+    if isinstance(value, unicode):
+        value = value.encode('utf-8')
+    resp.body = value
+    return resp
 
-#@renderers.alias(RelationRenderer, renderer=renderers.checkboxset())
-#def relations(): pass
+def RelationRenderer(renderer=fields.SelectFieldRenderer, **jq_options):
+    class Renderer(renderer):
+        def render(self, *args, **kwargs):
+            html = super(Renderer, self).render(*args, **kwargs)
+            pk = fields._pk(self.field.model)
+            model_name = self.field.parent.model.__class__.__name__
+            request = self.request
+            if pk:
+                field_url = request.fa_url(model_name, 'xhr', pk, field=self.field.key)
+            else:
+                field_url = request.fa_url(model_name, 'xhr', field=self.field.key)
+            fk_class = self.field.relation_type()
+            model_name = fk_class.__name__
+            new_url = request.fa_url(model_name, 'xhr', 'new')
+            html += literal('<button class="new_relation_item" alt="%s" href="%s">New %s</button>' % (
+                                                field_url, new_url, model_name))
+            return html
+    return renderers.jQueryFieldRenderer('relation', show_input=True, renderer=Renderer, **jq_options)
 
-#@renderers.alias(RelationRenderer, renderer=renderers.radioset())
-#def relation(): pass
+@renderers.alias(RelationRenderer, renderer=renderers.checkboxset())
+def relations(): pass
 
-#renderers.default_renderers['dropdown'] = RelationRenderer()
+@renderers.alias(RelationRenderer, renderer=renderers.radioset())
+def relation(): pass
 
