@@ -19,6 +19,10 @@
         #header { height: 2em; font-size:1.5em; }
         #header div { font-size:1.5em; }
         #header a { font-size:1em; }
+        ul#languages {float:right;}
+        ul#languages li {display: inline;}
+        ul#languages a {text-decoration:none; color: grey;}
+        ul#languages a.lang_active {text-decoration:underline;}
         div.breadcrumb {float:right;width:20%;margin-right:20px;}
         div.breadcrumb a {text-decoration:none;}
         h1 a.ui-selectmenu {height:1em;}
@@ -41,7 +45,7 @@
           <div tal:condition="request.model_name">
             <a tal:attributes="href request.fa_url(model_name)" tal:content="model_name" />
             <span tal:condition="request.model_id and hasattr(request.model_class, '__unicode__')"
-                  tal:replace="request.model_instance"/>
+                  tal:replace="unicode(request.model_instance)"/>
             <span tal:condition="request.model_id and not hasattr(request.model_class, '__unicode__')"
                   tal:replace="request.model_id"/>
           </div>
@@ -49,7 +53,7 @@
         </h1>
         <div metal:define-slot="main">
         </div>
-        <ul tal:condition="request" tal:content="structure request.language_actions.render(request)" />
+        <ul id="languages" tal:condition="request" tal:content="structure request.language_actions.render(request)" />
         <a style="display:none" class="root_url" tal:attributes="href request.fa_url()"></a>
       </div>
     </body>

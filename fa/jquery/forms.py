@@ -68,15 +68,8 @@ class MultiFieldSet(object):
                 fields.append((f.key, f.model_value))
         return dict(fields)
 
-    #def _get_bound_pk(self):
-    #    for fs in self._fs:
-    #        return fs._bound_pk
-
-    #def _set_bound_pk(self, value):
-    #    for fs in self._fs:
-    #        fs._bound_pk = value
-
     _bound_pk = MultiFieldSetProperty('_bound_pk')
+    _request = MultiFieldSetProperty('_request')
     focus = MultiFieldSetProperty('focus')
     engine = MultiFieldSetProperty('engine')
     readonly = MultiFieldSetProperty('readonly')
