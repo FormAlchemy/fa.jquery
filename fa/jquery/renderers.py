@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import os
 from simplejson import dumps
 from webhelpers.html import literal
 from webhelpers.html.tools import strip_tags
@@ -7,14 +6,11 @@ from webhelpers import text
 from formalchemy import helpers as h
 from formalchemy import types
 from formalchemy import fields
-from formalchemy import config
 from postmarkup import render_bbcode
 from textile import textile as render_textile
 from markdown import markdown as render_markdown
 
-from utils import TemplateEngine
 from utils import templates
-from utils import load_datas
 from utils import url
 
 __doc__ = """
@@ -100,7 +96,7 @@ def jQueryFieldRenderer(plugin, show_input=False, tag='div', renderer=fields.Tex
                 resources=[url(r, prefix=self.resources_prefix, request=request) for r in resources],
             )
             try:
-                self.update_options(options)
+                self.update_options(options, kwargs)
             except AttributeError:
                 pass
             try:
@@ -459,7 +455,7 @@ def RichTextFieldRenderer(use='tinymce', resources_prefix=None, **jq_options):
     class Renderer(fields.TextAreaFieldRenderer):
         markup = use
 
-        def update_options(self, options):
+        def update_options(self, options, kwargs):
             request = self.request
             if request and hasattr(request, 'route_url'):
                 options['previewParserPath'] = '%s?markup=%s' % (request.route_url('markup_parser'), use)
