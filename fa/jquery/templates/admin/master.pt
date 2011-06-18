@@ -35,7 +35,7 @@
       <div id="content" class="ui-admin ui-widget">
         <h1 id="header" class="ui-widget-header ui-corner-all">
           <div class="breadcrumb" tal:condition="request.model_name and breadcrumb">
-            <select id="models" style="display:none;">
+            <select id="models" style="display:none;" i18n:domain="fa_jquery">
             <tal:repeat tal:repeat="item breadcrumb">
               <option tal:attributes="value python:item[0];class python: item[2]"
                 tal:content="python:item[1]" />
