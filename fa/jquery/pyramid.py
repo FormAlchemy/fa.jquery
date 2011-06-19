@@ -15,7 +15,7 @@ from webhelpers.html import literal
 from simplejson import dumps
 
 from js.jqgrid import jqgrid
-from js.jqueryui import smoothness, jqueryui
+from js.jqueryui import smoothness, jqueryui, jqueryui_i18n
 from js.jqueryui_selectmenu import selectmenu
 from fa.jquery.fanstatic_resources import fa, fa_jqgrid
 
@@ -168,6 +168,7 @@ def relation(): pass
 def add_always_required_resources(event):
     smoothness.need()
     jqueryui.need()
+    jqueryui_i18n.need()
     selectmenu.need()
     fa.need()
     event['libraries'] = {'fa_jqgrid': fa_jqgrid}
