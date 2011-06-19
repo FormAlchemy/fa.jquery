@@ -1,15 +1,27 @@
 # -*- coding: utf-8 -*-
+from formalchemy import fields
+from formalchemy import fatypes
+
 from pyramid_formalchemy.views import ModelView as Base
 from pyramid_formalchemy.utils import TemplateEngine
+
 import markdown
 from textile import textile
 from postmarkup import render_bbcode
+
 from webob import Response
-from fa.jquery import utils
 from webhelpers.html import literal
-from formalchemy import fields
-from formalchemy import fatypes
 from simplejson import dumps
+
+from js.jqgrid import jqgrid
+from js.jqueryui import smoothness, jqueryui
+from js.jqueryui_selectmenu import selectmenu
+from fa.jquery.fanstatic_resources import fa, fa_jqgrid
+
+subscriber = __import__("pyramid").events.subscriber
+BeforeRender = __import__("pyramid").events.BeforeRender
+
+from fa.jquery import utils
 import renderers
 import logging
 
@@ -148,4 +160,13 @@ def relations(): pass
 
 @renderers.alias(RelationRenderer, renderer=renderers.radioset())
 def relation(): pass
+
+@subscriber(BeforeRender)
+def add_always_required_resources(event):
+    smoothness.need()
+    jqueryui.need()
+    selectmenu.need()
+    fa.need()
+    event['libraries'] = {'fa_jqgrid': fa_jqgrid}
+
 

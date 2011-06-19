@@ -11,6 +11,10 @@ from formalchemy import config
 from postmarkup import render_bbcode
 from textile import textile as render_textile
 from markdown import markdown as render_markdown
+from js.tinymce import tinymce
+from js.jquery_markitup import markitup
+from fa.jquery import fanstatic_resources
+
 
 from utils import TemplateEngine
 from utils import templates
@@ -429,8 +433,8 @@ def RichTextFieldRenderer(use='tinymce', resources_prefix=None, **jq_options):
     """
     plugin_name = use
     defaults = {}
+
     if use == 'tinymce':
-        resources = ['tiny_mce/tiny_mce.js', 'tiny_mce/jquery.tinymce.js']
         defaults['theme'] = 'advanced'
         defaults['theme_advanced_toolbar_location'] = "top"
         defaults['theme_advanced_toolbar_align'] = "left"
@@ -444,13 +448,6 @@ def RichTextFieldRenderer(use='tinymce', resources_prefix=None, **jq_options):
         defaults['resizeHandle'] = True
         defaults['previewAutoRefresh'] = True
         defaults['previewParserPath'] = url('markup_parser.html?markup=%s' % use)
-        resources = ['markitup/jquery.markitup.pack.js',
-                     'markitup/skins/simple/style.css',
-                     'markitup/sets/%s/style.css' % use,
-                     'markitup/sets/%s/set.js' % use]
-
-    else:
-        resources = []
 
     for k, v in defaults.items():
         if k not in jq_options:
@@ -458,6 +455,14 @@ def RichTextFieldRenderer(use='tinymce', resources_prefix=None, **jq_options):
 
     class Renderer(fields.TextAreaFieldRenderer):
         markup = use
+
+        def render(self, *args, **kwargs):
+            if use == 'tinymce':
+                tinymce.need()
+            elif use in ('textile', 'bbcode', 'markdown'):
+                getattr(fanstatic_resources, "markitup_%s_set" % use).need()
+                markitup.need()
+            return super(Renderer, self).render(*args, **kwargs)
 
         def update_options(self, options):
             request = self.request
@@ -482,7 +487,7 @@ def RichTextFieldRenderer(use='tinymce', resources_prefix=None, **jq_options):
                 return meth()
             return fields.TextAreaFieldRenderer.render_readonly(self, **kwargs)
     return jQueryFieldRenderer(plugin_name, show_input=True, renderer=Renderer,
-                               resources_prefix=resources_prefix, resources=resources, **jq_options)
+                               **jq_options)
 
 @alias(RichTextFieldRenderer, use='tinymce')
 def tinymce(): pass

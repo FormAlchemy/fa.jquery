@@ -2,10 +2,7 @@
   <head>
     <script metal:fill-slot="javascript">
       var USE_POPUP = ${request.registry.settings.get('fa.use_popup') and 'true' or 'false'};
-      jQuery.fa.add_resource("${request.static_url('fa.jquery:jquery-ui/jqgrid/js/i18n/grid.locale-en.js')}");
-      jQuery.fa.add_resource("${request.static_url('fa.jquery:jquery-ui/jqgrid/js/jquery.jqGrid.min.js')}");
-      jQuery.fa.add_resource("${request.static_url('fa.jquery:jquery-ui/jqgrid/js/fa.jqgrid.js')}");
-      jQuery.fa.add_resource("${request.static_url('fa.jquery:jquery-ui/jqgrid/css/ui.jqgrid.css')}");
+      ${libraries['fa_jqgrid'].need()}
     </script>
   </head>
   <body>

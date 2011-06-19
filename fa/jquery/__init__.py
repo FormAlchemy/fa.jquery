@@ -37,7 +37,6 @@ except ImportError:
     pass
 
 def includeme(config):
-    config.add_static_view('jquery', 'fa.jquery:jquery-ui')
     config.override_asset(
         to_override="pyramid_formalchemy:templates/admin/",
         override_with="fa.jquery:templates/admin/")
@@ -47,5 +46,5 @@ def includeme(config):
 
     config.add_route('markup_parser', '/markup_parser.html',
                       view='fa.jquery.pyramid.markup_parser',
-                    )
-
+                     )
+    config.scan("fa.jquery.pyramid")

@@ -36,6 +36,13 @@ setup(name='fa.jquery',
           'textile',
           'postmarkup',
           'markdown',
+          'fanstatic',
+          'js.jquery',
+          'js.jquery_markitup',
+          'js.jqueryui',
+          'js.jqueryui_selectmenu',
+          'js.tinymce',
+          'js.jqgrid
           'mako',
       ],
       entry_points="""
@@ -44,5 +51,7 @@ setup(name='fa.jquery',
       test = fa.jquery.app:make_app
       [paste.filter_factory]
       demo = fa.jquery.app:make_demo
+      [fanstatic.libraries]
+      fa = fa.jquery.fanstatic_resources:fa_library
       """,
       )

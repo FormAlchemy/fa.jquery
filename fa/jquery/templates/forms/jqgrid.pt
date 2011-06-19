@@ -4,10 +4,7 @@
       ">
 <table tal:attributes="id dom_id"></table> <div tal:attributes="id string:${dom_id}_jqgrid"></div> 
 <script>
-jQuery.fa.add_resource("${request.static_url('fa.jquery:jquery-ui/jqgrid/js/i18n/grid.locale-en.js')}");
-jQuery.fa.add_resource("${request.static_url('fa.jquery:jquery-ui/jqgrid/js/jquery.jqGrid.min.js')}");
-jQuery.fa.add_resource("${request.static_url('fa.jquery:jquery-ui/jqgrid/js/fa.jqgrid.js')}");
-jQuery.fa.add_resource("${request.static_url('fa.jquery:jquery-ui/jqgrid/css/ui.jqgrid.css')}");
+${libraries['fa_jqgrid'].need()}
 </script>
 <script>
 var init_grid = function() {
