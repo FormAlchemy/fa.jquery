@@ -100,7 +100,7 @@ def jQueryFieldRenderer(plugin, show_input=False, tag='div', renderer=fields.Tex
                 resources=[url(r, prefix=self.resources_prefix, request=request) for r in resources],
             )
             try:
-                self.update_options(options, kwargs)
+                self.update_options(options, **kwargs)
             except AttributeError:
                 pass
             try:
@@ -466,7 +466,7 @@ def RichTextFieldRenderer(use='tinymce', resources_prefix=None, **jq_options):
                 markitup.need()
             return super(Renderer, self).render(*args, **kwargs)
 
-        def update_options(self, options, kwargs):
+        def update_options(self, options, **kwargs):
             request = self.request
             if request and hasattr(request, 'route_url'):
                 options['previewParserPath'] = '%s?markup=%s' % (request.route_url('markup_parser'), use)
