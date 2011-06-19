@@ -1,9 +1,11 @@
 <html metal:define-macro="master" xmlns:i18n="http://xml.zope.org/namespaces/i18n">
     <head>
-      <title tal:content="request.model_name or 'Models index'"></title>
+      <title tal:condition="request.model_name" tal:content="request.model_name"></title>
+      <title tal:condition="request.model_name is None" i18n:domain="fa_jquery" i18n:translate="">Models index</title>
       <link rel="stylesheet" tal:attributes="href request.static_url('fa.jquery:jquery-ui/css/smoothness/jquery-ui-1.8.8.custom.css')" />
       <link rel="stylesheet" tal:attributes="href request.static_url('fa.jquery:jquery-ui/fa.jquery.min.css')" />
       <script type="text/javascript" tal:attributes="src request.static_url('fa.jquery:jquery-ui/fa.jquery.min.js')"></script>
+      <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/i18n/jquery-ui-i18n.min.js"></script>
       <script type="text/javascript" tal:attributes="src request.static_url('fa.jquery:jquery-ui/fa/jquery.pyramid_formalchemy.js')"></script>
       <script type="text/javascript">
         jQuery(document).ready(function() {
@@ -50,7 +52,7 @@
             <span tal:condition="request.model_id and not hasattr(request.model_class, '__unicode__')"
                   tal:replace="request.model_id"/>
           </div>
-          <div tal:condition="not request.model_name" i18n:domain="fa_jquery" i18n:translate="" tal:content="string:Models index">Models index</div>
+          <div tal:condition="not request.model_name" i18n:domain="fa_jquery" i18n:translate="">Models index</div>
         </h1>
         <div metal:define-slot="main">
         </div>

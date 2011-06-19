@@ -97,7 +97,14 @@ $.extend({
 
 $.fa.extend({
   datepicker: function(field, plugin, options) {
-    field.datepicker(options);
+    var opts = {};
+    var val = field.val();
+    if (options['lang'])
+        field.datepicker($.datepicker.regional[options['lang']]);
+    else
+        field.datepicker();
+    field.datepicker('option', {dateFormat: options['dateFormat']});
+    field.val(val);
   },
   autocomplete: function(field, plugin, options) {
     options['select'] = function(event, ui) {

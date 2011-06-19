@@ -236,10 +236,16 @@ class DateFieldRenderer(fields.DateFieldRenderer):
     def render(self, **kwargs):
         value = self.value or ''
         value = value and value.split()[0] or ''
+        options = self.jq_options.copy()
+        request = self.request
+        if request is not None and hasattr(request, 'cookies'):
+            lang = request.cookies.get('_LOCALE_', None)
+            if lang:
+                options['lang'] = lang
         kwargs.update(
             name=self.name,
             value=value,
-            jq_options=dumps(self.jq_options),
+            jq_options=dumps(options),
         )
         return literal(self.template.render(**kwargs))
 
