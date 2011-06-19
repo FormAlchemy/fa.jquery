@@ -1,5 +1,4 @@
 from setuptools import setup, find_packages
-import os
 
 version = '0.9.3'
 
@@ -26,6 +25,10 @@ setup(name='fa.jquery',
       license='MIT',
       packages=find_packages(exclude=['ez_setup']),
       namespace_packages=['fa'],
+      message_extractors = { 'fa/jquery': [
+             ('*.py', 'lingua_python', None ),
+             ('templates/**.pt', 'chameleon_xml', None ),
+             ]},
       include_package_data=True,
       zip_safe=False,
       install_requires=[
@@ -44,6 +47,7 @@ setup(name='fa.jquery',
           'js.tinymce',
           'js.jqgrid
           'mako',
+          'Babel',
       ],
       entry_points="""
       [paste.app_factory]

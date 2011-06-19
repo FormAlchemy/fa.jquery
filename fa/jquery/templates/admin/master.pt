@@ -1,6 +1,7 @@
-<html metal:define-macro="master">
+<html metal:define-macro="master" xmlns:i18n="http://xml.zope.org/namespaces/i18n">
     <head>
-      <title tal:content="request.model_name or 'Models index'"></title>
+      <title tal:condition="request.model_name" tal:content="request.model_name"></title>
+      <title tal:condition="request.model_name is None" i18n:domain="fa_jquery" i18n:translate="">Models index</title>
       <script type="text/javascript">
         jQuery(document).ready(function() {
           $('select#models')
@@ -16,6 +17,10 @@
         #header { height: 2em; font-size:1.5em; }
         #header div { font-size:1.5em; }
         #header a { font-size:1em; }
+        ul#languages {float:right;}
+        ul#languages li {display: inline;}
+        ul#languages a {text-decoration:none; color: grey;}
+        ul#languages a.lang_active {text-decoration:underline;}
         div.breadcrumb {float:right;width:20%;margin-right:20px;}
         div.breadcrumb a {text-decoration:none;}
         h1 a.ui-selectmenu {height:1em;}
@@ -28,7 +33,7 @@
       <div id="content" class="ui-admin ui-widget">
         <h1 id="header" class="ui-widget-header ui-corner-all">
           <div class="breadcrumb" tal:condition="request.model_name and breadcrumb">
-            <select id="models" style="display:none;">
+            <select id="models" style="display:none;" i18n:domain="fa_jquery">
             <tal:repeat tal:repeat="item breadcrumb">
               <option tal:attributes="value python:item[0];class python: item[2]"
                 tal:content="python:item[1]" />
@@ -36,16 +41,17 @@
             </select>
           </div>
           <div tal:condition="request.model_name">
-            <a tal:attributes="href request.fa_url(request.model_name)" tal:content="request.model_name" />
+            <a tal:attributes="href request.fa_url(model_name)" tal:content="model_name" />
             <span tal:condition="request.model_id and hasattr(request.model_class, '__unicode__')"
-                  tal:replace="request.model_instance"/>
+                  tal:replace="unicode(request.model_instance)"/>
             <span tal:condition="request.model_id and not hasattr(request.model_class, '__unicode__')"
                   tal:replace="request.model_id"/>
           </div>
-          <div tal:condition="not request.model_name">Models index</div>
+          <div tal:condition="not request.model_name" i18n:domain="fa_jquery" i18n:translate="">Models index</div>
         </h1>
         <div metal:define-slot="main">
         </div>
+        <ul id="languages" tal:condition="request" tal:content="structure request.language_actions.render(request)" />
         <a style="display:none" class="root_url" tal:attributes="href request.fa_url()"></a>
       </div>
     </body>

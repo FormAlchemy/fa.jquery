@@ -2,8 +2,9 @@
 from formalchemy import fields
 from formalchemy import fatypes
 
-from pyramid_formalchemy.views import ModelView as Base
+from pyramid_formalchemy.i18n import TranslationStringFactory
 from pyramid_formalchemy.utils import TemplateEngine
+from pyramid_formalchemy.views import ModelView as Base
 
 import markdown
 from textile import textile
@@ -25,6 +26,8 @@ from fa.jquery import utils
 import renderers
 import logging
 
+_ = TranslationStringFactory('fa_jquery')
+
 class ModelView(Base):
 
     engine = TemplateEngine()
@@ -39,13 +42,13 @@ class ModelView(Base):
             return []
 
         items = [
-            ('', 'Jump to ...', ''),
-            (request.fa_url(), 'Models index', ''),
+            ('', _('Jump to ...'), ''),
+            (request.fa_url(), _('Models index'), ''),
           ]
 
         models = sorted([v for v in models.items()])
         for name, url in models:
-            items.append((request.fa_url(name), name, 'model_url'))
+            items.append((request.fa_url(name), _(name), 'model_url'))
         return items
 
     def index(self, *args, **kwargs):

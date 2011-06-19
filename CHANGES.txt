@@ -2,6 +2,7 @@
 -----
 
 Small change to work with pyramid_formalchemy 0.2
+add italian translations [amleczko]
 
 0.9.1
 -----
