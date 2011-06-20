@@ -2,6 +2,7 @@
 from pyramid_formalchemy.views import ModelView as Base
 from pyramid_formalchemy.utils import TemplateEngine
 from pyramid_formalchemy.i18n import TranslationStringFactory
+from pyramid_formalchemy import actions
 import markdown
 from textile import textile
 from postmarkup import render_bbcode
@@ -20,23 +21,25 @@ class ModelView(Base):
 
     engine = TemplateEngine()
 
-    def breadcrumb(self, fs=None, **kwargs):
+    def breadcrumb(self, **kwargs):
         """return items to build the breadcrumb"""
         request = self.request
-        model_name = request.model_name
-        models = self.models(json=True)
+        if request.model_name is None:
+            return actions.Actions()
+
+        models = self.models(i18n=True, json=True)
 
         if len(models) == 1:
-            return []
+            return actions.Actions()
 
-        items = [
-            ('', _('Jump to ...'), ''),
-            (request.fa_url(), _('Models index'), ''),
-          ]
+        items = actions.Actions(
+            actions.Option('jump_to', content=_('Jump to ...')),
+            actions.Option('model_index', content=_('Models index'), value='request.fa_url()'),
+          )
 
         models = sorted([v for v in models.items()])
         for name, url in models:
-            items.append((request.fa_url(name), _(name), 'model_url'))
+            items.append(actions.Option('%s_listing' % name.lower(), content=name, value='string:%s' % url))
         return items
 
     def index(self, *args, **kwargs):
@@ -108,6 +111,7 @@ class ModelView(Base):
             if metadata['search']:
                 metadata['searchoptions'] = searchoptions
             metadata = dict(json=dumps(metadata))
+            metadata['label'] = dumps(field.label())
             field.set(metadata=metadata)
 
 def markup_parser(request):

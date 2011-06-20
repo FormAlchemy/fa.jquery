@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from formalchemy.i18n import get_translator
 from formalchemy.fields import _pk
 from simplejson import dumps
 from utils import templates
@@ -173,6 +174,7 @@ class MultiFieldSet(object):
                                     rid=str(random())[2:],
                                     fieldsets=fieldsets,
                                     options=dumps(options),
+                                    F_=get_translator(request=self._request),
                                     **kwargs)
 
 

@@ -11,7 +11,7 @@
   <body>
     <div metal:fill-slot="main">
       <div tal:content="structure fs.render(renderer='fa.jquery:templates/forms/jqgrid.pt', request=request)" />
-      <div class="fa_controls" tal:content="structure request.buttons.render(request)">
+      <div class="fa_controls" tal:content="structure actions.buttons(request)">
       </div>
     </div>
   </body>

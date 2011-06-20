@@ -1,17 +1,17 @@
 registry = dict(version=0)
 def bind():
     from cPickle import loads as _loads
+    _attrs_4365408720 = _loads('(dp1\nVname\np2\nVnext\np3\nsVvalue\np4\nV\nsVtype\np5\nVhidden\np6\nsVid\np7\nVnext\np8\ns.')
     _lookup_attr = _loads('cchameleon.core.codegen\nlookup_attr\np1\n.')
     _init_scope = _loads('cchameleon.core.utils\necontext\np1\n.')
-    _attrs_4362773520 = _loads('(dp1\nVaction\np2\nV\nsVmethod\np3\nVPOST\np4\nsVenctype\np5\nVmultipart/form-data\np6\ns.')
-    _attrs_4362773776 = _loads('(dp1\nVname\np2\nVnext\np3\nsVvalue\np4\nV\nsVtype\np5\nVhidden\np6\nsVid\np7\nVnext\np8\ns.')
-    _attrs_4362773712 = _loads('(dp1\nVname\np2\nV_method\np3\nsVtype\np4\nVhidden\np5\nsVvalue\np6\nVPUT\np7\ns.')
+    _attrs_4365409424 = _loads('(dp1\nVclass\np2\nVfa_controls\np3\ns.')
+    _attrs_4365406672 = _loads('(dp1\n.')
+    _attrs_4365407632 = _loads('(dp1\n.')
+    _attrs_4365408080 = _loads('(dp1\nVname\np2\nV_method\np3\nsVtype\np4\nVhidden\np5\nsVvalue\np6\nVPUT\np7\ns.')
     _init_stream = _loads('cchameleon.core.generation\ninitialize_stream\np1\n.')
-    _attrs_4362773392 = _loads('(dp1\n.')
     _init_default = _loads('cchameleon.core.generation\ninitialize_default\np1\n.')
-    _attrs_4362773648 = _loads('(dp1\n.')
+    _attrs_4365407056 = _loads('(dp1\nVaction\np2\nV\nsVmethod\np3\nVPOST\np4\nsVenctype\np5\nVmultipart/form-data\np6\ns.')
     _init_tal = _loads('cchameleon.core.generation\ninitialize_tal\np1\n.')
-    _attrs_4362773840 = _loads('(dp1\nVclass\np2\nVfa_controls\np3\ns.')
     def render(econtext, rcontext=None):
         macros = econtext.get('macros')
         _translate = econtext.get('_translate')
@@ -32,15 +32,15 @@ def bind():
         def _callback_main(econtext, _repeat, _out=_out, _write=_write, _domain=_domain, **_ignored):
             if _repeat:
                 repeat.update(_repeat)
-            attrs = _attrs_4362773392
+            attrs = _attrs_4365406672
             _write(u'<div>\n      ')
-            attrs = _attrs_4362773520
+            attrs = _attrs_4365407056
             u"''"
             _write(u'<form action="" method="POST" enctype="multipart/form-data">\n        ')
             _default.value = default = ''
             u'fs.render()'
             _content = _lookup_attr(econtext['fs'], 'render')()
-            attrs = _attrs_4362773648
+            attrs = _attrs_4365407632
             u'_content'
             _write(u'<div>')
             _tmp1 = _content
@@ -59,15 +59,15 @@ def bind():
                     _tmp = str(_tmp)
                 _write(_tmp)
             _write(u'</div>\n        ')
-            attrs = _attrs_4362773712
+            attrs = _attrs_4365408080
             _write(u'<input type="hidden" name="_method" value="PUT" />\n        ')
-            attrs = _attrs_4362773776
+            attrs = _attrs_4365408720
             u"u'\\n        '"
             _write(u'<input type="hidden" id="next" name="next" value="" />\n        ')
             _default.value = default = u'\n        '
-            u'request.buttons.render(request)'
-            _content = _lookup_attr(_lookup_attr(econtext['request'], 'buttons'), 'render')(econtext['request'])
-            attrs = _attrs_4362773840
+            u'actions.buttons(request)'
+            _content = _lookup_attr(econtext['actions'], 'buttons')(econtext['request'])
+            attrs = _attrs_4365409424
             u'_content'
             _write(u'<div class="fa_controls">')
             _tmp1 = _content

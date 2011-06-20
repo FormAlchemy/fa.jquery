@@ -5,7 +5,7 @@
         <div tal:content="structure fs.render()" />
         <input type="hidden" name="_method" value="PUT" />
         <input type="hidden" id="next" name="next" value="" />
-        <div class="fa_controls" tal:content="structure request.buttons.render(request)">
+        <div class="fa_controls" tal:content="structure actions.buttons(request)">
         </div>
       </form>
     </div>

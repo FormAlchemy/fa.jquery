@@ -4,12 +4,12 @@ def bind():
     _lookup_attr = _loads('cchameleon.core.codegen\nlookup_attr\np1\n.')
     _init_scope = _loads('cchameleon.core.utils\necontext\np1\n.')
     _re_amp = _loads("cre\n_compile\np1\n(S'&(?!([A-Za-z]+|#[0-9]+);)'\np2\nI0\ntRp3\n.")
-    _attrs_4365941200 = _loads('(dp1\n.')
+    _attrs_4362992784 = _loads('(dp1\n.')
+    _attrs_4362992848 = _loads('(dp1\nVclass\np2\nVfa_controls\np3\ns.')
+    _attrs_4362992528 = _loads('(dp1\n.')
+    _attrs_4362992656 = _loads('(dp1\n.')
     _init_stream = _loads('cchameleon.core.generation\ninitialize_stream\np1\n.')
-    _attrs_4365941520 = _loads('(dp1\nVclass\np2\nVfa_controls\np3\ns.')
     _init_default = _loads('cchameleon.core.generation\ninitialize_default\np1\n.')
-    _attrs_4365941456 = _loads('(dp1\n.')
-    _attrs_4365941328 = _loads('(dp1\n.')
     _init_tal = _loads('cchameleon.core.generation\ninitialize_tal\np1\n.')
     def render(econtext, rcontext=None):
         macros = econtext.get('macros')
@@ -31,7 +31,7 @@ def bind():
         def _callback_javascript(econtext, _repeat, _out=_out, _write=_write, _domain=_domain, **_ignored):
             if _repeat:
                 repeat.update(_repeat)
-            attrs = _attrs_4365941200
+            attrs = _attrs_4362992528
             u"request.registry.settings.get('fa.use_popup') and 'true' or 'false'"
             _write(u'<script>\n      var USE_POPUP = ')
             _tmp1 = ((_lookup_attr(_lookup_attr(_lookup_attr(econtext['request'], 'registry'), 'settings'), 'get')('fa.use_popup') and 'true') or 'false')
@@ -166,13 +166,13 @@ def bind():
         def _callback_main(econtext, _repeat, _out=_out, _write=_write, _domain=_domain, **_ignored):
             if _repeat:
                 repeat.update(_repeat)
-            attrs = _attrs_4365941328
+            attrs = _attrs_4362992656
             u"''"
             _write(u'<div>\n      ')
             _default.value = default = ''
             u"fs.render(renderer='fa.jquery:templates/forms/jqgrid.pt', request=request)"
             _content = _lookup_attr(econtext['fs'], 'render')(renderer='fa.jquery:templates/forms/jqgrid.pt', request=econtext['request'])
-            attrs = _attrs_4365941456
+            attrs = _attrs_4362992784
             u'_content'
             _write(u'<div>')
             _tmp1 = _content
@@ -193,9 +193,9 @@ def bind():
             u"u'\\n      '"
             _write(u'</div>\n      ')
             _default.value = default = u'\n      '
-            u'request.buttons.render(request)'
-            _content = _lookup_attr(_lookup_attr(econtext['request'], 'buttons'), 'render')(econtext['request'])
-            attrs = _attrs_4365941520
+            u'actions.buttons(request)'
+            _content = _lookup_attr(econtext['actions'], 'buttons')(econtext['request'])
+            attrs = _attrs_4362992848
             u'_content'
             _write(u'<div class="fa_controls">')
             _tmp1 = _content

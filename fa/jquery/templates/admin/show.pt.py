@@ -3,11 +3,11 @@ def bind():
     from cPickle import loads as _loads
     _lookup_attr = _loads('cchameleon.core.codegen\nlookup_attr\np1\n.')
     _init_scope = _loads('cchameleon.core.utils\necontext\np1\n.')
-    _attrs_4367219984 = _loads('(dp1\nVclass\np2\nVfa_controls\np3\ns.')
-    _attrs_4367217936 = _loads('(dp1\n.')
+    _attrs_4365318992 = _loads('(dp1\n.')
+    _attrs_4365317968 = _loads('(dp1\n.')
     _init_stream = _loads('cchameleon.core.generation\ninitialize_stream\np1\n.')
+    _attrs_4365318544 = _loads('(dp1\nVclass\np2\nVfa_controls\np3\ns.')
     _init_default = _loads('cchameleon.core.generation\ninitialize_default\np1\n.')
-    _attrs_4367220112 = _loads('(dp1\n.')
     _init_tal = _loads('cchameleon.core.generation\ninitialize_tal\np1\n.')
     def render(econtext, rcontext=None):
         macros = econtext.get('macros')
@@ -29,13 +29,13 @@ def bind():
         def _callback_main(econtext, _repeat, _out=_out, _write=_write, _domain=_domain, **_ignored):
             if _repeat:
                 repeat.update(_repeat)
-            attrs = _attrs_4367217936
+            attrs = _attrs_4365317968
             u"''"
             _write(u'<div>\n      ')
             _default.value = default = ''
             u'fs.render()'
             _content = _lookup_attr(econtext['fs'], 'render')()
-            attrs = _attrs_4367220112
+            attrs = _attrs_4365318992
             u'_content'
             _write(u'<table>')
             _tmp1 = _content
@@ -56,9 +56,9 @@ def bind():
             u"u'\\n      '"
             _write(u'</table>\n      ')
             _default.value = default = u'\n      '
-            u'request.buttons.render(request)'
-            _content = _lookup_attr(_lookup_attr(econtext['request'], 'buttons'), 'render')(econtext['request'])
-            attrs = _attrs_4367219984
+            u'actions.buttons(request)'
+            _content = _lookup_attr(econtext['actions'], 'buttons')(econtext['request'])
+            attrs = _attrs_4365318544
             u'_content'
             _write(u'<div class="fa_controls">')
             _tmp1 = _content
