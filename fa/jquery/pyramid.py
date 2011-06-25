@@ -14,7 +14,7 @@ from webob import Response
 from webhelpers.html import literal
 from simplejson import dumps
 
-from js.jqgrid import jqgrid
+from js import jqgrid
 from js.jqueryui import smoothness, jqueryui, jqueryui_i18n
 from js.jqueryui_selectmenu import selectmenu
 from fa.jquery.fanstatic_resources import fa, fa_jqgrid
@@ -171,6 +171,14 @@ def add_always_required_resources(event):
     jqueryui_i18n.need()
     selectmenu.need()
     fa.need()
-    event['libraries'] = {'fa_jqgrid': fa_jqgrid}
+    class LanguageSelector (object):
+        def needFor(self, request):
+            lang = getattr(request, 'cookies', {}).get('_LOCALE_', 'en')
+            needed_resource = getattr(jqgrid, 'jqgrid_i18n_%s' % lang,
+                                      jqgrid.jqgrid_i18n_en)
+            needed_resource.need()
+        
+    event['libraries'] = {'fa_jqgrid': fa_jqgrid,
+                          'jqgrid_lang': LanguageSelector()}
 
 
