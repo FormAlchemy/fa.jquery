@@ -45,7 +45,7 @@ setup(name='fa.jquery',
           'js.jqueryui',
           'js.jqueryui_selectmenu',
           'js.tinymce',
-          'js.jqgrid
+          'js.jqgrid',
           'mako',
           'Babel',
       ],
