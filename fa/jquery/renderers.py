@@ -9,7 +9,7 @@ from formalchemy import fields
 from postmarkup import render_bbcode
 from textile import textile as render_textile
 from markdown import markdown as render_markdown
-from js.tinymce import tinymce
+from js.tinymce import tinymce as tinymce_js
 from js.jquery_markitup import markitup
 from fa.jquery import fanstatic_resources
 
@@ -364,6 +364,14 @@ def RichTextFieldRenderer(use='tinymce', resources_prefix=None, **jq_options):
         >>> from testing import fs
         >>> field = fs.rich.set(renderer=RichTextFieldRenderer(use='tinymce', theme='advanced'))
         >>> print field.render() #doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+        <textarea autocomplete="off" id="Sample--rich" name="Sample--rich"></textarea>
+        <div id="Sample--rich_tinymce"></div>
+        <script type="text/javascript">
+          jQuery.fa.tinymce('Sample--rich', {"theme_advanced_toolbar_location": "top", "theme_advanced_toolbar_align": "left", "theme": "advanced", "theme_advanced_statusbar_location": "bottom", "options": [], "theme_advanced_resizing": true});
+        </script>
+        
+        ...
+
         <script type="text/javascript">
           jQuery.fa.add_resource("/jquery/tiny_mce/tiny_mce.js");
           jQuery.fa.add_resource("/jquery/tiny_mce/jquery.tinymce.js");
@@ -380,10 +388,12 @@ def RichTextFieldRenderer(use='tinymce', resources_prefix=None, **jq_options):
 
         >>> field = fs.rich.set(renderer=RichTextFieldRenderer(use='tinymce', resources_prefix='/my_js'))
         >>> print field.render() #doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+        <textarea autocomplete="off" id="Sample--rich" name="Sample--rich"></textarea>
+        <div id="Sample--rich_tinymce"></div>
         <script type="text/javascript">
-          jQuery.fa.add_resource("/my_js/tiny_mce/tiny_mce.js");
-          jQuery.fa.add_resource("/my_js/tiny_mce/jquery.tinymce.js");
+          jQuery.fa.tinymce('Sample--rich', {"theme_advanced_toolbar_location": "top", "theme_advanced_toolbar_align": "left", "theme": "advanced", "theme_advanced_statusbar_location": "bottom", "options": [], "theme_advanced_resizing": true});
         </script>
+        
         ...
 
     There is also some aliases:
@@ -392,43 +402,41 @@ def RichTextFieldRenderer(use='tinymce', resources_prefix=None, **jq_options):
 
         >>> field = fs.rich.set(renderer=tinymce())
         >>> print field.render() #doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-        <script type="text/javascript">
-          jQuery.fa.add_resource("/jquery/tiny_mce/tiny_mce.js");
-          jQuery.fa.add_resource("/jquery/tiny_mce/jquery.tinymce.js");
-        </script>
         <textarea autocomplete="off" id="Sample--rich" name="Sample--rich"></textarea>
+        <div id="Sample--rich_tinymce"></div>
+        <script type="text/javascript">
+          jQuery.fa.tinymce('Sample--rich', {"theme_advanced_toolbar_location": "top", "theme_advanced_toolbar_align": "left", "theme": "advanced", "theme_advanced_statusbar_location": "bottom", "options": [], "theme_advanced_resizing": true});
+        </script>
+        
         ...
 
         >>> field = fs.rich.set(renderer=textile())
         >>> print field.render() #doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-        <script type="text/javascript">
-          jQuery.fa.add_resource("/jquery/markitup/jquery.markitup.pack.js");
-          jQuery.fa.add_resource("/jquery/markitup/skins/simple/style.css");
-          jQuery.fa.add_resource("/jquery/markitup/sets/textile/style.css");
-          jQuery.fa.add_resource("/jquery/markitup/sets/textile/set.js");
-        </script>
         <textarea autocomplete="off" id="Sample--rich" name="Sample--rich"></textarea>
-        ...
-        
+        <div id="Sample--rich_markitup"></div>
+        <script type="text/javascript">
+          jQuery.fa.markitup('Sample--rich', {"previewAutoRefresh": true, "nameSpace": "textile", "options": [], "resizeHandle": true, "previewParserPath": "/jquery/markup_parser.html?markup=textile"});
+        </script>
+
         >>> field = fs.rich.set(renderer=markdown())
         >>> print field.render() #doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+        <textarea autocomplete="off" id="Sample--rich" name="Sample--rich"></textarea>
+        <div id="Sample--rich_markitup"></div>
         <script type="text/javascript">
-          jQuery.fa.add_resource("/jquery/markitup/jquery.markitup.pack.js");
-          jQuery.fa.add_resource("/jquery/markitup/skins/simple/style.css");
-          jQuery.fa.add_resource("/jquery/markitup/sets/markdown/style.css");
-          jQuery.fa.add_resource("/jquery/markitup/sets/markdown/set.js");
+          jQuery.fa.markitup('Sample--rich', {"previewAutoRefresh": true, "nameSpace": "markdown", "options": [], "resizeHandle": true, "previewParserPath": "/jquery/markup_parser.html?markup=markdown"});
         </script>
+        
         <textarea autocomplete="off" id="Sample--rich" name="Sample--rich"></textarea>
         ...
 
         >>> field = fs.rich.set(renderer=bbcode())
         >>> print field.render() #doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+        <textarea autocomplete="off" id="Sample--rich" name="Sample--rich"></textarea>
+        <div id="Sample--rich_markitup"></div>
         <script type="text/javascript">
-          jQuery.fa.add_resource("/jquery/markitup/jquery.markitup.pack.js");
-          jQuery.fa.add_resource("/jquery/markitup/skins/simple/style.css");
-          jQuery.fa.add_resource("/jquery/markitup/sets/bbcode/style.css");
-          jQuery.fa.add_resource("/jquery/markitup/sets/bbcode/set.js");
+          jQuery.fa.markitup('Sample--rich', {"previewAutoRefresh": true, "nameSpace": "bbcode", "options": [], "resizeHandle": true, "previewParserPath": "/jquery/markup_parser.html?markup=bbcode"});
         </script>
+        
         <textarea autocomplete="off" id="Sample--rich" name="Sample--rich"></textarea>
         ...
 
@@ -460,7 +468,7 @@ def RichTextFieldRenderer(use='tinymce', resources_prefix=None, **jq_options):
 
         def render(self, *args, **kwargs):
             if use == 'tinymce':
-                tinymce.need()
+                tinymce_js.need()
             elif use in ('textile', 'bbcode', 'markdown'):
                 getattr(fanstatic_resources, "markitup_%s_set" % use).need()
                 markitup.need()
