@@ -5,6 +5,7 @@
 <table tal:attributes="id dom_id"></table> <div tal:attributes="id string:${dom_id}_jqgrid"></div> 
 <script>
 ${libraries['fa_jqgrid'].need()}
+${libraries['jqgrid_lang'].needFor(request)}
 </script>
 <script>
 var init_grid = function() {
