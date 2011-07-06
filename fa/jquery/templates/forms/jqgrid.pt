@@ -1,5 +1,5 @@
 <tal:define tal:define="dom_id string:grid_1;
-      colnames ','.join([repr(str(f.label())) for f in collection.render_fields.values()]);
+      colnames ','.join([f.metadata.get('label') for f in collection.render_fields.values()]);
       colmodels ','.join([f.metadata.get('json') for f in collection.render_fields.values()]);
       ">
 <table tal:attributes="id dom_id"></table> <div tal:attributes="id string:${dom_id}_jqgrid"></div> 
@@ -20,7 +20,7 @@ url.push(model);
 url = url.join('/');
 jQuery.fa.jqgrid("${dom_id}", {
     url: url+'?jqgrid=true',
-    colNames:['id' ${colnames and ', %s' % colnames or ''}],
+    colNames:['id' ${colnames and ', %s' % colnames or u''}],
     colModel:[
       {name:"id",index:"id", width:30, align:"center", searchoptions:{sopt:["eq"]}}
       ${colmodels and ', %s' % colmodels or ''}

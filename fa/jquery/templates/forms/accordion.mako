@@ -1,6 +1,6 @@
 <div id="${id}">
 %for fs in fieldsets:
-<h3><a href="#${fs['id']}">${fs['title']}</a></h3>
+<h3><a href="#${fs['id']}">${F_(fs['title'])}</a></h3>
 <div id="${fs['id']}">
 ${header % fs}
 ${fs['fs'].render()}

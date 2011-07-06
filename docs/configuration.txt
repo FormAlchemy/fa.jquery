@@ -29,9 +29,9 @@ And set your own css:
 
 You can update FormAlchemy's default_renderers to always use fa.jquery::
 
-    >>> from formalchemy import Fieldset
+    >>> from formalchemy import FieldSet
     >>> from fa.jquery import renderers as jquery
-    >>> Fieldset.default_renderers.update(jquery.default_renderers)
+    >>> FieldSet.default_renderers.update(jquery.default_renderers)
 
 You can change the template engine to have more friendly forms::
 

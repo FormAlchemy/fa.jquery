@@ -1,16 +1,16 @@
 registry = dict(version=0)
 def bind():
     from cPickle import loads as _loads
-    _attrs_4363310928 = _loads('(dp1\n.')
     _lookup_attr = _loads('cchameleon.core.codegen\nlookup_attr\np1\n.')
     _init_scope = _loads('cchameleon.core.utils\necontext\np1\n.')
     _re_amp = _loads("cre\n_compile\np1\n(S'&(?!([A-Za-z]+|#[0-9]+);)'\np2\nI0\ntRp3\n.")
-    _attrs_4363311760 = _loads('(dp1\nVclass\np2\nVfa_controls\np3\ns.')
-    _attrs_4363313104 = _loads('(dp1\nVmethod\np2\nVPOST\np3\nsVenctype\np4\nVmultipart/form-data\np5\ns.')
+    _attrs_4364380688 = _loads('(dp1\nVclass\np2\nVfa_controls\np3\ns.')
     _init_stream = _loads('cchameleon.core.generation\ninitialize_stream\np1\n.')
-    _attrs_4363312528 = _loads('(dp1\n.')
     _init_default = _loads('cchameleon.core.generation\ninitialize_default\np1\n.')
-    _attrs_4363312144 = _loads('(dp1\nVname\np2\nVnext\np3\nsVvalue\np4\nV\nsVtype\np5\nVhidden\np6\nsVid\np7\nVnext\np8\ns.')
+    _attrs_4364382032 = _loads('(dp1\n.')
+    _attrs_4364379408 = _loads('(dp1\nVmethod\np2\nVPOST\np3\nsVenctype\np4\nVmultipart/form-data\np5\ns.')
+    _attrs_4364380368 = _loads('(dp1\nVname\np2\nVnext\np3\nsVvalue\np4\nV\nsVtype\np5\nVhidden\np6\nsVid\np7\nVnext\np8\ns.')
+    _attrs_4364380048 = _loads('(dp1\n.')
     _init_tal = _loads('cchameleon.core.generation\ninitialize_tal\np1\n.')
     def render(econtext, rcontext=None):
         macros = econtext.get('macros')
@@ -32,9 +32,9 @@ def bind():
         def _callback_main(econtext, _repeat, _out=_out, _write=_write, _domain=_domain, **_ignored):
             if _repeat:
                 repeat.update(_repeat)
-            attrs = _attrs_4363310928
+            attrs = _attrs_4364382032
             _write(u'<div>\n      ')
-            attrs = _attrs_4363313104
+            attrs = _attrs_4364379408
             u'request.fa_url(request.model_name)'
             _write(u'<form method="POST" enctype="multipart/form-data"')
             _tmp1 = _lookup_attr(econtext['request'], 'fa_url')(_lookup_attr(econtext['request'], 'model_name'))
@@ -63,7 +63,7 @@ def bind():
             _default.value = default = ''
             u'fs.render()'
             _content = _lookup_attr(econtext['fs'], 'render')()
-            attrs = _attrs_4363312528
+            attrs = _attrs_4364380048
             u'_content'
             _write(u'<div>')
             _tmp1 = _content
@@ -82,13 +82,13 @@ def bind():
                     _tmp = str(_tmp)
                 _write(_tmp)
             _write(u'</div>\n        ')
-            attrs = _attrs_4363312144
+            attrs = _attrs_4364380368
             u"u'\\n        '"
             _write(u'<input type="hidden" id="next" name="next" value="" />\n        ')
             _default.value = default = u'\n        '
-            u'request.buttons.render(request)'
-            _content = _lookup_attr(_lookup_attr(econtext['request'], 'buttons'), 'render')(econtext['request'])
-            attrs = _attrs_4363311760
+            u'actions.buttons(request)'
+            _content = _lookup_attr(econtext['actions'], 'buttons')(econtext['request'])
+            attrs = _attrs_4364380688
             u'_content'
             _write(u'<div class="fa_controls">')
             _tmp1 = _content

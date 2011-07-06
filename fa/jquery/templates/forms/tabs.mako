@@ -1,7 +1,7 @@
 <div id="${id}_${rid}">
 <ul>
 %for fs in fieldsets:
-<li><a href="#${fs['id']}_${rid}">${fs['title']}</a></li>
+<li><a href="#${fs['id']}_${rid}">${F_(fs['title'])}</a></li>
 %endfor
 </ul>
 %for fs in fieldsets:

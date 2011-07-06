@@ -1,6 +1,6 @@
 <html metal:define-macro="master" xmlns:i18n="http://xml.zope.org/namespaces/i18n">
     <head>
-      <title tal:condition="request.model_name" tal:content="request.model_name"></title>
+      <title tal:condition="request.model_name" tal:content="model_class.plural"></title>
       <title tal:condition="request.model_name is None" i18n:domain="fa_jquery" i18n:translate="">Models index</title>
       <script type="text/javascript">
         jQuery(document).ready(function() {
@@ -33,15 +33,10 @@
       <div id="content" class="ui-admin ui-widget">
         <h1 id="header" class="ui-widget-header ui-corner-all">
           <div class="breadcrumb" tal:condition="request.model_name and breadcrumb">
-            <select id="models" style="display:none;" i18n:domain="fa_jquery">
-            <tal:repeat tal:repeat="item breadcrumb">
-              <option tal:attributes="value python:item[0];class python: item[2]"
-                tal:content="python:item[1]" />
-            </tal:repeat>
-            </select>
+            <select id="models" style="display:none;" tal:content="structure breadcrumb.render(request)" />
           </div>
           <div tal:condition="request.model_name">
-            <a tal:attributes="href request.fa_url(model_name)" tal:content="model_name" />
+            <a tal:attributes="href request.fa_url(model_name)" tal:content="model_class.plural" />
             <span tal:condition="request.model_id and hasattr(request.model_class, '__unicode__')"
                   tal:replace="unicode(request.model_instance)"/>
             <span tal:condition="request.model_id and not hasattr(request.model_class, '__unicode__')"
@@ -51,7 +46,7 @@
         </h1>
         <div metal:define-slot="main">
         </div>
-        <ul id="languages" tal:condition="request" tal:content="structure request.language_actions.render(request)" />
+        <ul id="languages" tal:condition="request" tal:content="structure actions.languages(request)" />
         <a style="display:none" class="root_url" tal:attributes="href request.fa_url()"></a>
       </div>
     </body>
