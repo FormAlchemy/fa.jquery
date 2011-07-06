@@ -1,31 +1,11 @@
 Configuration
 =============
 
-You need to load jQuery and jQuery.ui yourself but fa.jquery provide a small
-wsgi application to publish all js/css files needed if you use Paste.
+fa.jquery uses fanstatic for managing its needed resoures. All you need to do is to
+add the filter into the wsgi pipeline.
 
 .. literalinclude:: ../config.ini
    :language: ini
-
-
-If you want to include all features you need to add this to your html header:
-
-.. sourcecode:: html
-
-		<link type="text/css" href="/jquery/css/smoothness/jquery-ui-1.8.8.custom.css" rel="stylesheet" />	
-		<link type="text/css" href="/jquery/fa.jquery.min.css" rel="stylesheet" />	
-		<script type="text/javascript" src="/jquery/fa.jquery.min.js"></script>
-
-
-Else you can choose what to include:
-
-.. literalinclude:: ../fa/jquery/templates/head.mako
-   :language: html
-
-And set your own css:
-
-.. literalinclude:: ../fa/jquery/jquery-ui/fa/jquery.formalchemy.css
-   :language: css
 
 You can update FormAlchemy's default_renderers to always use fa.jquery::
 
