@@ -7,9 +7,7 @@ import markdown
 import glob
 import os
 
-jquery_ui = 'jquery-ui'
-
-dirname = os.path.join(os.path.dirname(__file__), jquery_ui)
+dirname = os.path.join(os.path.dirname(__file__), 'resources')
 
 def html_headers():
     return ''

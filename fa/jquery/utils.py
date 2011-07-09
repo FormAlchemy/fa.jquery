@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from formalchemy.templates import TemplateEngine as BaseTemplateEngine
 from formalchemy import types as fatypes
+from fa.jquery import fanstatic_resources
 from webhelpers.html import escape, literal
 from mako.lookup import TemplateLookup
 from simplejson import dumps
@@ -117,6 +118,7 @@ class Flash(object):
 
     """
     def __init__(self, level=logging.INFO, show_headers=True, options={}):
+        fanstatic_resources.jquery_jgrowl.need()
         self.messages = []
         self.level = level
         self.show_headers = show_headers

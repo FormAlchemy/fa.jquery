@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from fa.jquery import fanstatic_resources
+from js.jqueryui import smoothness
 from webob import Request, Response
 from renderers import templates
 from formalchemy import config
@@ -16,6 +18,8 @@ class Demo(object):
         self.headers = headers
 
     def __call__(self, environ, start_response):
+        fanstatic_resources.fa.need()
+        smoothness.need()
         req = Request(environ)
         req.flash = Flash()
         req.flash.info('info message display with Flash.render()')
@@ -71,10 +75,9 @@ class Demo(object):
                     accordion.sync()
 
             template = templates.get_template('index.mako')
-            head = templates.get_template('head.mako').render()
             body = template.render(req=req, fs=fs, tabs=tabs, accordion=accordion,
                                    headers=self.headers,
-                                   head=head, mim=req.GET.get('mim', False))
+                                   mim=req.GET.get('mim', False))
 
             if self.headers:
                 resp = Response()
@@ -82,8 +85,7 @@ class Demo(object):
             else:
                 req.method = 'get'
                 resp = req.get_response(self.app)
-                resp.body = resp.body.replace('</head>', head+'</head>')
-                resp.body = resp.body.replace('<div id="demo"></div>', body)
+                resp.body = resp.body.replace('src="_static/jquery.js"','').replace('<div id="demo"></div>', body)
         else:
             return self.app(environ, start_response)
         return resp(environ, start_response)

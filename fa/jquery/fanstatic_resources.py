@@ -1,29 +1,43 @@
 from fanstatic import Library, Resource, Group
 from js.jquery import jquery
+from js.jqueryui import jqueryui, jqueryui_i18n
 from js.jqueryui_syronex_colorpicker import colorpicker
+from js.jqueryui_selectmenu import selectmenu
+from js.jquery_markitup import markitup
 from js.jquery_markitup import simple_style
+from js.jquery_jgrowl import jquery_jgrowl
+from js.tinymce import tinymce
 from js.jqgrid import jqgrid
+import os
 
-fa_library = Library('fa', 'jquery-ui')
+fa_library = Library('fa', 'resources')
 
-R = lambda x: Resource(fa_library, x)
+def R(path, *args, **kwargs):
+    minified = os.path.join(fa_library.path, 'min', path)
+    if os.path.isfile(minified):
+        kwargs['minified'] = 'min/%s' % path
+    return Resource(fa_library, path, *args, **kwargs)
 
-fa_js = Resource(fa_library, "fa/jquery.formalchemy.js",
-                 depends=[jquery, colorpicker])
-fa_css = R("fa/jquery.formalchemy.css")
-fa_globals_css = R("css/global.css")
+fa_css = R("jquery.formalchemy.css")
+fa_js = R("jquery.formalchemy.js",
+          depends=[jquery, jqueryui, jqueryui_i18n])
+fa_pyramid_js = R("jquery.pyramid_formalchemy.js", depends=[fa_js])
 
-fa = Group([fa_js, fa_css, fa_globals_css])
+markitup_bbcode_set = R("markitup_sets/bbcode/set.js",
+                        depends=[R("markitup_sets/bbcode/style.css"),
+                                 fa_js, markitup, simple_style])
+markitup_markdown_set = R("markitup_sets/markdown/set.js",
+                          depends=[R("markitup_sets/markdown/style.css"),
+                                   fa_js, markitup, simple_style])
+markitup_textile_set = R("markitup_sets/textile/set.js",
+                         depends=[R("markitup_sets/textile/style.css"),
+                                  fa_js, markitup, simple_style])
 
-markitup_bbcode_set = Resource(fa_library, "markitup_sets/bbcode/set.js",
-                               depends=[R("markitup_sets/bbcode/style.css"),
-                                        fa_js, simple_style])
-markitup_markdown_set = Resource(fa_library, "markitup_sets/markdown/set.js",
-                                 depends=[R("markitup_sets/markdown/style.css"),
-                                          fa_js, simple_style])
-markitup_textile_set = Resource(fa_library, "markitup_sets/textile/set.js",
-                                depends=[R("markitup_sets/textile/style.css"),
-                                         fa_js, simple_style])
+jquery_tinymce = R("jquery.tinymce.js", depends=[tinymce, jquery])
 
-fa_jqgrid = Resource(fa_library, 'fa/fa.jqgrid.js',
-                     depends=[jqgrid, fa])
+fa_jqgrid = R('fa.jqgrid.js',
+              depends=[jqgrid, fa_js])
+
+fa = Group([fa_css, fa_js])
+fa_admin = Group([R("jquery.formalchemy.uiadmin.css"), fa_css, fa_js, selectmenu])
+

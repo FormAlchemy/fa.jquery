@@ -9,8 +9,6 @@ from formalchemy import fields
 from postmarkup import render_bbcode
 from textile import textile as render_textile
 from markdown import markdown as render_markdown
-from js.tinymce import tinymce as tinymce_js
-from js.jquery_markitup import markitup
 from fa.jquery import fanstatic_resources
 
 
@@ -85,7 +83,11 @@ def jQueryFieldRenderer(plugin, show_input=False, tag='div', renderer=fields.Tex
     template_name = jq_options.get('_template', 'jquery')
     template=templates.get_template('/renderers/%s.mako' % template_name)
     class Renderer(renderer):
+        _resources = [r for r in resources if not getattr(r, 'need', None)]
+        _fanstatic_resources = [r for r in resources if getattr(r, 'need', None)]
         def render(self, **kwargs):
+            for r in self._fanstatic_resources:
+                r.need()
             if 'autocomplete' in kwargs:
                 kwargs.pop('autocomplete')
             request = self.request
@@ -97,10 +99,10 @@ def jQueryFieldRenderer(plugin, show_input=False, tag='div', renderer=fields.Tex
                 plugin=plugin,
                 name=self.name,
                 show_input=show_input,
-                resources=[url(r, prefix=self.resources_prefix, request=request) for r in resources],
+                resources=[url(r, prefix=self.resources_prefix, request=request) for r in self._resources],
             )
             try:
-                self.update_options(options)
+                self.update_options(options, kwargs)
             except AttributeError:
                 pass
             try:
@@ -217,7 +219,7 @@ def ColorPickerFieldRenderer(colors=[], **jq_options):
             if not v:
                 return ''
             return h.literal('<div style="background:%s;">%s</div>' % (v, v))
-    return jQueryFieldRenderer('colorpicker', renderer=Renderer, **jq_options)
+    return jQueryFieldRenderer('colorpicker', renderer=Renderer, resources=[fanstatic_resources.colorpicker], **jq_options)
 
 @alias(ColorPickerFieldRenderer)
 def colorpicker(): pass
@@ -468,13 +470,12 @@ def RichTextFieldRenderer(use='tinymce', resources_prefix=None, **jq_options):
 
         def render(self, *args, **kwargs):
             if use == 'tinymce':
-                tinymce_js.need()
+                fanstatic_resources.jquery_tinymce.need()
             elif use in ('textile', 'bbcode', 'markdown'):
                 getattr(fanstatic_resources, "markitup_%s_set" % use).need()
-                markitup.need()
             return super(Renderer, self).render(*args, **kwargs)
 
-        def update_options(self, options):
+        def update_options(self, options, kwargs):
             request = self.request
             if request and hasattr(request, 'route_url'):
                 options['previewParserPath'] = '%s?markup=%s' % (request.route_url('markup_parser'), use)

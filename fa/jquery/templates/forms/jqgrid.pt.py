@@ -4,13 +4,13 @@ def bind():
     _lookup_attr = _loads('cchameleon.core.codegen\nlookup_attr\np1\n.')
     _init_scope = _loads('cchameleon.core.utils\necontext\np1\n.')
     _re_amp = _loads("cre\n_compile\np1\n(S'&(?!([A-Za-z]+|#[0-9]+);)'\np2\nI0\ntRp3\n.")
-    _attrs_4364428624 = _loads('(dp1\n.')
-    _attrs_4364428496 = _loads('(dp1\n.')
+    _attrs_4374972496 = _loads('(dp1\n.')
+    _attrs_4374973584 = _loads('(dp1\n.')
+    _attrs_4374970448 = _loads('(dp1\n.')
     _init_stream = _loads('cchameleon.core.generation\ninitialize_stream\np1\n.')
-    _attrs_4364428560 = _loads('(dp1\n.')
     _init_default = _loads('cchameleon.core.generation\ninitialize_default\np1\n.')
-    _attrs_4364428432 = _loads('(dp1\n.')
     _init_tal = _loads('cchameleon.core.generation\ninitialize_tal\np1\n.')
+    _attrs_4374973904 = _loads('(dp1\n.')
     def render(econtext, rcontext=None):
         macros = econtext.get('macros')
         _translate = econtext.get('_translate')
@@ -33,7 +33,7 @@ def bind():
         u"','.join([f.metadata.get('json') for f in collection.render_fields.values()])"
         colmodels = _lookup_attr(',', 'join')([_lookup_attr(_lookup_attr(f, 'metadata'), 'get')('json') for f in _lookup_attr(_lookup_attr(econtext['collection'], 'render_fields'), 'values')()])
         _write(u'\n')
-        attrs = _attrs_4364428432
+        attrs = _attrs_4374973904
         u'dom_id'
         _write(u'<table')
         _tmp1 = dom_id
@@ -58,7 +58,7 @@ def bind():
                 _tmp1 = _tmp1.replace('"', '&quot;')
             _write(((' id="' + _tmp1) + '"'))
         _write(u'></table> ')
-        attrs = _attrs_4364428496
+        attrs = _attrs_4374973584
         u'${dom_id}_jqgrid'
         _write(u'<div')
         _tmp1 = ('%s%s' % (dom_id, u'_jqgrid', ))
@@ -83,10 +83,10 @@ def bind():
                 _tmp1 = _tmp1.replace('"', '&quot;')
             _write(((' id="' + _tmp1) + '"'))
         _write(u'></div> \n')
-        attrs = _attrs_4364428560
-        u"request.static_url('fa.jquery:jquery-ui/jqgrid/js/i18n/grid.locale-en.js')"
-        _write(u'<script>\njQuery.fa.add_resource("')
-        _tmp1 = _lookup_attr(econtext['request'], 'static_url')('fa.jquery:jquery-ui/jqgrid/js/i18n/grid.locale-en.js')
+        attrs = _attrs_4374972496
+        u"libraries['fa_jqgrid'].need()"
+        _write(u'<script>\n')
+        _tmp1 = _lookup_attr(econtext['libraries']['fa_jqgrid'], 'need')()
         _tmp = _tmp1
         if (_tmp.__class__ not in (str, unicode, int, float, )):
             try:
@@ -110,9 +110,9 @@ def bind():
             if ('>' in _tmp):
                 _tmp = _tmp.replace('>', '&gt;')
             _write(_tmp)
-        u"request.static_url('fa.jquery:jquery-ui/jqgrid/js/jquery.jqGrid.min.js')"
-        _write(u'");\njQuery.fa.add_resource("')
-        _tmp1 = _lookup_attr(econtext['request'], 'static_url')('fa.jquery:jquery-ui/jqgrid/js/jquery.jqGrid.min.js')
+        u"libraries['jqgrid_lang'].needFor(request)"
+        _write(u'\n')
+        _tmp1 = _lookup_attr(econtext['libraries']['jqgrid_lang'], 'needFor')(econtext['request'])
         _tmp = _tmp1
         if (_tmp.__class__ not in (str, unicode, int, float, )):
             try:
@@ -136,60 +136,8 @@ def bind():
             if ('>' in _tmp):
                 _tmp = _tmp.replace('>', '&gt;')
             _write(_tmp)
-        u"request.static_url('fa.jquery:jquery-ui/jqgrid/js/fa.jqgrid.js')"
-        _write(u'");\njQuery.fa.add_resource("')
-        _tmp1 = _lookup_attr(econtext['request'], 'static_url')('fa.jquery:jquery-ui/jqgrid/js/fa.jqgrid.js')
-        _tmp = _tmp1
-        if (_tmp.__class__ not in (str, unicode, int, float, )):
-            try:
-                _tmp = _tmp.__html__
-            except:
-                _tmp = _translate(_tmp, domain=_domain, mapping=None, target_language=target_language, default=None)
-            else:
-                _tmp = _tmp()
-                _write(_tmp)
-                _tmp = None
-        if (_tmp is not None):
-            if not isinstance(_tmp, unicode):
-                _tmp = str(_tmp)
-            if ('&' in _tmp):
-                if (';' in _tmp):
-                    _tmp = _re_amp.sub('&amp;', _tmp)
-                else:
-                    _tmp = _tmp.replace('&', '&amp;')
-            if ('<' in _tmp):
-                _tmp = _tmp.replace('<', '&lt;')
-            if ('>' in _tmp):
-                _tmp = _tmp.replace('>', '&gt;')
-            _write(_tmp)
-        u"request.static_url('fa.jquery:jquery-ui/jqgrid/css/ui.jqgrid.css')"
-        _write(u'");\njQuery.fa.add_resource("')
-        _tmp1 = _lookup_attr(econtext['request'], 'static_url')('fa.jquery:jquery-ui/jqgrid/css/ui.jqgrid.css')
-        _tmp = _tmp1
-        if (_tmp.__class__ not in (str, unicode, int, float, )):
-            try:
-                _tmp = _tmp.__html__
-            except:
-                _tmp = _translate(_tmp, domain=_domain, mapping=None, target_language=target_language, default=None)
-            else:
-                _tmp = _tmp()
-                _write(_tmp)
-                _tmp = None
-        if (_tmp is not None):
-            if not isinstance(_tmp, unicode):
-                _tmp = str(_tmp)
-            if ('&' in _tmp):
-                if (';' in _tmp):
-                    _tmp = _re_amp.sub('&amp;', _tmp)
-                else:
-                    _tmp = _tmp.replace('&', '&amp;')
-            if ('<' in _tmp):
-                _tmp = _tmp.replace('<', '&lt;')
-            if ('>' in _tmp):
-                _tmp = _tmp.replace('>', '&gt;')
-            _write(_tmp)
-        _write(u'");\n</script>\n')
-        attrs = _attrs_4364428624
+        _write(u'\n</script>\n')
+        attrs = _attrs_4374970448
         u'dom_id'
         _write(u'<script>\nvar init_grid = function() {\nif (!jQuery.fa.jqgrid) {\n  setTimeout(init_grid, 100);\n  return;\n}\nvar url = window.location.href.split(\'?\')[0].split(\'/\');\nvar model = url.pop();\nurl.push(\'json\');\nurl.push(model);\nurl = url.join(\'/\');\njQuery.fa.jqgrid("')
         _tmp1 = dom_id

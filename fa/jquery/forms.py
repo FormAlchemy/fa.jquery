@@ -51,7 +51,8 @@ class MultiFieldSet(object):
         self._id = id
         self._fs = []
         self._fs_dict = {}
-        self._bound_pk = None
+        self.__bound_pk = None
+        self.__request = None
         self._options = options
         self._readonly = False
         self._engine = None
@@ -174,7 +175,7 @@ class MultiFieldSet(object):
                                     rid=str(random())[2:],
                                     fieldsets=fieldsets,
                                     options=dumps(options),
-                                    F_=get_translator(request=self._request),
+                                    F_=get_translator(request=self.__request),
                                     **kwargs)
 
 

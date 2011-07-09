@@ -4,11 +4,11 @@ def bind():
     _lookup_attr = _loads('cchameleon.core.codegen\nlookup_attr\np1\n.')
     _init_scope = _loads('cchameleon.core.utils\necontext\np1\n.')
     _re_amp = _loads("cre\n_compile\np1\n(S'&(?!([A-Za-z]+|#[0-9]+);)'\np2\nI0\ntRp3\n.")
-    _attrs_4362992784 = _loads('(dp1\n.')
-    _attrs_4362992848 = _loads('(dp1\nVclass\np2\nVfa_controls\np3\ns.')
-    _attrs_4362992528 = _loads('(dp1\n.')
-    _attrs_4362992656 = _loads('(dp1\n.')
+    _attrs_4374910992 = _loads('(dp1\n.')
+    _attrs_4374910864 = _loads('(dp1\n.')
     _init_stream = _loads('cchameleon.core.generation\ninitialize_stream\np1\n.')
+    _attrs_4374911056 = _loads('(dp1\nVclass\np2\nVfa_controls\np3\ns.')
+    _attrs_4374910736 = _loads('(dp1\n.')
     _init_default = _loads('cchameleon.core.generation\ninitialize_default\np1\n.')
     _init_tal = _loads('cchameleon.core.generation\ninitialize_tal\np1\n.')
     def render(econtext, rcontext=None):
@@ -31,7 +31,7 @@ def bind():
         def _callback_javascript(econtext, _repeat, _out=_out, _write=_write, _domain=_domain, **_ignored):
             if _repeat:
                 repeat.update(_repeat)
-            attrs = _attrs_4362992528
+            attrs = _attrs_4374910736
             u"request.registry.settings.get('fa.use_popup') and 'true' or 'false'"
             _write(u'<script>\n      var USE_POPUP = ')
             _tmp1 = ((_lookup_attr(_lookup_attr(_lookup_attr(econtext['request'], 'registry'), 'settings'), 'get')('fa.use_popup') and 'true') or 'false')
@@ -58,9 +58,9 @@ def bind():
                 if ('>' in _tmp):
                     _tmp = _tmp.replace('>', '&gt;')
                 _write(_tmp)
-            u"request.static_url('fa.jquery:jquery-ui/jqgrid/js/i18n/grid.locale-en.js')"
-            _write(u';\n      jQuery.fa.add_resource("')
-            _tmp1 = _lookup_attr(econtext['request'], 'static_url')('fa.jquery:jquery-ui/jqgrid/js/i18n/grid.locale-en.js')
+            u"libraries['fa_jqgrid'].need()"
+            _write(u';\n      ')
+            _tmp1 = _lookup_attr(econtext['libraries']['fa_jqgrid'], 'need')()
             _tmp = _tmp1
             if (_tmp.__class__ not in (str, unicode, int, float, )):
                 try:
@@ -84,9 +84,9 @@ def bind():
                 if ('>' in _tmp):
                     _tmp = _tmp.replace('>', '&gt;')
                 _write(_tmp)
-            u"request.static_url('fa.jquery:jquery-ui/jqgrid/js/jquery.jqGrid.min.js')"
-            _write(u'");\n      jQuery.fa.add_resource("')
-            _tmp1 = _lookup_attr(econtext['request'], 'static_url')('fa.jquery:jquery-ui/jqgrid/js/jquery.jqGrid.min.js')
+            u"libraries['jqgrid_lang'].needFor(request)"
+            _write(u'\n      ')
+            _tmp1 = _lookup_attr(econtext['libraries']['jqgrid_lang'], 'needFor')(econtext['request'])
             _tmp = _tmp1
             if (_tmp.__class__ not in (str, unicode, int, float, )):
                 try:
@@ -110,69 +110,17 @@ def bind():
                 if ('>' in _tmp):
                     _tmp = _tmp.replace('>', '&gt;')
                 _write(_tmp)
-            u"request.static_url('fa.jquery:jquery-ui/jqgrid/js/fa.jqgrid.js')"
-            _write(u'");\n      jQuery.fa.add_resource("')
-            _tmp1 = _lookup_attr(econtext['request'], 'static_url')('fa.jquery:jquery-ui/jqgrid/js/fa.jqgrid.js')
-            _tmp = _tmp1
-            if (_tmp.__class__ not in (str, unicode, int, float, )):
-                try:
-                    _tmp = _tmp.__html__
-                except:
-                    _tmp = _translate(_tmp, domain=_domain, mapping=None, target_language=target_language, default=None)
-                else:
-                    _tmp = _tmp()
-                    _write(_tmp)
-                    _tmp = None
-            if (_tmp is not None):
-                if not isinstance(_tmp, unicode):
-                    _tmp = str(_tmp)
-                if ('&' in _tmp):
-                    if (';' in _tmp):
-                        _tmp = _re_amp.sub('&amp;', _tmp)
-                    else:
-                        _tmp = _tmp.replace('&', '&amp;')
-                if ('<' in _tmp):
-                    _tmp = _tmp.replace('<', '&lt;')
-                if ('>' in _tmp):
-                    _tmp = _tmp.replace('>', '&gt;')
-                _write(_tmp)
-            u"request.static_url('fa.jquery:jquery-ui/jqgrid/css/ui.jqgrid.css')"
-            _write(u'");\n      jQuery.fa.add_resource("')
-            _tmp1 = _lookup_attr(econtext['request'], 'static_url')('fa.jquery:jquery-ui/jqgrid/css/ui.jqgrid.css')
-            _tmp = _tmp1
-            if (_tmp.__class__ not in (str, unicode, int, float, )):
-                try:
-                    _tmp = _tmp.__html__
-                except:
-                    _tmp = _translate(_tmp, domain=_domain, mapping=None, target_language=target_language, default=None)
-                else:
-                    _tmp = _tmp()
-                    _write(_tmp)
-                    _tmp = None
-            if (_tmp is not None):
-                if not isinstance(_tmp, unicode):
-                    _tmp = str(_tmp)
-                if ('&' in _tmp):
-                    if (';' in _tmp):
-                        _tmp = _re_amp.sub('&amp;', _tmp)
-                    else:
-                        _tmp = _tmp.replace('&', '&amp;')
-                if ('<' in _tmp):
-                    _tmp = _tmp.replace('<', '&lt;')
-                if ('>' in _tmp):
-                    _tmp = _tmp.replace('>', '&gt;')
-                _write(_tmp)
-            _write(u'");\n    </script>\n')
+            _write(u'\n    </script>\n')
         def _callback_main(econtext, _repeat, _out=_out, _write=_write, _domain=_domain, **_ignored):
             if _repeat:
                 repeat.update(_repeat)
-            attrs = _attrs_4362992656
+            attrs = _attrs_4374910864
             u"''"
             _write(u'<div>\n      ')
             _default.value = default = ''
             u"fs.render(renderer='fa.jquery:templates/forms/jqgrid.pt', request=request)"
             _content = _lookup_attr(econtext['fs'], 'render')(renderer='fa.jquery:templates/forms/jqgrid.pt', request=econtext['request'])
-            attrs = _attrs_4362992784
+            attrs = _attrs_4374910992
             u'_content'
             _write(u'<div>')
             _tmp1 = _content
@@ -195,7 +143,7 @@ def bind():
             _default.value = default = u'\n      '
             u'actions.buttons(request)'
             _content = _lookup_attr(econtext['actions'], 'buttons')(econtext['request'])
-            attrs = _attrs_4362992848
+            attrs = _attrs_4374911056
             u'_content'
             _write(u'<div class="fa_controls">')
             _tmp1 = _content

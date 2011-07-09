@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: fa.jquery 0.9.3\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2011-06-18 15:18+0200\n"
-"PO-Revision-Date: 2011-06-18 15:18+0200\n"
+"PO-Revision-Date: 2011-06-21 16:33+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: fr <LL@li.org>\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
@@ -17,11 +17,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 0.9.5\n"
 
-#: fa/jquery/pyramid.py:33
+#: fa/jquery/pyramid.py:36
 msgid "Jump to ..."
 msgstr "Aller à ..."
 
-#: fa/jquery/pyramid.py:34
+#: fa/jquery/pyramid.py:37 fa/jquery/templates/admin/master.pt:50
+#: fa/jquery/templates/admin/master.pt:4
 msgid "Models index"
 msgstr "Index des modèles"
 
