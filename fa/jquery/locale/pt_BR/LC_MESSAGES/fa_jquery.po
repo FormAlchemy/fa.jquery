@@ -1,0 +1,29 @@
+# Portuguese (Brazil) translations for fa.jquery.
+# Copyright (C) 2011 ORGANIZATION
+# This file is distributed under the same license as the fa.jquery project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: fa.jquery 0.9.3\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2011-06-21 16:33+0200\n"
+"PO-Revision-Date: 2011-08-01 20:33-0300\n"
+"Last-Translator: Rodrigo Ferreira de Souza <rodfersou@gmail.com>\n"
+"Language-Team: pt_BR <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 0.9.6\n"
+
+#: fa/jquery/pyramid.py:36
+msgid "Jump to ..."
+msgstr "Ir para ..."
+
+#: fa/jquery/pyramid.py:37
+#: fa/jquery/templates/admin/master.pt:50
+#: fa/jquery/templates/admin/master.pt:4
+msgid "Models index"
+msgstr "Lista de tabelas"
+
