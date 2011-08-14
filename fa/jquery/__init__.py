@@ -31,8 +31,8 @@ except ImportError:
     pass
 
 try:
-    from fa.jquery.pyramid import relation
-    from fa.jquery.pyramid import relations
+    from fa.jquery.pyramid.renderers import relation
+    from fa.jquery.pyramid.renderers import relations
 except ImportError:
     pass
 

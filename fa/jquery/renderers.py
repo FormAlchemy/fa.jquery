@@ -247,7 +247,7 @@ class DateFieldRenderer(fields.DateFieldRenderer):
         if request is not None and hasattr(request, 'cookies'):
             lang = request.cookies.get('_LOCALE_', None)
             if lang:
-                options['lang'] = lang
+                options['lang'] = lang.replace('_', '-')
         kwargs.update(
             name=self.name,
             value=value,

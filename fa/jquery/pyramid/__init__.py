@@ -98,6 +98,17 @@ class ModelView(Base):
             resp.unicode_body += flash.render()
         return resp
 
+    def update_resources(self):
+        """A hook to add some fanstatic resources"""
+        theme = getattr(self.request, 'cookies', {}).get('_THEME_', 'smoothness')
+        getattr(jqueryui, theme).need()
+        fa_admin.need()
+        lang = getattr(self.request, 'cookies', {}).get('_LOCALE_', 'en')
+        needed_resource = getattr(jqgrid, 'jqgrid_i18n_%s' % lang,
+                                  jqgrid.jqgrid_i18n_en)
+        needed_resource.need()
+        fa_jqgrid.need()
+
     def update_grid(self, grid, *args, **kwargs):
         metadatas = ('width', 'align', 'fixed', 'search', 'stype', 'searchoptions')
         for field in grid.render_fields.values():
@@ -140,18 +151,5 @@ def markup_parser(request):
         value = value.encode('utf-8')
     resp.body = value
     return resp
-
-@subscriber(BeforeRender)
-def add_always_required_resources(event):
-    getattr(jqueryui, 'smoothness').need()
-    fa_admin.need()
-    class LanguageSelector (object):
-        def needFor(self, request):
-            lang = getattr(request, 'cookies', {}).get('_LOCALE_', 'en')
-            needed_resource = getattr(jqgrid, 'jqgrid_i18n_%s' % lang,
-                                      jqgrid.jqgrid_i18n_en)
-            needed_resource.need()
-    event['libraries'] = {'fa_jqgrid': fa_jqgrid,
-                          'jqgrid_lang': LanguageSelector()}
 
 

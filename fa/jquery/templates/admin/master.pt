@@ -4,7 +4,7 @@
       <title tal:condition="request.model_name is None" i18n:domain="fa_jquery" i18n:translate="">Models index</title>
       <script type="text/javascript">
         jQuery(document).ready(function() {
-          $('select#models')
+          $('select#models, select#themes')
             .change(function() { window.location.href = $(this).val(); })
             .selectmenu({'style':'dropdown', 'menuWidth':'20%', 'width':'100%'});
         });
@@ -21,6 +21,7 @@
         ul#languages li {display: inline;}
         ul#languages a {text-decoration:none; color: grey;}
         ul#languages a.lang_active {text-decoration:underline;}
+        div.footer-actions {float:right;width: 300px;}
         div.breadcrumb {float:right;width:20%;margin-right:20px;}
         div.breadcrumb a {text-decoration:none;}
         h1 a.ui-selectmenu {height:1em;}
@@ -46,7 +47,10 @@
         </h1>
         <div metal:define-slot="main">
         </div>
-        <ul id="languages" tal:condition="request" tal:content="structure actions.languages(request)" />
+        <div class="footer-actions">
+          <ul id="languages" tal:condition="actions.languages" tal:content="structure actions.languages(request)" />
+          <select id="themes" tal:condition="actions.themes" tal:content="structure actions.themes(request)" />
+        </div>
         <a style="display:none" class="root_url" tal:attributes="href request.fa_url()"></a>
       </div>
     </body>

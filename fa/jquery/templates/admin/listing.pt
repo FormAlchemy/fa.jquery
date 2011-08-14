@@ -2,8 +2,6 @@
   <head>
     <script metal:fill-slot="javascript">
       var USE_POPUP = ${request.registry.settings.get('fa.use_popup') and 'true' or 'false'};
-      ${libraries['fa_jqgrid'].need()}
-      ${libraries['jqgrid_lang'].needFor(request)}
     </script>
   </head>
   <body>
