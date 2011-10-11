@@ -18,6 +18,7 @@ def R(path, *args, **kwargs):
         kwargs['minified'] = 'min/%s' % path
     return Resource(fa_library, path, *args, **kwargs)
 
+fa_uiadmin_css = R("jquery.formalchemy.uiadmin.css")
 fa_css = R("jquery.formalchemy.css")
 fa_js = R("jquery.formalchemy.js",
           depends=[jquery, jqueryui, jqueryui_i18n])
@@ -35,9 +36,8 @@ markitup_textile_set = R("markitup_sets/textile/set.js",
 
 jquery_tinymce = R("jquery.tinymce.js", depends=[tinymce, jquery])
 
-fa_jqgrid = R('fa.jqgrid.js',
-              depends=[jqgrid, fa_js])
+fa_jqgrid = R('fa.jqgrid.js', depends=[jqgrid, fa_js])
 
 fa = Group([fa_css, fa_js])
-fa_admin = Group([R("jquery.formalchemy.uiadmin.css"), fa_css, fa_js, selectmenu])
+fa_admin = Group([fa_uiadmin_css, fa_css, fa_js, selectmenu])
 
