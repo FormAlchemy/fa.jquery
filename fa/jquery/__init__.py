@@ -46,7 +46,5 @@ def includeme(config):
         override_with="fa.jquery:templates/forms/")
 
     config.add_route('markup_parser', '/markup_parser.html')
-    config.add_view('fa.jquery.pyramid.markup_parser',
-                    route_name='markup_parser')
-
+    config.add_view('fa.jquery.pyramid.markup_parser', route_name='markup_parser')
     config.scan("fa.jquery.pyramid")
