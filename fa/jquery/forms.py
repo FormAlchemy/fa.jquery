@@ -117,7 +117,7 @@ class MultiFieldSet(object):
         news = []
         for id, title in self._fs:
             fs = self.get(id)
-            fs = fs.bind(model=None, **kwargs)
+            fs = fs.bind(model=model, **kwargs)
             if model is None:
                 model = fs.model
             news.append((id, title, fs))
