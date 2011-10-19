@@ -112,22 +112,22 @@ class MultiFieldSet(object):
             fs = self._fs_dict[fs]
         return fs
 
-    def bind(self, model=None, session=None, data=None):
+    def bind(self, **kwargs):
         """Bind fieldsets to model. All sub-fieldsets are bound to model."""
         news = []
         for id, title in self._fs:
             fs = self.get(id)
-            fs = fs.bind(model=model, data=data, session=session)
+            fs = fs.bind(**kwargs)
             if model is None:
                 model = fs.model
             news.append((id, title, fs))
         return self.__class__(self._id, *news, **self._options.copy())
 
-    def rebind(self, model=None, session=None, data=None):
+    def rebind(self, **kwargs):
         """Bind fieldsets to model. All sub-fieldsets are bound to model."""
         for id, title in self._fs:
             fs = self.get(id)
-            fs.rebind(model=model, data=data, session=session)
+            fs.rebind(**kwargs)
             if model is None:
                 model = fs.model
 
