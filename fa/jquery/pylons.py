@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from formalchemy.ext.pylons.controller import _ModelsController as Base
-from fa.jquery.wsgi import StaticApp
 from fa.jquery.utils import TemplateEngine
 from fa.jquery.utils import Flash
 from fa.jquery.fanstatic_resources import fa_admin, fa_jqgrid
@@ -20,7 +19,6 @@ import logging
 log = logging.getLogger(__name__)
 
 class _ModelsController(Base):
-    _static_app=StaticApp()
     engine = TemplateEngine()
     template = 'restfieldset.mako'
 
