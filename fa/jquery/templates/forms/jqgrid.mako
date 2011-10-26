@@ -8,13 +8,6 @@ fields = [field for field in collection.render_fields.values()]
 %>
 <table id="${dom_id}"></table> <div id="${dom_id}_jqgrid"></div> 
 <script>
-${libraries['fa_jqgrid'].need()}
-jQuery.fa.add_resource(${repr(url('jqgrid/css/ui.jqgrid.css'))});
-jQuery.fa.add_resource(${repr(url('jqgrid/js/i18n/grid.locale-en.js'))});
-jQuery.fa.add_resource(${repr(url('jqgrid/js/jquery.jqGrid.min.js'))});
-jQuery.fa.add_resource(${repr(url('jqgrid/js/fa.jqgrid.js'))});
-</script>
-<script>
 var url = window.location.href.split('?')[0].split('/');
 var model = url.pop();
 url.push('json');

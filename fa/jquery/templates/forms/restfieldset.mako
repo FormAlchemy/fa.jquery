@@ -36,23 +36,6 @@ from fa.jquery.utils import url
     <title>
     ${collection_name.title()}
     </title>
-    %if 'debug' in request.GET:
-    <link type="text/css" href="/jquery/css/redmond/jquery-ui-1.8.custom.css" rel="stylesheet" />
-    <link type="text/css" href="/jquery/colorpicker/syronex-colorpicker.css" rel="stylesheet" />
-    <link type="text/css" href="/jquery/css/jquery.jgrowl.css" rel="stylesheet" />
-    <link type="text/css" href="/jquery/fa/jquery.formalchemy.css" rel="stylesheet" />
-
-    <script type="text/javascript" src="/jquery/js/jquery-1.4.2.min.js"></script>
-    <script type="text/javascript" src="/jquery/js/jquery-ui-1.8.custom.min.js"></script>
-    <script type="text/javascript" src="/jquery/colorpicker/syronex-colorpicker.js"></script>
-    <script type="text/javascript" src="/jquery/js/jquery.jgrowl_minimized.js"></script>
-    <script type="text/javascript" src="/jquery/js/jquery.form.js"></script>
-    <script type="text/javascript" src="/jquery/fa/jquery.formalchemy.js"></script>
-    %else:
-    <link type="text/css" rel="stylesheet" href="${url('css/redmond/jquery-ui-1.8.custom.css')}" />
-    <link type="text/css" rel="stylesheet" href="${url('fa.jquery.min.css')}" />
-    <script type="text/javascript" src="${url('fa.jquery.min.js')}"></script>
-    %endif
     <style type="text/css">
       label {font-weight:bold;}
       h1, h3 {padding:0.1 0.3em;}
