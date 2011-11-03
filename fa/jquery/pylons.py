@@ -1,14 +1,17 @@
 # -*- coding: utf-8 -*-
 from formalchemy.ext.pylons.controller import _ModelsController as Base
-from fa.jquery.wsgi import StaticApp
 from fa.jquery.utils import TemplateEngine
 from fa.jquery.utils import Flash
+from fa.jquery.fanstatic_resources import fa_admin, fa_jqgrid
+from js import jqueryui
+from js import jqgrid
 from webhelpers.html import literal
 from formalchemy.ext.pylons.controller import model_url
 from formalchemy.ext.pylons.controller import request
 from formalchemy import fields
 from formalchemy import fatypes
 from routes.util import GenerationException
+get_lang = __import__("pylons").i18n.translation.get_lang
 from simplejson import dumps
 import renderers
 import logging
@@ -16,9 +19,16 @@ import logging
 log = logging.getLogger(__name__)
 
 class _ModelsController(Base):
-    _static_app=StaticApp()
     engine = TemplateEngine()
     template = 'restfieldset.mako'
+
+    def update_resources(self):
+        jqueryui.redmond.need()
+        fa_admin.need()
+        needed_resource = getattr(jqgrid, 'jqgrid_i18n_%s' % get_lang(),
+                                  jqgrid.jqgrid_i18n_en)
+        needed_resource.need()
+        fa_jqgrid.need()
 
     def index(self, *args, **kwargs):
         kwargs['pager'] = ''
