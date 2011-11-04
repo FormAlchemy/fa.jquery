@@ -1,6 +1,5 @@
 <%!
 from random import random
-from fa.jquery.utils import url
 %>
 <%
 dom_id = 'grid_%s' % str(random())[2:]
@@ -8,11 +7,7 @@ fields = [field for field in collection.render_fields.values()]
 %>
 <table id="${dom_id}"></table> <div id="${dom_id}_jqgrid"></div> 
 <script>
-var url = window.location.href.split('?')[0].split('/');
-var model = url.pop();
-url.push('json');
-url.push(model);
-url = url.join('/');
+var url = window.location.href.split('?')[0] + '.json';
 jQuery.fa.jqgrid("${dom_id}", {
     url: url+'?jqgrid=true',
     colNames:['id'
