@@ -86,6 +86,8 @@ from fa.jquery.utils import url
   %endif
 </div>
 <script type="text/javascript">
-  jQuery('a.ui-widget-button').click(function() {jQuery('input', this).click(); return false;});
+  jQuery('a.ui-widget-button').click(function() {
+    jQuery(this).parents('form').submit()
+  });
 </script>
 </body></html>
