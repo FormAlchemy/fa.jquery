@@ -69,7 +69,7 @@ class _ModelsController(Base):
         if fs and request.POST and 'field' not in request.GET:
             flash = Flash()
             if fs.errors:
-                errors = [f.label_text or fs.prettify(f.key) for f in fs.render_fields.values() if f.errors]
+                errors = [f.label() for f in fs.render_fields.values() if f.errors]
                 flash.error('Field(s) %s have errors' % ','.join(errors))
             else:
                 flash.info('Record saved')
