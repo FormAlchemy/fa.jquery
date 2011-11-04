@@ -73,7 +73,7 @@ class _ModelsController(Base):
                 flash.error('Field(s) %s have errors' % ','.join(errors))
             else:
                 flash.info('Record saved')
-            html += flash.render()
+            html = literal(html) + flash.render()
         return html
 
     def update_grid(self, grid, *args, **kwargs):
