@@ -22,7 +22,7 @@ def R(path, *args, **kwargs):
 fa_uiadmin_css = R("jquery.formalchemy.uiadmin.css")
 fa_css = R("jquery.formalchemy.css")
 fa_js = R("jquery.formalchemy.js",
-          depends=[jquery, jquery_form, jqueryui, jqueryui_i18n])
+        depends=[jquery, jquery_form, jquery_jgrowl, jqueryui, jqueryui_i18n])
 fa_pyramid_js = R("jquery.pyramid_formalchemy.js", depends=[fa_js])
 
 markitup_bbcode_set = R("markitup_sets/bbcode/set.js",
